@@ -28,22 +28,16 @@ import numpy as np
 class Andor:
     def __init__(self):
 
-        # Check operating system and load library
-        # for Windows
+        # Check operating system and load library for Windows
         if platform.system() == "Windows":
-            if platform.architecture()[0] == "32bit":
-#                self.dll = cdll("C:\\Program Files\\Andor SOLIS\\Drivers\\atmcd32d")
-                self.dll = windll.LoadLibrary('atmcd32d.dll')
-            else:
+            if platform.architecture()[0] == "64bit":
                 self.dll = WinDLL('ATMCD64D.DLL')
-                print('arch: 64bit')
-#        # for Linux
-#        if platform.system() == "Linux":
-#            dllname = "/usr/local/lib/libandor.so"
-#            self.dll = cdll.LoadLibrary(dllname)
-#        else:
-#            print("Cannot detect operating system, wil now stop")
+                print('found and loaded ATMCD64D.DLL')
+            else:
+                print('PROBLEM: operating system or dll not found')
 
+
+        # --- all the camera parameters --------------------------------------#
         cw = c_int()
         ch = c_int()
         self.dll.GetDetector(byref(cw), byref(ch))
@@ -81,7 +75,7 @@ class Andor:
         self.availablecamera = 0
         self.camerahandle = None
         self.currentcamera = None
-        
+    # ------------------------------------------------------------------------#        
         
     def __del__(self):
         error = self.dll.ShutDown()
