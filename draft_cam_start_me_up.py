@@ -18,19 +18,55 @@ class window_camera(Ui_cam_gui):
     def __init__(self, dialog):
         Ui_cam_gui.__init__(self)
         self.setupUi(dialog)
-        self.cam = Andor()
+
+        #--- flags -----------------------------------------------------------#
         self.cam_flag = False
         self.cooler_flag = False
-        self.data_camera = []
         
-        #Push Buttons#
-        self.pushButton_Cam_OnOff.clicked.connect(self.initialise_cam)
+        #--- data ------------------------------------------------------------#
+        self.data_camera = []
+
+        #--- the object with all the functions within instr_Andor_iXon_ultra
+        self.cam = Andor()
+        
+
+       
+        #-- Push Buttons -----------------------------------------------------#
+#        self.pushButton_Cam_OnOff.clicked.connect(self.initialise_cam)
+        self.pushButton_Cam_OnOff.clicked.connect(self.initialise_thread)
         self.pushButton_Temp_set.clicked.connect(self.set_temp)
 #        self.pushButton_Exp_Time.clicked.connect(self.set_exp_time)
         self.pushButton_Snap.clicked.connect(self.snap_pic)
         self.pushButton_Save.clicked.connect(self.save_pic)
-        
-        
+           
+#    def initialise_cam(self):
+#        if self.cam_flag == False:
+#            self.cam.GetAvailableCameras()
+#            if self.cam.availablecamera > 0:
+#                #--- get handle of camera 0 since only one is connected ------------------#
+#                self.cam.GetCameraHandle(0) # saves camera handle in camera.camerahandle
+#                
+#                print('---> camera handle of available camera: ' + str(self.cam.camerahandle))
+#                
+#                #--- choose current camera to be the one with the handle from above ------#
+#                self.cam.SetCurrentCamera(self.cam.camerahandle)
+#                
+#                print('---> camera with handle = ' + str(self.cam.camerahandle) + ' selected.')
+#            else:
+#                print('PROBLEM: check connection and power of camera and try again.')
+#            
+#            self.cam.Initialize()
+#            self.label_Cam_OnOff.setText('ON')
+#            self.label_Cam_OnOff.setStyleSheet('color: green')
+#            self.cam_flag = True
+#        
+#        elif self.cam_flag == True:
+#            self.cam.CoolerOFF()
+#            self.cam.ShutDown()
+#            self.label_Cam_OnOff.setText('OFF')
+#            self.label_Cam_OnOff.setStyleSheet('color: red')
+#            self.cam_flag = False
+
     def initialise_cam(self):
         if self.cam_flag == False:
             self.cam.GetAvailableCameras()
@@ -44,21 +80,34 @@ class window_camera(Ui_cam_gui):
                 self.cam.SetCurrentCamera(self.cam.camerahandle)
                 
                 print('---> camera with handle = ' + str(self.cam.camerahandle) + ' selected.')
+                
+                self.cam_flag = True
+                self.cam.Initialize()
+                print('---> camera with handle = ' + str(self.cam.camerahandle) + ' initialized.')
+                self.label_Cam_OnOff.setText('ON')
+                self.label_Cam_OnOff.setStyleSheet('color: green')
+                
+                while self.cam_flag == True:
+                    self.cam.GetTemperature()
+                    time.sleep(3)
+                    
+                print('Camera Shutdown')
+                self.cam.CoolerOFF()
+                self.cam.ShutDown()
+                self.label_Cam_OnOff.setText('OFF')
+                self.label_Cam_OnOff.setStyleSheet('color: red')
+                self.cam_flag = False                
             else:
                 print('PROBLEM: check connection and power of camera and try again.')
-            
-            self.cam.Initialize()
-            self.label_Cam_OnOff.setText('ON')
-            self.label_Cam_OnOff.setStyleSheet('color: green')
-            self.cam_flag = True
-        
+     
         elif self.cam_flag == True:
+            print('Camera Shutdown')
             self.cam.CoolerOFF()
             self.cam.ShutDown()
             self.label_Cam_OnOff.setText('OFF')
             self.label_Cam_OnOff.setStyleSheet('color: red')
             self.cam_flag = False
-   
+        
     def initialise_thread(self):
         init_thread = threading.Thread(target =self.initialise_cam)
         init_thread.start()         
