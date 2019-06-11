@@ -8,7 +8,7 @@ Created on Sun Jun  9 16:45:08 2019
 import pandas as pd
 import numpy as np
 
-results2 = pd.read_csv('test3.txt', header = None, usecols = np.arange(1,513))
+results2 = pd.read_csv('test.txt', header = None, usecols = np.arange(1,513))
 
 import matplotlib.pyplot as plt
 
