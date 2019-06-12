@@ -40,7 +40,8 @@ class window_camera(Ui_cam_gui):
        
         #-- Push Buttons -----------------------------------------------------#
 #        self.pushButton_Cam_OnOff.clicked.connect(self.initialise_cam)
-        self.pushButton_Cam_OnOff.clicked.connect(self.initialise_thread)
+        self.pushButton_Cam_On.clicked.connect(self.initialise_thread)
+        self.pushButton_Cam_Off.clicked.connect(self.cam_off)
         self.pushButton_Temp_set.clicked.connect(self.set_temp)
 #        self.pushButton_Exp_Time.clicked.connect(self.set_exp_time)
         self.pushButton_Snap.clicked.connect(self.snap_thread)
@@ -88,19 +89,20 @@ class window_camera(Ui_cam_gui):
                 
                 print('---> camera with handle = ' + str(self.cam.camerahandle) + ' selected.')
                 
-                self.cam_flag = True
+                
                 self.cam.Initialize()
                 print('---> camera with handle = ' + str(self.cam.camerahandle) + ' initialized.')
                 self.label_Cam_OnOff.setText('ON')
                 self.label_Cam_OnOff.setStyleSheet('color: green')
                 self.cam.GetTemperature()
                 self.label_Temp_disp.setText(str(self.cam.temperature) + ' °C')
+                self.cam_flag = True
                 
                 while self.cam_flag == True:
                     self.cam.GetTemperature()
                     time.sleep(2)
                     
-                print('Camera Shutdown')
+                #print('Camera Shutdown')
                 print('yay!!')
                 #self.cam.CoolerOFF()
                 #self.cam.ShutDown()
@@ -109,8 +111,23 @@ class window_camera(Ui_cam_gui):
                 #self.cam_flag = False                
             else:
                 print('PROBLEM: check connection and power of camera and try again.')
-     
+        
         elif self.cam_flag == True:
+            None
+     
+        #elif self.cam_flag == True:
+         #   print('Camera Shutdown')
+          #  self.cam.CoolerOFF()
+           # self.cam.ShutDown()
+            #self.label_Cam_OnOff.setText('OFF')
+            #self.label_Cam_OnOff.setStyleSheet('color: red')
+            #self.label_Cooler_OnOff.setText('OFF')
+            #self.label_Cooler_OnOff.setStyleSheet('color: red')
+            #self.cam_flag = False
+            #self.cooler_flag = False
+    
+    def cam_off(self):
+        if self.cam_flag == True:
             print('Camera Shutdown')
             self.cam.CoolerOFF()
             self.cam.ShutDown()
@@ -120,8 +137,10 @@ class window_camera(Ui_cam_gui):
             self.label_Cooler_OnOff.setStyleSheet('color: red')
             self.cam_flag = False
             self.cooler_flag = False
-            
         
+        elif self.cam_flag == False:
+            print("camera already off")
+    
     def initialise_thread(self):
         init_thread = threading.Thread(target =self.initialise_cam)
         init_thread.start()         

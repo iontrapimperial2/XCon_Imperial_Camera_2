@@ -22,6 +22,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QRadioButton>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
@@ -63,11 +64,22 @@ public:
     QSpacerItem *horizontalSpacer_12;
     QSpacerItem *horizontalSpacer_13;
     QSpacerItem *horizontalSpacer_14;
+    QPushButton *pushButton_Save;
+    QSpacerItem *verticalSpacer_3;
+    QPushButton *pushButton_Snap;
+    QGroupBox *groupBox_4;
+    QWidget *gridLayoutWidget_5;
+    QGridLayout *gridLayout_9;
+    QSpacerItem *horizontalSpacer_34;
+    QSpacerItem *horizontalSpacer_33;
+    QSpacerItem *horizontalSpacer_32;
+    QRadioButton *radioButton;
+    QLabel *label_Acq_mode;
+    QSpacerItem *horizontalSpacer_31;
+    QRadioButton *radioButton_2;
+    QLabel *label_6;
     QSpacerItem *verticalSpacer_5;
-    QLabel *label;
     QSpacerItem *verticalSpacer_6;
-    QPushButton *pushButton_Cam_OnOff;
-    QLabel *label_Cam_OnOff;
     QSpacerItem *verticalSpacer;
     QSpacerItem *verticalSpacer_2;
     QSpacerItem *verticalSpacer_4;
@@ -77,10 +89,15 @@ public:
     QSpacerItem *horizontalSpacer_5;
     QSpacerItem *horizontalSpacer_6;
     QSpacerItem *horizontalSpacer_4;
-    QSpacerItem *verticalSpacer_3;
-    QLabel *label_6;
-    QPushButton *pushButton_Snap;
-    QPushButton *pushButton_Save;
+    QGroupBox *groupBox_5;
+    QWidget *gridLayoutWidget_6;
+    QGridLayout *gridLayout_10;
+    QSpacerItem *horizontalSpacer_38;
+    QSpacerItem *horizontalSpacer_36;
+    QSpacerItem *horizontalSpacer_37;
+    QSpacerItem *horizontalSpacer_35;
+    QLabel *label_Read_mode;
+    QLineEdit *lineEdit_read_mode;
     QGroupBox *groupBox_3;
     QWidget *gridLayoutWidget_4;
     QGridLayout *gridLayout_8;
@@ -94,24 +111,10 @@ public:
     QSpacerItem *horizontalSpacer_25;
     QDoubleSpinBox *doubleSpinBox_EMCCD_Gain;
     QLabel *label_EMCCDGain_disp;
-    QGroupBox *groupBox_4;
-    QWidget *gridLayoutWidget_5;
-    QGridLayout *gridLayout_9;
-    QSpacerItem *horizontalSpacer_31;
-    QSpacerItem *horizontalSpacer_32;
-    QSpacerItem *horizontalSpacer_33;
-    QSpacerItem *horizontalSpacer_34;
-    QLabel *label_Acq_mode;
-    QLineEdit *lineEdit_acq_mode;
-    QGroupBox *groupBox_5;
-    QWidget *gridLayoutWidget_6;
-    QGridLayout *gridLayout_10;
-    QSpacerItem *horizontalSpacer_38;
-    QSpacerItem *horizontalSpacer_36;
-    QSpacerItem *horizontalSpacer_37;
-    QSpacerItem *horizontalSpacer_35;
-    QLabel *label_Read_mode;
-    QLineEdit *lineEdit_read_mode;
+    QLabel *label;
+    QLabel *label_Cam_OnOff;
+    QPushButton *pushButton_Cam_OnOff;
+    QPushButton *pushButton;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -195,7 +198,7 @@ public:
         gridLayout_7->addWidget(label_Exp_time_disp, 1, 0, 1, 1);
 
 
-        gridLayout->addWidget(groupBox_2, 4, 1, 1, 6);
+        gridLayout->addWidget(groupBox_2, 7, 1, 1, 6);
 
         groupBox = new QGroupBox(gridLayoutWidget);
         groupBox->setObjectName(QStringLiteral("groupBox"));
@@ -271,46 +274,96 @@ public:
         gridLayout_5->addItem(horizontalSpacer_14, 2, 3, 1, 1);
 
 
-        gridLayout->addWidget(groupBox, 3, 1, 1, 6);
+        gridLayout->addWidget(groupBox, 6, 1, 1, 6);
+
+        pushButton_Save = new QPushButton(gridLayoutWidget);
+        pushButton_Save->setObjectName(QStringLiteral("pushButton_Save"));
+        pushButton_Save->setFont(font1);
+
+        gridLayout->addWidget(pushButton_Save, 9, 6, 1, 1);
+
+        verticalSpacer_3 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        gridLayout->addItem(verticalSpacer_3, 9, 0, 1, 1);
+
+        pushButton_Snap = new QPushButton(gridLayoutWidget);
+        pushButton_Snap->setObjectName(QStringLiteral("pushButton_Snap"));
+        pushButton_Snap->setFont(font1);
+
+        gridLayout->addWidget(pushButton_Snap, 9, 5, 1, 1);
+
+        groupBox_4 = new QGroupBox(gridLayoutWidget);
+        groupBox_4->setObjectName(QStringLiteral("groupBox_4"));
+        groupBox_4->setFont(font);
+        gridLayoutWidget_5 = new QWidget(groupBox_4);
+        gridLayoutWidget_5->setObjectName(QStringLiteral("gridLayoutWidget_5"));
+        gridLayoutWidget_5->setGeometry(QRect(0, 10, 391, 120));
+        gridLayout_9 = new QGridLayout(gridLayoutWidget_5);
+        gridLayout_9->setSpacing(6);
+        gridLayout_9->setContentsMargins(11, 11, 11, 11);
+        gridLayout_9->setObjectName(QStringLiteral("gridLayout_9"));
+        gridLayout_9->setContentsMargins(0, 0, 0, 0);
+        horizontalSpacer_34 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout_9->addItem(horizontalSpacer_34, 3, 1, 1, 1);
+
+        horizontalSpacer_33 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout_9->addItem(horizontalSpacer_33, 3, 0, 1, 1);
+
+        horizontalSpacer_32 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout_9->addItem(horizontalSpacer_32, 0, 1, 1, 1);
+
+        radioButton = new QRadioButton(gridLayoutWidget_5);
+        radioButton->setObjectName(QStringLiteral("radioButton"));
+
+        gridLayout_9->addWidget(radioButton, 2, 1, 1, 1);
+
+        label_Acq_mode = new QLabel(gridLayoutWidget_5);
+        label_Acq_mode->setObjectName(QStringLiteral("label_Acq_mode"));
+        label_Acq_mode->setFont(font1);
+        label_Acq_mode->setAlignment(Qt::AlignCenter);
+
+        gridLayout_9->addWidget(label_Acq_mode, 1, 0, 1, 1);
+
+        horizontalSpacer_31 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        gridLayout_9->addItem(horizontalSpacer_31, 0, 0, 1, 1);
+
+        radioButton_2 = new QRadioButton(gridLayoutWidget_5);
+        radioButton_2->setObjectName(QStringLiteral("radioButton_2"));
+
+        gridLayout_9->addWidget(radioButton_2, 1, 1, 1, 1);
+
+
+        gridLayout->addWidget(groupBox_4, 5, 1, 1, 3);
+
+        label_6 = new QLabel(gridLayoutWidget);
+        label_6->setObjectName(QStringLiteral("label_6"));
+        label_6->setFont(font1);
+
+        gridLayout->addWidget(label_6, 9, 4, 1, 1);
 
         verticalSpacer_5 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-        gridLayout->addItem(verticalSpacer_5, 4, 0, 1, 1);
-
-        label = new QLabel(gridLayoutWidget);
-        label->setObjectName(QStringLiteral("label"));
-        label->setFont(font1);
-
-        gridLayout->addWidget(label, 1, 4, 1, 1);
+        gridLayout->addItem(verticalSpacer_5, 7, 0, 1, 1);
 
         verticalSpacer_6 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-        gridLayout->addItem(verticalSpacer_6, 5, 0, 1, 1);
-
-        pushButton_Cam_OnOff = new QPushButton(gridLayoutWidget);
-        pushButton_Cam_OnOff->setObjectName(QStringLiteral("pushButton_Cam_OnOff"));
-        pushButton_Cam_OnOff->setFont(font1);
-
-        gridLayout->addWidget(pushButton_Cam_OnOff, 1, 6, 1, 1);
-
-        label_Cam_OnOff = new QLabel(gridLayoutWidget);
-        label_Cam_OnOff->setObjectName(QStringLiteral("label_Cam_OnOff"));
-        label_Cam_OnOff->setFont(font1);
-        label_Cam_OnOff->setAlignment(Qt::AlignCenter);
-
-        gridLayout->addWidget(label_Cam_OnOff, 1, 5, 1, 1);
+        gridLayout->addItem(verticalSpacer_6, 8, 0, 1, 1);
 
         verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-        gridLayout->addItem(verticalSpacer, 1, 0, 1, 1);
+        gridLayout->addItem(verticalSpacer, 2, 0, 1, 1);
 
         verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-        gridLayout->addItem(verticalSpacer_2, 2, 0, 1, 1);
+        gridLayout->addItem(verticalSpacer_2, 5, 0, 1, 1);
 
         verticalSpacer_4 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-        gridLayout->addItem(verticalSpacer_4, 3, 0, 1, 1);
+        gridLayout->addItem(verticalSpacer_4, 6, 0, 1, 1);
 
         horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
@@ -336,27 +389,47 @@ public:
 
         gridLayout->addItem(horizontalSpacer_4, 0, 1, 1, 1);
 
-        verticalSpacer_3 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        groupBox_5 = new QGroupBox(gridLayoutWidget);
+        groupBox_5->setObjectName(QStringLiteral("groupBox_5"));
+        groupBox_5->setFont(font);
+        gridLayoutWidget_6 = new QWidget(groupBox_5);
+        gridLayoutWidget_6->setObjectName(QStringLiteral("gridLayoutWidget_6"));
+        gridLayoutWidget_6->setGeometry(QRect(0, 10, 391, 80));
+        gridLayout_10 = new QGridLayout(gridLayoutWidget_6);
+        gridLayout_10->setSpacing(6);
+        gridLayout_10->setContentsMargins(11, 11, 11, 11);
+        gridLayout_10->setObjectName(QStringLiteral("gridLayout_10"));
+        gridLayout_10->setContentsMargins(0, 0, 0, 0);
+        horizontalSpacer_38 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        gridLayout->addItem(verticalSpacer_3, 6, 0, 1, 1);
+        gridLayout_10->addItem(horizontalSpacer_38, 2, 1, 1, 1);
 
-        label_6 = new QLabel(gridLayoutWidget);
-        label_6->setObjectName(QStringLiteral("label_6"));
-        label_6->setFont(font1);
+        horizontalSpacer_36 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        gridLayout->addWidget(label_6, 6, 4, 1, 1);
+        gridLayout_10->addItem(horizontalSpacer_36, 0, 1, 1, 1);
 
-        pushButton_Snap = new QPushButton(gridLayoutWidget);
-        pushButton_Snap->setObjectName(QStringLiteral("pushButton_Snap"));
-        pushButton_Snap->setFont(font1);
+        horizontalSpacer_37 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        gridLayout->addWidget(pushButton_Snap, 6, 5, 1, 1);
+        gridLayout_10->addItem(horizontalSpacer_37, 2, 0, 1, 1);
 
-        pushButton_Save = new QPushButton(gridLayoutWidget);
-        pushButton_Save->setObjectName(QStringLiteral("pushButton_Save"));
-        pushButton_Save->setFont(font1);
+        horizontalSpacer_35 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        gridLayout->addWidget(pushButton_Save, 6, 6, 1, 1);
+        gridLayout_10->addItem(horizontalSpacer_35, 0, 0, 1, 1);
+
+        label_Read_mode = new QLabel(gridLayoutWidget_6);
+        label_Read_mode->setObjectName(QStringLiteral("label_Read_mode"));
+        label_Read_mode->setFont(font1);
+        label_Read_mode->setAlignment(Qt::AlignCenter);
+
+        gridLayout_10->addWidget(label_Read_mode, 1, 0, 1, 1);
+
+        lineEdit_read_mode = new QLineEdit(gridLayoutWidget_6);
+        lineEdit_read_mode->setObjectName(QStringLiteral("lineEdit_read_mode"));
+
+        gridLayout_10->addWidget(lineEdit_read_mode, 1, 1, 1, 1);
+
+
+        gridLayout->addWidget(groupBox_5, 5, 4, 1, 3);
 
         groupBox_3 = new QGroupBox(gridLayoutWidget);
         groupBox_3->setObjectName(QStringLiteral("groupBox_3"));
@@ -417,91 +490,32 @@ public:
         gridLayout_8->addWidget(label_EMCCDGain_disp, 1, 0, 1, 1);
 
 
-        gridLayout->addWidget(groupBox_3, 5, 1, 1, 6);
+        gridLayout->addWidget(groupBox_3, 8, 1, 1, 6);
 
-        groupBox_4 = new QGroupBox(gridLayoutWidget);
-        groupBox_4->setObjectName(QStringLiteral("groupBox_4"));
-        groupBox_4->setFont(font);
-        gridLayoutWidget_5 = new QWidget(groupBox_4);
-        gridLayoutWidget_5->setObjectName(QStringLiteral("gridLayoutWidget_5"));
-        gridLayoutWidget_5->setGeometry(QRect(0, 10, 391, 80));
-        gridLayout_9 = new QGridLayout(gridLayoutWidget_5);
-        gridLayout_9->setSpacing(6);
-        gridLayout_9->setContentsMargins(11, 11, 11, 11);
-        gridLayout_9->setObjectName(QStringLiteral("gridLayout_9"));
-        gridLayout_9->setContentsMargins(0, 0, 0, 0);
-        horizontalSpacer_31 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        label = new QLabel(gridLayoutWidget);
+        label->setObjectName(QStringLiteral("label"));
+        label->setFont(font1);
 
-        gridLayout_9->addItem(horizontalSpacer_31, 0, 0, 1, 1);
+        gridLayout->addWidget(label, 2, 3, 1, 1);
 
-        horizontalSpacer_32 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        label_Cam_OnOff = new QLabel(gridLayoutWidget);
+        label_Cam_OnOff->setObjectName(QStringLiteral("label_Cam_OnOff"));
+        label_Cam_OnOff->setFont(font1);
+        label_Cam_OnOff->setAlignment(Qt::AlignCenter);
 
-        gridLayout_9->addItem(horizontalSpacer_32, 0, 1, 1, 1);
+        gridLayout->addWidget(label_Cam_OnOff, 2, 4, 1, 1);
 
-        horizontalSpacer_33 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        pushButton_Cam_OnOff = new QPushButton(gridLayoutWidget);
+        pushButton_Cam_OnOff->setObjectName(QStringLiteral("pushButton_Cam_OnOff"));
+        pushButton_Cam_OnOff->setFont(font1);
 
-        gridLayout_9->addItem(horizontalSpacer_33, 2, 0, 1, 1);
+        gridLayout->addWidget(pushButton_Cam_OnOff, 2, 5, 1, 1);
 
-        horizontalSpacer_34 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        pushButton = new QPushButton(gridLayoutWidget);
+        pushButton->setObjectName(QStringLiteral("pushButton"));
+        pushButton->setFont(font1);
 
-        gridLayout_9->addItem(horizontalSpacer_34, 2, 1, 1, 1);
-
-        label_Acq_mode = new QLabel(gridLayoutWidget_5);
-        label_Acq_mode->setObjectName(QStringLiteral("label_Acq_mode"));
-        label_Acq_mode->setFont(font1);
-        label_Acq_mode->setAlignment(Qt::AlignCenter);
-
-        gridLayout_9->addWidget(label_Acq_mode, 1, 0, 1, 1);
-
-        lineEdit_acq_mode = new QLineEdit(gridLayoutWidget_5);
-        lineEdit_acq_mode->setObjectName(QStringLiteral("lineEdit_acq_mode"));
-
-        gridLayout_9->addWidget(lineEdit_acq_mode, 1, 1, 1, 1);
-
-
-        gridLayout->addWidget(groupBox_4, 2, 1, 1, 3);
-
-        groupBox_5 = new QGroupBox(gridLayoutWidget);
-        groupBox_5->setObjectName(QStringLiteral("groupBox_5"));
-        groupBox_5->setFont(font);
-        gridLayoutWidget_6 = new QWidget(groupBox_5);
-        gridLayoutWidget_6->setObjectName(QStringLiteral("gridLayoutWidget_6"));
-        gridLayoutWidget_6->setGeometry(QRect(0, 10, 391, 80));
-        gridLayout_10 = new QGridLayout(gridLayoutWidget_6);
-        gridLayout_10->setSpacing(6);
-        gridLayout_10->setContentsMargins(11, 11, 11, 11);
-        gridLayout_10->setObjectName(QStringLiteral("gridLayout_10"));
-        gridLayout_10->setContentsMargins(0, 0, 0, 0);
-        horizontalSpacer_38 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        gridLayout_10->addItem(horizontalSpacer_38, 2, 1, 1, 1);
-
-        horizontalSpacer_36 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        gridLayout_10->addItem(horizontalSpacer_36, 0, 1, 1, 1);
-
-        horizontalSpacer_37 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        gridLayout_10->addItem(horizontalSpacer_37, 2, 0, 1, 1);
-
-        horizontalSpacer_35 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        gridLayout_10->addItem(horizontalSpacer_35, 0, 0, 1, 1);
-
-        label_Read_mode = new QLabel(gridLayoutWidget_6);
-        label_Read_mode->setObjectName(QStringLiteral("label_Read_mode"));
-        label_Read_mode->setFont(font1);
-        label_Read_mode->setAlignment(Qt::AlignCenter);
-
-        gridLayout_10->addWidget(label_Read_mode, 1, 0, 1, 1);
-
-        lineEdit_read_mode = new QLineEdit(gridLayoutWidget_6);
-        lineEdit_read_mode->setObjectName(QStringLiteral("lineEdit_read_mode"));
-
-        gridLayout_10->addWidget(lineEdit_read_mode, 1, 1, 1, 1);
-
-
-        gridLayout->addWidget(groupBox_5, 2, 4, 1, 3);
+        gridLayout->addWidget(pushButton, 2, 6, 1, 1);
 
         cam_gui->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(cam_gui);
@@ -529,18 +543,21 @@ public:
         label_Cooler_OnOff->setText(QApplication::translate("cam_gui", "OFF", 0));
         label_Temp_disp->setText(QApplication::translate("cam_gui", "0 \302\260C", 0));
         pushButton_Temp_set->setText(QApplication::translate("cam_gui", "Set", 0));
-        label->setText(QApplication::translate("cam_gui", "Initialisation:", 0));
-        pushButton_Cam_OnOff->setText(QApplication::translate("cam_gui", "Camera", 0));
-        label_Cam_OnOff->setText(QApplication::translate("cam_gui", "OFF", 0));
-        label_6->setText(QApplication::translate("cam_gui", "Picture:", 0));
-        pushButton_Snap->setText(QApplication::translate("cam_gui", "Snap", 0));
         pushButton_Save->setText(QApplication::translate("cam_gui", "Save", 0));
-        groupBox_3->setTitle(QApplication::translate("cam_gui", "EMCCD Gain", 0));
-        label_EMCCDGain_disp->setText(QApplication::translate("cam_gui", "0", 0));
+        pushButton_Snap->setText(QApplication::translate("cam_gui", "Snap", 0));
         groupBox_4->setTitle(QApplication::translate("cam_gui", "Acquisition Mode", 0));
+        radioButton->setText(QApplication::translate("cam_gui", "Kinetic Scan", 0));
         label_Acq_mode->setText(QApplication::translate("cam_gui", "N/A", 0));
+        radioButton_2->setText(QApplication::translate("cam_gui", "Single Scan", 0));
+        label_6->setText(QApplication::translate("cam_gui", "Picture:", 0));
         groupBox_5->setTitle(QApplication::translate("cam_gui", "Read Mode", 0));
         label_Read_mode->setText(QApplication::translate("cam_gui", "N/A", 0));
+        groupBox_3->setTitle(QApplication::translate("cam_gui", "EMCCD Gain", 0));
+        label_EMCCDGain_disp->setText(QApplication::translate("cam_gui", "0", 0));
+        label->setText(QApplication::translate("cam_gui", "Initialisation:", 0));
+        label_Cam_OnOff->setText(QApplication::translate("cam_gui", "OFF", 0));
+        pushButton_Cam_OnOff->setText(QApplication::translate("cam_gui", "Camera ON", 0));
+        pushButton->setText(QApplication::translate("cam_gui", "Camera OFF", 0));
     } // retranslateUi
 
 };
