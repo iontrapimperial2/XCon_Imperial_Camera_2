@@ -101,7 +101,7 @@ class window_camera(Ui_cam_gui):
                     time.sleep(2)
                     
                 print('Camera Shutdown')
-                print('yay')
+                print('yay!!')
                 #self.cam.CoolerOFF()
                 #self.cam.ShutDown()
                 #self.label_Cam_OnOff.setText('OFF')
