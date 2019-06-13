@@ -39,42 +39,14 @@ class window_camera(Ui_cam_gui):
 
        
         #-- Push Buttons -----------------------------------------------------#
-#        self.pushButton_Cam_OnOff.clicked.connect(self.initialise_cam)
         self.pushButton_Cam_On.clicked.connect(self.initialise_thread)
         self.pushButton_Cam_Off.clicked.connect(self.cam_off)
-        self.pushButton_Temp_set.clicked.connect(self.set_temp)
-#        self.pushButton_Exp_Time.clicked.connect(self.set_exp_time)
+        self.pushButton_Temp_set.clicked.connect(self.temp_thread)
         self.pushButton_Snap.clicked.connect(self.snap_thread)
         self.pushButton_Save.clicked.connect(self.save_pic)
-           
-#    def initialise_cam(self):
-#        if self.cam_flag == False:
-#            self.cam.GetAvailableCameras()
-#            if self.cam.availablecamera > 0:
-#                #--- get handle of camera 0 since only one is connected ------------------#
-#                self.cam.GetCameraHandle(0) # saves camera handle in camera.camerahandle
-#                
-#                print('---> camera handle of available camera: ' + str(self.cam.camerahandle))
-#                
-#                #--- choose current camera to be the one with the handle from above ------#
-#                self.cam.SetCurrentCamera(self.cam.camerahandle)
-#                
-#                print('---> camera with handle = ' + str(self.cam.camerahandle) + ' selected.')
-#            else:
-#                print('PROBLEM: check connection and power of camera and try again.')
-#            
-#            self.cam.Initialize()
-#            self.label_Cam_OnOff.setText('ON')
-#            self.label_Cam_OnOff.setStyleSheet('color: green')
-#            self.cam_flag = True
-#        
-#        elif self.cam_flag == True:
-#            self.cam.CoolerOFF()
-#            self.cam.ShutDown()
-#            self.label_Cam_OnOff.setText('OFF')
-#            self.label_Cam_OnOff.setStyleSheet('color: red')
-#            self.cam_flag = False
 
+
+#-- Initialise camera -----------------------------------------------------#
     def initialise_cam(self):
         if self.cam_flag == False:
             self.cam.GetAvailableCameras()
@@ -97,63 +69,55 @@ class window_camera(Ui_cam_gui):
                 self.cam.GetTemperature()
                 self.label_Temp_disp.setText(str(self.cam.temperature) + ' °C')
                 self.cam_flag = True
-                
-                while self.cam_flag == True:
-                    self.cam.GetTemperature()
-                    time.sleep(2)
-                    
-                #print('Camera Shutdown')
-                print('yay!!')
-                #self.cam.CoolerOFF()
-                #self.cam.ShutDown()
-                #self.label_Cam_OnOff.setText('OFF')
-                #self.label_Cam_OnOff.setStyleSheet('color: red')
-                #self.cam_flag = False                
+
+                print('Camera ON!!')
+             
             else:
                 print('PROBLEM: check connection and power of camera and try again.')
         
         elif self.cam_flag == True:
+            print('camera already on')
             None
-     
-        #elif self.cam_flag == True:
-         #   print('Camera Shutdown')
-          #  self.cam.CoolerOFF()
-           # self.cam.ShutDown()
-            #self.label_Cam_OnOff.setText('OFF')
-            #self.label_Cam_OnOff.setStyleSheet('color: red')
-            #self.label_Cooler_OnOff.setText('OFF')
-            #self.label_Cooler_OnOff.setStyleSheet('color: red')
-            #self.cam_flag = False
-            #self.cooler_flag = False
-    
+
+
+#-- shuts down camera and cooler-----------------------------------------------------#    
     def cam_off(self):
         if self.cam_flag == True:
             print('Camera Shutdown')
+            self.cam_flag = False
+            self.cooler_flag = False
             self.cam.CoolerOFF()
-            self.cam.ShutDown()
+            self.cam.ShutDown()            
             self.label_Cam_OnOff.setText('OFF')
             self.label_Cam_OnOff.setStyleSheet('color: red')
             self.label_Cooler_OnOff.setText('OFF')
             self.label_Cooler_OnOff.setStyleSheet('color: red')
-            self.cam_flag = False
-            self.cooler_flag = False
+            
         
         elif self.cam_flag == False:
             print("camera already off")
-    
+            
+#-- starts thread which initialises camera -----------------------------------------------------#    
     def initialise_thread(self):
         init_thread = threading.Thread(target =self.initialise_cam)
-        init_thread.start()         
-        
+        init_thread.start()
+
+#-- retrieves temperature data every 3 seconds -----------------------------------------------------#            
+    def temp_update(self):
+        while self.cam_flag == True:
+            self.cam.GetTemperature()
+            time.sleep(3)
+            
+
+#-- turns cooler on and off and starts live display of temperature monitoring-----------------------#        
     def set_temp(self):
         if self.cam_flag == True:
             if self.cooler_flag == False:
+                
                 self.cooler_on()            
                 self.cooler_flag = True
-                
     
-    
-                temp_thread = threading.Thread( target = self.temp_disp)
+                temp_thread = threading.Thread(target = self.temp_disp)
                 temp_thread.start()
                 
             elif self.cooler_flag == True:
@@ -164,20 +128,25 @@ class window_camera(Ui_cam_gui):
         elif self.cam_flag == False:
             print('camera not on')
             None
-    
-    
+            
+
+#-- starts thread for self.temp_update and calls self.self_temp -----------------------------------------------------#     
+    def temp_thread(self):
+        temp_thread = threading.Thread(target = self.temp_update)
+        temp_thread.start()
+        self.set_temp()
+        
+
+#-- turns cooler on -----------------------------------------------------#      
     def cooler_on(self):
         temp = self.doubleSpinBox_Temp_set.value()
-        #print(round(temp))
         self.cam.SetTemperature(round(temp))
         self.cam.CoolerON()
         self.label_Cooler_OnOff.setText('ON')
         self.label_Cooler_OnOff.setStyleSheet('color: green')
-        self.cam.GetTemperature()
-        temp1 = self.cam.temperature
-        #print(temp1)
-        self.label_Temp_disp.setText(str(temp1) + ' °C')
-        
+
+
+#-- turns cooler off and displays final temperature -----------------------------------------------------#          
     def cooler_off(self):
         self.cam.CoolerOFF()
         self.label_Cooler_OnOff.setText('OFF')
@@ -185,21 +154,19 @@ class window_camera(Ui_cam_gui):
         self.cam.GetTemperature()
         temp2 = self.cam.temperature
         self.label_Temp_disp.setText(str(temp2) + ' °C')
-    
+        
+
+#-- live temperature display -----------------------------------------------------#      
     def temp_disp(self):
         while self.cooler_flag == True:
             self.label_Temp_disp.setText(str(self.cam.temperature) + ' °C')
-            time.sleep(3)
+            time.sleep(4)
             
-        
-        
-        
-    
+                        
+#-- sets modes, exposure time, EMCCD gain and snaps pic -----------------------------------------------------#      
     def snap_pic(self):
         exp_time = self.doubleSpinBox_Exp_Time.value()
         EMCCD_gain = self.doubleSpinBox_EMCCD_Gain.value()
-        #print(exp_time)
-        #print(EMCCD_gain)
         self.set_Read_mode()
         self.cam.SetImage(1,1,1,512,1,512)
         self.set_Acq_mode()
@@ -215,18 +182,21 @@ class window_camera(Ui_cam_gui):
         self.cam.GetAcquiredData(data_camera)
         self.data_camera = data_camera
         print('Snap Complete!')
-        #print(self.data_camera)
-    
+
+
+#-- starts thread which calls self.snap_pic -----------------------------------------------------#          
     def snap_thread(self):
         snap = threading.Thread(target = self.snap_pic)
         snap.start()
         
-    
+        
+#-- saves picture as .txt file -----------------------------------------------------#          
     def save_pic(self):
-        #print(self.data_camera)
         self.cam.SaveAsTxt2('test.txt')
         print('Save Complete!')
         
+
+#-- displays the camera setting of previous snap -----------------------------------------------------#              
     def snap_setting_disp(self):
         #print(self.exp_time)
         #print(self.EMCCD_Gain)
@@ -236,6 +206,8 @@ class window_camera(Ui_cam_gui):
         self.label_Exp_time_disp.setText(str(self.exp_time)[:5]+ ' s')
         self.label_EMCCDGain_disp.setText(str(self.EMCCD_Gain))
         
+
+#-- sets Acquisition mode from user input -----------------------------------------------------#            
     def set_Acq_mode(self):
         Acq = str(self.lineEdit_acq_mode.text())
         if Acq.casefold() == 'Single Scan'.casefold():       #makes it case insensitive
@@ -247,7 +219,9 @@ class window_camera(Ui_cam_gui):
             print('Available Acquisition Modes: Single Scan, Kinetic Scan')
             if str(self.label_Acq_mode.text()) != 'N/A':
                 print('previous Acquisition mode used')
-        
+                
+
+#-- displays Acquisition mode from previous snap-----------------------------------------------------#            
     def Acq_mode_disp(self):
         self.acquistion_mode = self.cam.AcquisitionMode
         
@@ -257,8 +231,9 @@ class window_camera(Ui_cam_gui):
             self.label_Acq_mode.setText('Kinetic Scan')
         else:
             self.label_Acq_mode.setText('N/A')
+            
     
-    
+#-- sets Read mode from user input -----------------------------------------------------#        
     def set_Read_mode(self):
         Read = str(self.lineEdit_read_mode.text()).casefold() 
         if Read.casefold() == 'Full vertical binning'.casefold():    #makes it case insensitive
@@ -279,7 +254,9 @@ class window_camera(Ui_cam_gui):
                 print('previous Read mode used' + '\n')
             else:
                 print('Available Read Modes: Full vertical binning, Multi track, Single track, Image' + '\n' )
-    
+                
+
+#-- displays Read mode from previous snap -----------------------------------------------------#       
     def Read_mode_disp(self):
         self.read_mode = self.cam.ReadMode
         if self.read_mode == 0:
