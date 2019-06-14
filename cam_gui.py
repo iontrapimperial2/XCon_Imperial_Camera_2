@@ -97,7 +97,7 @@ class Ui_cam_gui(object):
         font.setPointSize(11)
         self.doubleSpinBox_Temp_set.setFont(font)
         self.doubleSpinBox_Temp_set.setDecimals(0)
-        self.doubleSpinBox_Temp_set.setMinimum(-60.0)
+        self.doubleSpinBox_Temp_set.setMinimum(-70.0)
         self.doubleSpinBox_Temp_set.setMaximum(30.0)
         self.doubleSpinBox_Temp_set.setProperty("value", -30.0)
         self.doubleSpinBox_Temp_set.setObjectName("doubleSpinBox_Temp_set")

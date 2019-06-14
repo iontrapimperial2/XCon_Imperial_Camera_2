@@ -192,7 +192,7 @@ class window_camera(Ui_cam_gui):
         
 #-- saves picture as .txt file -----------------------------------------------------#          
     def save_pic(self):
-        self.cam.SaveAsTxt2('test.txt')
+        self.cam.SaveAsTxt2('test4.txt')
         print('Save Complete!')
         
 
