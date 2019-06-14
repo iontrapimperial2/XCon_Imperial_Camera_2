@@ -1,0 +1,12 @@
+
+ 
+ 2019-06-14 15:39:45.432282
+ Acquisition Mode: Kinetic Scan
+ Read Mode: Image
+ Temperature: -31 °C
+ Exposure Time: 0.001 s
+ EMCCD Gain: 300
+ No. of Accumulations: 1
+ Accumulate Cycle Time: 0.000 s
+ No. in Kinetic Series: 5
+ Kinetic Cycle Time: 0.003 s

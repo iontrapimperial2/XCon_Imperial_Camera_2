@@ -257,10 +257,10 @@ class Andor:
 
         file.close()
         
-    def SaveAsTxt2(self, path):
+    def SaveAsTxt2(self, path, n):
         file = open(path, 'w')
-        width = int(np.sqrt(len(self.imageArray)))
-        for k in range(width):
+        width = 512 #int(np.sqrt(len(self.imageArray)))
+        for k in range(int(n)*width):
             file.write('{0},'.format(k+1))
             for line in self.imageArray[k*width:(k+1)*width]:
                 file.write('%g,' % line)

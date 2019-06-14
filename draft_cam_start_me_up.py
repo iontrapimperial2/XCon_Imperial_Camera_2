@@ -8,6 +8,7 @@ import sys
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import QFileDialog
 import time
+from datetime import datetime
 import threading
 from cam_gui import Ui_cam_gui
 from instr_Andor_iXon_ultra import Andor
@@ -43,6 +44,7 @@ class window_camera(Ui_cam_gui):
         self.pushButton_Cam_Off.clicked.connect(self.cam_off)
         self.pushButton_Temp_set.clicked.connect(self.temp_thread)
         self.pushButton_Snap.clicked.connect(self.snap_thread)
+        self.pushButton_Browse.clicked.connect(self.Browse_data)
         self.pushButton_Save.clicked.connect(self.save_pic)
 
 
@@ -173,9 +175,21 @@ class window_camera(Ui_cam_gui):
         self.cam.SetExposureTime(exp_time)
         self.cam.SetEMCCDGain(round(EMCCD_gain))
         self.snap_setting_disp()
-        self.Acq_mode_disp()
         self.Read_mode_disp()
-        self.cam.StartAcquisition()
+        self.Acq_mode_disp()
+        if str(self.label_Acq_mode.text()).casefold() == 'kinetic Scan'.casefold():
+            accum_time = self.doubleSpinBox_Accum_time.value()
+            accum_no = self.doubleSpinBox_no_Accum.value()
+            Kin_time = self.doubleSpinBox_Kin_time.value()
+            Kin_no = self.doubleSpinBox_no_Kin.value()
+            self.cam.SetAccumulationCycleTime(accum_time)
+            self.cam.SetNumberAccumulations(round(accum_no))
+            self.cam.SetKineticCycleTime(Kin_time)
+            self.cam.SetNumberKinetics(round(Kin_no))
+            self.Kin_disp()
+            self.cam.StartAcquisition()
+        else:
+            self.cam.StartAcquisition()
 
         time.sleep(5)
         data_camera = []
@@ -188,18 +202,61 @@ class window_camera(Ui_cam_gui):
     def snap_thread(self):
         snap = threading.Thread(target = self.snap_pic)
         snap.start()
+
+
+#-- displays kinetic scan settings-----------------------------------------------------#                 
+    def Kin_disp(self):
+        self.label_Accum_time.setText(str(self.doubleSpinBox_Accum_time.text()) + ' s')
+        self.label_no_Accum.setText(str(self.doubleSpinBox_no_Accum.text()))
+        self.label_Kin_time.setText(str(self.doubleSpinBox_Kin_time.text())+ ' s')
+        self.label_no_Kin.setText(str(self.doubleSpinBox_no_Kin.text()))
+
+
+#-- Browse save directory-----------------------------------------------------#               
+    def Browse_data(self):
+        options = QFileDialog.Options()
+        options |= QFileDialog.DontUseNativeDialog    
+        self.filename_pic, _ = QFileDialog.getSaveFileName(None,"save data", "","all files (*);; asc files (*.asc);; txt files (*.txt)", options=options)
         
-        
+        if self.filename_pic:
+            self.lineEdit_Browse.setText(self.filename_pic) 
+            
+            
 #-- saves picture as .txt file -----------------------------------------------------#          
     def save_pic(self):
-        self.cam.SaveAsTxt2('test4.txt')
+        self.cam.SaveAsTxt2(str(self.lineEdit_Browse.text()) + '.txt', self.label_no_Kin.text())
+        self.save_cam_settings()
         print('Save Complete!')
-        
+
+
+#-- saves cam setting of snap as .txt file -----------------------------------------------------#                
+    def save_cam_settings(self):
+        a = self.label_Acq_mode.text()
+        b = self.label_Read_mode.text()
+        c = self.label_Temp_disp.text()
+        d = self.label_Exp_time_disp.text()
+        e = self.label_EMCCDGain_disp.text()
+        f = self.label_no_Accum.text()
+        g = self.label_Accum_time.text()
+        h = self.label_no_Kin.text()
+        i = self.label_Kin_time.text()
+        current_time = datetime.today()
+        data_file = open(str(self.lineEdit_Browse.text()) + '_cam_settings.txt', 'a+') 
+        if str(self.label_Acq_mode.text()).casefold() == 'Single Scan'.casefold():
+            data_file.write('\n ' + '\n ' + str(current_time) + '\n ' + 'Acquisition Mode: ' + str(a)
+                            + '\n ' + 'Read Mode: ' + str(b) + '\n ' + 'Temperature: ' + str(c)
+                            + '\n ' + 'Exposure Time: ' + str(d) + '\n ' + 'EMCCD Gain: ' + str(e))
+            data_file.close()
+        elif str(self.label_Acq_mode.text()).casefold() == 'Kinetic Scan'.casefold():
+            data_file.write('\n ' + '\n ' + str(current_time) + '\n ' + 'Acquisition Mode: ' + str(a)
+                            + '\n ' + 'Read Mode: ' + str(b) + '\n ' + 'Temperature: ' + str(c)
+                            + '\n ' + 'Exposure Time: ' + str(d) + '\n ' + 'EMCCD Gain: ' + str(e)
+                            + '\n ' + 'No. of Accumulations: ' + str(f) + '\n ' + 'Accumulate Cycle Time: ' + str(g)
+                            + '\n ' + 'No. of Kinetic Series: ' + str(h) + '\n ' + 'Kinetic Cycle Time: ' + str(i))
+            data_file.close()
 
 #-- displays the camera setting of previous snap -----------------------------------------------------#              
     def snap_setting_disp(self):
-        #print(self.exp_time)
-        #print(self.EMCCD_Gain)
         self.cam.GetEMCCDGain()
         self.EMCCD_Gain = self.cam.gain
         self.exp_time = self.cam.exposure
@@ -269,7 +326,11 @@ class window_camera(Ui_cam_gui):
             self.label_Read_mode.setText('Single track')
         elif self.read_mode == 4:
             self.label_Read_mode.setText('Image')
-        
+            
+    
+    #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+    
+    
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)

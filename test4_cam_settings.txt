@@ -1,0 +1,13 @@
+
+ 2019-06-14 10:54:21.556867
+ Acquisition Mode: Single Scan
+ Read Mode: Image
+ Temperature: -67 °C
+ Exposure Time: 0.001 s
+ EMCCD Gain: 300
+ 2019-06-14 12:09:12.830713
+ Acquisition Mode: Kinetic Scan
+ Read Mode: Image
+ Temperature: -69 °C
+ Exposure Time: 0.001 s
+ EMCCD Gain: 300
