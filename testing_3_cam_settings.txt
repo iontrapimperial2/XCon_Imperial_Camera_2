@@ -1,0 +1,8 @@
+
+ 
+ 2019-06-18 11:06:12.059684
+ Acquisition Mode: Single Scan
+ Read Mode: Image
+ Temperature: -72 °C
+ Exposure Time: 3.0 s
+ EMCCD Gain: 300

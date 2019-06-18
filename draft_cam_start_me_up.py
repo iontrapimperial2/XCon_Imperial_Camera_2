@@ -19,6 +19,11 @@ class window_camera(Ui_cam_gui):
     def __init__(self, dialog):
         Ui_cam_gui.__init__(self)
         self.setupUi(dialog)
+        
+        self.start_col = self.doubleSpinBox_Start_col.value()
+        self.end_col = self.doubleSpinBox_End_col.value()
+        self.start_row = self.doubleSpinBox_Start_row.value()
+        self.end_row = self.doubleSpinBox_End_row.value()
 
         #--- flags -----------------------------------------------------------#
         self.cam_flag = False
@@ -165,19 +170,27 @@ class window_camera(Ui_cam_gui):
             time.sleep(4)
             
                         
-#-- sets modes, exposure time, EMCCD gain and snaps pic -----------------------------------------------------#      
+#-- sets modes, exposure time, EMCCD gain, image area and snaps pic -----------------------------------------------------#      
     def snap_pic(self):
         exp_time = self.doubleSpinBox_Exp_Time.value()
         EMCCD_gain = self.doubleSpinBox_EMCCD_Gain.value()
+        self.start_col = self.doubleSpinBox_Start_col.value()
+        self.end_col = self.doubleSpinBox_End_col.value()
+        self.start_row = self.doubleSpinBox_Start_row.value()
+        self.end_row = self.doubleSpinBox_End_row.value()
         self.set_Read_mode()
-        self.cam.SetImage(1,1,1,512,1,512)
         self.set_Acq_mode()
+        
+        
         self.cam.SetExposureTime(exp_time)
         self.cam.SetEMCCDGain(round(EMCCD_gain))
+        self.cam.SetImage(2,2,int(self.start_col),int(self.end_col),int(self.start_row),int(self.end_row))
         self.snap_setting_disp()
         self.Read_mode_disp()
         self.Acq_mode_disp()
+        self.img_are_disp()
         if str(self.label_Acq_mode.text()).casefold() == 'kinetic Scan'.casefold():
+            print('oo')
             accum_time = self.doubleSpinBox_Accum_time.value()
             accum_no = self.doubleSpinBox_no_Accum.value()
             Kin_time = self.doubleSpinBox_Kin_time.value()
@@ -195,6 +208,7 @@ class window_camera(Ui_cam_gui):
         data_camera = []
         self.cam.GetAcquiredData(data_camera)
         self.data_camera = data_camera
+        print(self.data_camera)
         print('Snap Complete!')
 
 
@@ -212,6 +226,14 @@ class window_camera(Ui_cam_gui):
         self.label_no_Kin.setText(str(self.doubleSpinBox_no_Kin.text()))
 
 
+#-- displays image area settings-----------------------------------------------------#         
+    def img_are_disp(self):
+        self.label_Start_col.setText(str(self.doubleSpinBox_Start_col.text()))
+        self.label_End_col.setText(str(self.doubleSpinBox_End_col.text()))
+        self.label_Start_row.setText(str(self.doubleSpinBox_Start_row.text()))
+        self.label_End_row.setText(str(self.doubleSpinBox_End_row.text()))
+        
+        
 #-- Browse save directory-----------------------------------------------------#               
     def Browse_data(self):
         options = QFileDialog.Options()
@@ -224,7 +246,15 @@ class window_camera(Ui_cam_gui):
             
 #-- saves picture as .txt file -----------------------------------------------------#          
     def save_pic(self):
-        self.cam.SaveAsTxt2(str(self.lineEdit_Browse.text()) + '.txt', self.label_no_Kin.text())
+        print(self.start_col)
+        print(self.end_col)
+        print(self.start_row)
+        print(self.end_row)
+        width = self.end_col - self.start_col + 1
+        height = self.end_row - self.start_row + 1
+        print(int(width))
+        print(int(height))
+        self.cam.SaveAsTxt2(str(self.lineEdit_Browse.text()) + '.txt', self.label_no_Kin.text(), int(width), int(height))
         self.save_cam_settings()
         print('Save Complete!')
 
@@ -240,19 +270,27 @@ class window_camera(Ui_cam_gui):
         g = self.label_Accum_time.text()
         h = self.label_no_Kin.text()
         i = self.label_Kin_time.text()
+        j = self.label_Start_col.text()
+        k = self.label_End_col.text()
+        l = self.label_Start_row.text()
+        m = self.label_End_row.text()
         current_time = datetime.today()
         data_file = open(str(self.lineEdit_Browse.text()) + '_cam_settings.txt', 'a+') 
         if str(self.label_Acq_mode.text()).casefold() == 'Single Scan'.casefold():
             data_file.write('\n ' + '\n ' + str(current_time) + '\n ' + 'Acquisition Mode: ' + str(a)
                             + '\n ' + 'Read Mode: ' + str(b) + '\n ' + 'Temperature: ' + str(c)
-                            + '\n ' + 'Exposure Time: ' + str(d) + '\n ' + 'EMCCD Gain: ' + str(e))
+                            + '\n ' + 'Exposure Time: ' + str(d) + '\n ' + 'EMCCD Gain: ' + str(e) 
+                            + '\n ' + 'Start Column: ' + str(j) + '\n ' + 'End Column: ' + str(k) 
+                            + '\n ' + 'Start Row: ' + str(l) + '\n ' + 'End Row: ' + str(m))
             data_file.close()
         elif str(self.label_Acq_mode.text()).casefold() == 'Kinetic Scan'.casefold():
             data_file.write('\n ' + '\n ' + str(current_time) + '\n ' + 'Acquisition Mode: ' + str(a)
                             + '\n ' + 'Read Mode: ' + str(b) + '\n ' + 'Temperature: ' + str(c)
                             + '\n ' + 'Exposure Time: ' + str(d) + '\n ' + 'EMCCD Gain: ' + str(e)
                             + '\n ' + 'No. of Accumulations: ' + str(f) + '\n ' + 'Accumulate Cycle Time: ' + str(g)
-                            + '\n ' + 'No. of Kinetic Series: ' + str(h) + '\n ' + 'Kinetic Cycle Time: ' + str(i))
+                            + '\n ' + 'No. of Kinetic Series: ' + str(h) + '\n ' + 'Kinetic Cycle Time: ' + str(i)
+                            + '\n ' + 'Start Column: ' + str(j) + '\n ' + 'End Column: ' + str(k) 
+                            + '\n ' + 'Start Row: ' + str(l) + '\n ' + 'End Row: ' + str(m))
             data_file.close()
 
 #-- displays the camera setting of previous snap -----------------------------------------------------#              
