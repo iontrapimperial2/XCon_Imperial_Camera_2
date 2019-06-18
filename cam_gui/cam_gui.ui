@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>840</width>
+    <width>863</width>
     <height>688</height>
    </rect>
   </property>
@@ -19,7 +19,7 @@
      <rect>
       <x>9</x>
       <y>-1</y>
-      <width>821</width>
+      <width>841</width>
       <height>631</height>
      </rect>
     </property>
@@ -430,15 +430,6 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="lineEdit_read_mode">
-           <property name="font">
-            <font>
-             <pointsize>11</pointsize>
-            </font>
-           </property>
-          </widget>
-         </item>
          <item row="1" column="0">
           <spacer name="horizontalSpacer_9">
            <property name="orientation">
@@ -464,6 +455,18 @@
             </size>
            </property>
           </spacer>
+         </item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="comboBox_Read_mode">
+           <property name="font">
+            <font>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+           <property name="editable">
+            <bool>false</bool>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -591,15 +594,6 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="lineEdit_acq_mode">
-           <property name="font">
-            <font>
-             <pointsize>11</pointsize>
-            </font>
-           </property>
-          </widget>
-         </item>
          <item row="1" column="0">
           <spacer name="horizontalSpacer_7">
            <property name="orientation">
@@ -625,6 +619,15 @@
             </size>
            </property>
           </spacer>
+         </item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="comboBox_Acq_mode">
+           <property name="font">
+            <font>
+             <pointsize>11</pointsize>
+            </font>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -1163,7 +1166,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>840</width>
+     <width>863</width>
      <height>21</height>
     </rect>
    </property>

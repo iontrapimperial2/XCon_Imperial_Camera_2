@@ -30,6 +30,10 @@ class window_camera(Ui_cam_gui):
         self.cooler_flag = False
         self.temp_flag = False
         
+        #--available read modes adn acquisition modes-----------------------------------------------------#
+        self.list_read_modes = ['Full vertical binning','Multi track', 'Random track', 'Single track', 'Image']
+        self.list_Acq_modes = ['Single Scan', 'Kinetic Scan']
+        
         #--- data ------------------------------------------------------------#
         self.data_camera = []
 
@@ -52,6 +56,11 @@ class window_camera(Ui_cam_gui):
         self.pushButton_Browse.clicked.connect(self.Browse_data)
         self.pushButton_Save.clicked.connect(self.save_pic)
 
+        #-- combo boxes-----------------------------------------------------#
+        self.list_read_modes = ['Full vertical binning','Multi track', 'Random track', 'Single track', 'Image']
+        self.list_Acq_modes = ['Single Scan', 'Kinetic Scan']
+        self.comboBox_Read_mode.addItems(self.list_read_modes )
+        self.comboBox_Acq_mode.addItems(self.list_Acq_modes)
 
 #-- Initialise camera -----------------------------------------------------#
     def initialise_cam(self):
@@ -304,10 +313,10 @@ class window_camera(Ui_cam_gui):
 
 #-- sets Acquisition mode from user input -----------------------------------------------------#            
     def set_Acq_mode(self):
-        Acq = str(self.lineEdit_acq_mode.text())
-        if Acq.casefold() == 'Single Scan'.casefold():       #makes it case insensitive
+        Acq = str(self.comboBox_Acq_mode.currentText())
+        if Acq == 'Single Scan':
             self.cam.SetAcquisitionMode(1)
-        elif Acq.casefold() == 'Kinetic Scan'.casefold():
+        elif Acq == 'Kinetic Scan':
             self.cam.SetAcquisitionMode(3)
         else:
             print('Invalid Acquisition Mode: ' + str(self.lineEdit_acq_mode.text()))
@@ -330,16 +339,16 @@ class window_camera(Ui_cam_gui):
     
 #-- sets Read mode from user input -----------------------------------------------------#        
     def set_Read_mode(self):
-        Read = str(self.lineEdit_read_mode.text()).casefold() 
-        if Read.casefold() == 'Full vertical binning'.casefold():    #makes it case insensitive
+        Read = str(self.comboBox_Read_mode.currentText())
+        if Read == 'Full vertical binning':    
             self.cam.SetReadMode(0)
-        elif Read.casefold() == 'Multi track'.casefold():
+        elif Read == 'Multi track':
             self.cam.SetReadMode(1)
-        elif Read.casefold() == 'Random track'.casefold():
+        elif Read == 'Random track':
             self.cam.SetReadMode(2)
-        elif Read.casefold() == 'Single track'.casefold():
+        elif Read == 'Single track':
             self.cam.SetReadMode(3)
-        elif Read.casefold() == 'Image'.casefold():
+        elif Read == 'Image':
             self.cam.SetReadMode(4)
         else:
             print('Invalid Read Mode: ' + str(self.lineEdit_read_mode.text()))
