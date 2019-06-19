@@ -189,11 +189,11 @@ class window_camera(Ui_cam_gui):
         self.end_row = self.doubleSpinBox_End_row.value()
         self.set_Read_mode()
         self.set_Acq_mode()
-        
-        
+        self.cam.width = int(self.end_col) - int(self.start_col) +1
+        self.cam.height = int(self.end_row) - int(self.start_row) +1
         self.cam.SetExposureTime(exp_time)
         self.cam.SetEMCCDGain(round(EMCCD_gain))
-        self.cam.SetImage(2,2,int(self.start_col),int(self.end_col),int(self.start_row),int(self.end_row))
+        self.cam.SetImage(1,1,int(self.start_col),int(self.end_col),int(self.start_row),int(self.end_row))
         self.snap_setting_disp()
         self.Read_mode_disp()
         self.Acq_mode_disp()

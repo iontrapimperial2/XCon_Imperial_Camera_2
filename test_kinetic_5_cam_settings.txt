@@ -10,3 +10,7 @@
  Accumulate Cycle Time: 0.000 s
  No. in Kinetic Series: 10
  Kinetic Cycle Time: 0.003 s
+ Start Column: 1
+ End Column: 512
+ Start Row: 1
+ End Row: 512
