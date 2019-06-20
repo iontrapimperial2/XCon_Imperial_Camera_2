@@ -33,7 +33,7 @@ class window_camera(Ui_cam_gui):
         #--available read modes, acquisition modes and trigger modes-----------------------------------------------------#
         self.list_read_modes = ['Image', 'Full vertical binning','Multi track', 'Random track', 'Single track']
         self.list_Acq_modes = ['Single Scan', 'Kinetic Scan']
-        self.list_trig_modes = ['Internal', 'External', 'External Start']
+        self.list_trig_modes = ['Internal', 'External', 'External Start', 'External Exposure', 'Software']
         
         #--- data ------------------------------------------------------------#
         self.data_camera = []
@@ -57,6 +57,7 @@ class window_camera(Ui_cam_gui):
         self.pushButton_Browse.clicked.connect(self.Browse_data)
         self.pushButton_Save.clicked.connect(self.save_pic)
         self.pushButton_trig_mode.clicked.connect(self.set_trig_mode)
+        self.pushButton_soft_trigger.clicked.connect(self.cam.SendSoftwareTrigger)
 
         #-- combo boxes-----------------------------------------------------#
         self.comboBox_Read_mode.addItems(self.list_read_modes )
@@ -378,6 +379,10 @@ class window_camera(Ui_cam_gui):
             self.cam.SetTriggerMode(1)
         elif trig == 'External Start':
             self.cam.SetTriggerMode(6)
+        elif trig == 'External Exposure':
+            self.cam.SetTriggerMode(7)
+        elif trig == 'Software':
+            self.cam.SetTriggerMode(10)
         
 
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#

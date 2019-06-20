@@ -454,6 +454,11 @@ class Andor:
         error = self.dll.SetTriggerMode(mode)
         self.verbose(ERROR_CODE[error], sys._getframe().f_code.co_name)
         return ERROR_CODE[error]
+    
+    def SendSoftwareTrigger(self):
+        error = self.dll.SendSoftwareTrigger()
+        self.verbose(ERROR_CODE[error], sys._getframe().f_code.co_name)
+        return ERROR_CODE[error]
 
     def GetStatus(self):
         status = c_int()

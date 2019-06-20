@@ -1067,6 +1067,18 @@
         </layout>
        </widget>
       </item>
+      <item row="10" column="5">
+       <widget class="QPushButton" name="pushButton_soft_trigger">
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Software Trigger</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </item>
    </layout>

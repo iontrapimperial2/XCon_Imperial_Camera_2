@@ -518,6 +518,12 @@ class Ui_cam_gui(object):
         self.gridLayout_11.addWidget(self.pushButton_trig_mode, 0, 2, 1, 1)
         self.gridLayout_6.addLayout(self.gridLayout_11, 0, 0, 1, 1)
         self.gridLayout.addWidget(self.groupBox_8, 10, 1, 1, 4)
+        self.pushButton_soft_trigger = QtWidgets.QPushButton(self.centralWidget)
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        self.pushButton_soft_trigger.setFont(font)
+        self.pushButton_soft_trigger.setObjectName("pushButton_soft_trigger")
+        self.gridLayout.addWidget(self.pushButton_soft_trigger, 10, 5, 1, 1)
         self.gridLayout_4.addLayout(self.gridLayout, 0, 0, 1, 1)
         cam_gui.setCentralWidget(self.centralWidget)
         self.menuBar = QtWidgets.QMenuBar(cam_gui)
@@ -578,6 +584,7 @@ class Ui_cam_gui(object):
         self.groupBox_8.setTitle(_translate("cam_gui", "Trigger Mode"))
         self.label_Trig_mode.setText(_translate("cam_gui", "N/A"))
         self.pushButton_trig_mode.setText(_translate("cam_gui", "Set Trigger Mode"))
+        self.pushButton_soft_trigger.setText(_translate("cam_gui", "Software Trigger"))
 
 
 if __name__ == "__main__":
