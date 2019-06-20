@@ -30,9 +30,10 @@ class window_camera(Ui_cam_gui):
         self.cooler_flag = False
         self.temp_flag = False
         
-        #--available read modes adn acquisition modes-----------------------------------------------------#
-        self.list_read_modes = ['Full vertical binning','Multi track', 'Random track', 'Single track', 'Image']
+        #--available read modes, acquisition modes and trigger modes-----------------------------------------------------#
+        self.list_read_modes = ['Image', 'Full vertical binning','Multi track', 'Random track', 'Single track']
         self.list_Acq_modes = ['Single Scan', 'Kinetic Scan']
+        self.list_trig_modes = ['Internal', 'External', 'External Start']
         
         #--- data ------------------------------------------------------------#
         self.data_camera = []
@@ -57,10 +58,9 @@ class window_camera(Ui_cam_gui):
         self.pushButton_Save.clicked.connect(self.save_pic)
 
         #-- combo boxes-----------------------------------------------------#
-        self.list_read_modes = ['Full vertical binning','Multi track', 'Random track', 'Single track', 'Image']
-        self.list_Acq_modes = ['Single Scan', 'Kinetic Scan']
         self.comboBox_Read_mode.addItems(self.list_read_modes )
         self.comboBox_Acq_mode.addItems(self.list_Acq_modes)
+        self.comboBox_trig_mode.addItems(self.list_trig_modes)
 
 #-- Initialise camera -----------------------------------------------------#
     def initialise_cam(self):
@@ -183,21 +183,17 @@ class window_camera(Ui_cam_gui):
     def snap_pic(self):
         exp_time = self.doubleSpinBox_Exp_Time.value()
         EMCCD_gain = self.doubleSpinBox_EMCCD_Gain.value()
-        self.start_col = self.doubleSpinBox_Start_col.value()
-        self.end_col = self.doubleSpinBox_End_col.value()
-        self.start_row = self.doubleSpinBox_Start_row.value()
-        self.end_row = self.doubleSpinBox_End_row.value()
+        
         self.set_Read_mode()
-        self.set_Acq_mode()
-        self.cam.width = int(self.end_col) - int(self.start_col) +1
-        self.cam.height = int(self.end_row) - int(self.start_row) +1
+        self.set_Acq_mode()        
         self.cam.SetExposureTime(exp_time)
         self.cam.SetEMCCDGain(round(EMCCD_gain))
-        self.cam.SetImage(1,1,int(self.start_col),int(self.end_col),int(self.start_row),int(self.end_row))
+        self.set_img_area()
+        self.set_trig_mode()
         self.snap_setting_disp()
         self.Read_mode_disp()
         self.Acq_mode_disp()
-        self.img_are_disp()
+        self.img_area_disp()
         if str(self.label_Acq_mode.text()).casefold() == 'kinetic Scan'.casefold():
             print('oo')
             accum_time = self.doubleSpinBox_Accum_time.value()
@@ -235,8 +231,18 @@ class window_camera(Ui_cam_gui):
         self.label_no_Kin.setText(str(self.doubleSpinBox_no_Kin.text()))
 
 
+#-- sets image area-----------------------------------------------------#         
+    def set_img_area(self):
+        self.start_col = self.doubleSpinBox_Start_col.value()
+        self.end_col = self.doubleSpinBox_End_col.value()
+        self.start_row = self.doubleSpinBox_Start_row.value()
+        self.end_row = self.doubleSpinBox_End_row.value()
+        self.cam.width = int(self.end_col) - int(self.start_col) +1
+        self.cam.height = int(self.end_row) - int(self.start_row) +1
+        self.cam.SetImage(1,1,int(self.start_col),int(self.end_col),int(self.start_row),int(self.end_row))
+        
 #-- displays image area settings-----------------------------------------------------#         
-    def img_are_disp(self):
+    def img_area_disp(self):
         self.label_Start_col.setText(str(self.doubleSpinBox_Start_col.text()))
         self.label_End_col.setText(str(self.doubleSpinBox_End_col.text()))
         self.label_Start_row.setText(str(self.doubleSpinBox_Start_row.text()))
@@ -318,11 +324,7 @@ class window_camera(Ui_cam_gui):
             self.cam.SetAcquisitionMode(1)
         elif Acq == 'Kinetic Scan':
             self.cam.SetAcquisitionMode(3)
-        else:
-            print('Invalid Acquisition Mode: ' + str(self.lineEdit_acq_mode.text()))
-            print('Available Acquisition Modes: Single Scan, Kinetic Scan')
-            if str(self.label_Acq_mode.text()) != 'N/A':
-                print('previous Acquisition mode used')
+
                 
 
 #-- displays Acquisition mode from previous snap-----------------------------------------------------#            
@@ -350,15 +352,7 @@ class window_camera(Ui_cam_gui):
             self.cam.SetReadMode(3)
         elif Read == 'Image':
             self.cam.SetReadMode(4)
-        else:
-            print('Invalid Read Mode: ' + str(self.lineEdit_read_mode.text()))
-            
-            if str(self.label_Read_mode.text()) != 'N/A':
-                print('Available Read Modes: Full vertical binning, Multi track, Single track, Image'  )
-                print('previous Read mode used' + '\n')
-            else:
-                print('Available Read Modes: Full vertical binning, Multi track, Single track, Image' + '\n' )
-                
+
 
 #-- displays Read mode from previous snap -----------------------------------------------------#       
     def Read_mode_disp(self):
@@ -374,8 +368,21 @@ class window_camera(Ui_cam_gui):
         elif self.read_mode == 4:
             self.label_Read_mode.setText('Image')
             
-    
+            
+#-- sets Trigger mode from user input and displays trigger mode on label -----------------------------------------------------#        
+    def set_trig_mode(self):
+        trig = str(self.comboBox_trig_mode.currentText())
+        self.label_Trig_mode.setText(trig)
+        if trig == 'Internal':    
+            self.cam.SetTriggerMode(0)
+        elif trig == 'External':
+            self.cam.SetTriggerMode(1)
+        elif trig == 'External Start':
+            self.cam.SetTriggerMode(6)
+        
+
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
     
     
 
