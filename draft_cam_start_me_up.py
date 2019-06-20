@@ -56,6 +56,7 @@ class window_camera(Ui_cam_gui):
         self.pushButton_Snap.clicked.connect(self.snap_thread)
         self.pushButton_Browse.clicked.connect(self.Browse_data)
         self.pushButton_Save.clicked.connect(self.save_pic)
+        self.pushButton_trig_mode.clicked.connect(self.set_trig_mode)
 
         #-- combo boxes-----------------------------------------------------#
         self.comboBox_Read_mode.addItems(self.list_read_modes )
@@ -189,13 +190,11 @@ class window_camera(Ui_cam_gui):
         self.cam.SetExposureTime(exp_time)
         self.cam.SetEMCCDGain(round(EMCCD_gain))
         self.set_img_area()
-        self.set_trig_mode()
         self.snap_setting_disp()
         self.Read_mode_disp()
         self.Acq_mode_disp()
         self.img_area_disp()
         if str(self.label_Acq_mode.text()).casefold() == 'kinetic Scan'.casefold():
-            print('oo')
             accum_time = self.doubleSpinBox_Accum_time.value()
             accum_no = self.doubleSpinBox_no_Accum.value()
             Kin_time = self.doubleSpinBox_Kin_time.value()
