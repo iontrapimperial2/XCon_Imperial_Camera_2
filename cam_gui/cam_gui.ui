@@ -1013,7 +1013,7 @@
         </layout>
        </widget>
       </item>
-      <item row="10" column="1" colspan="4">
+      <item row="10" column="1" colspan="3">
        <widget class="QGroupBox" name="groupBox_8">
         <property name="font">
          <font>
@@ -1067,16 +1067,59 @@
         </layout>
        </widget>
       </item>
-      <item row="10" column="5">
-       <widget class="QPushButton" name="pushButton_soft_trigger">
-        <property name="font">
-         <font>
-          <pointsize>11</pointsize>
-         </font>
+      <item row="10" column="4" colspan="3">
+       <widget class="QGroupBox" name="groupBox_9">
+        <property name="title">
+         <string>Set Vertical Clock Voltage Amplitude</string>
         </property>
-        <property name="text">
-         <string>Software Trigger</string>
-        </property>
+        <layout class="QGridLayout" name="gridLayout_21">
+         <item row="0" column="0">
+          <layout class="QGridLayout" name="gridLayout_20">
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_VSAmp">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>0 V</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QPushButton" name="pushButton_VSAmp">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Set Voltage</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QDoubleSpinBox" name="doubleSpinBox_VSAmp">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="decimals">
+              <number>0</number>
+             </property>
+             <property name="maximum">
+              <double>4.000000000000000</double>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
        </widget>
       </item>
      </layout>

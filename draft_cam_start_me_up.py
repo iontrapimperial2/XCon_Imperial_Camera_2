@@ -33,7 +33,7 @@ class window_camera(Ui_cam_gui):
         #--available read modes, acquisition modes and trigger modes-----------------------------------------------------#
         self.list_read_modes = ['Image', 'Full vertical binning','Multi track', 'Random track', 'Single track']
         self.list_Acq_modes = ['Single Scan', 'Kinetic Scan']
-        self.list_trig_modes = ['Internal', 'External', 'External Start', 'External Exposure', 'Software']
+        self.list_trig_modes = ['Internal', 'External', 'External Start', 'External Exposure']
         
         #--- data ------------------------------------------------------------#
         self.data_camera = []
@@ -57,7 +57,8 @@ class window_camera(Ui_cam_gui):
         self.pushButton_Browse.clicked.connect(self.Browse_data)
         self.pushButton_Save.clicked.connect(self.save_pic)
         self.pushButton_trig_mode.clicked.connect(self.set_trig_mode)
-        self.pushButton_soft_trigger.clicked.connect(self.cam.SendSoftwareTrigger)
+        self.pushButton_VSAmp.clicked.connect(self.setVSAmp)
+        
 
         #-- combo boxes-----------------------------------------------------#
         self.comboBox_Read_mode.addItems(self.list_read_modes )
@@ -180,6 +181,13 @@ class window_camera(Ui_cam_gui):
             self.label_Temp_disp.setText(str(self.cam.temperature) + ' °C')
             time.sleep(4)
             
+            
+#-- sets Vertical Clock Voltage Amplitude -----------------------------------------------------#      
+    def setVSAmp(self):
+        v = int(self.doubleSpinBox_VSAmp.value())
+        self.cam.SetVSAmplitude(v)
+        self.label_VSAmp.setText(str(v) + ' V')
+            
                         
 #-- sets modes, exposure time, EMCCD gain, image area and snaps pic -----------------------------------------------------#      
     def snap_pic(self):
@@ -289,6 +297,8 @@ class window_camera(Ui_cam_gui):
         k = self.label_End_col.text()
         l = self.label_Start_row.text()
         m = self.label_End_row.text()
+        n = self.label_Trig_mode.text()
+        o = self.label_VSAmp.text()
         current_time = datetime.today()
         data_file = open(str(self.lineEdit_Browse.text()) + '_cam_settings.txt', 'a+') 
         if str(self.label_Acq_mode.text()).casefold() == 'Single Scan'.casefold():
@@ -296,7 +306,8 @@ class window_camera(Ui_cam_gui):
                             + '\n ' + 'Read Mode: ' + str(b) + '\n ' + 'Temperature: ' + str(c)
                             + '\n ' + 'Exposure Time: ' + str(d) + '\n ' + 'EMCCD Gain: ' + str(e) 
                             + '\n ' + 'Start Column: ' + str(j) + '\n ' + 'End Column: ' + str(k) 
-                            + '\n ' + 'Start Row: ' + str(l) + '\n ' + 'End Row: ' + str(m))
+                            + '\n ' + 'Start Row: ' + str(l) + '\n ' + 'End Row: ' + str(m)
+                            + '\n ' + 'Trigger Mode: ' + str(n) + '\n ' + 'Vertical Clock Voltage Amplitude: ' + str(o))
             data_file.close()
         elif str(self.label_Acq_mode.text()).casefold() == 'Kinetic Scan'.casefold():
             data_file.write('\n ' + '\n ' + str(current_time) + '\n ' + 'Acquisition Mode: ' + str(a)

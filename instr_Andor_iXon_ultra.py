@@ -172,7 +172,12 @@ class Andor:
         error = self.dll.SetImage(hbin,vbin,hstart,hend,vstart,vend)
         self.verbose(ERROR_CODE[error], sys._getframe().f_code.co_name)
         return ERROR_CODE[error]
-
+    
+    def SetVSAmplitude(self, v):
+        error = self.dll.SetVSAmplitude(v)
+        self.verbose(ERROR_CODE[error], sys._getframe().f_code.co_name)
+        return ERROR_CODE[error]
+    
     def StartAcquisition(self):
         error = self.dll.StartAcquisition()
         self.dll.WaitForAcquisition()
