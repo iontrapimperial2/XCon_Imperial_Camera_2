@@ -196,11 +196,11 @@ class window_camera(Ui_cam_gui):
     def snap_pic(self):
         exp_time = self.doubleSpinBox_Exp_Time.value()
         EMCCD_gain = self.doubleSpinBox_EMCCD_Gain.value()
-        
+        self.cam.SetExposureTime(exp_time)
+        self.cam.SetEMCCDGain(int(EMCCD_gain))
         self.set_Read_mode()
         self.set_Acq_mode()        
-        self.cam.SetExposureTime(exp_time)
-        self.cam.SetEMCCDGain(round(EMCCD_gain))
+        
         self.set_img_area()
         self.snap_setting_disp()
         self.Read_mode_disp()
