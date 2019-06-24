@@ -36,6 +36,7 @@ class window_camera(Ui_cam_gui):
         self.list_trig_modes = ['Internal', 'External', 'External Start', 'External Exposure']
         self.list_preamp_gain = ['1','2','3']
         self.list_EM_gain_mode = ['0','1','2','3']
+        self.list_Shutter = ['Fully Auto', 'Permanently Open', 'Permanently Closed']
         
         #--- data ------------------------------------------------------------#
         self.data_camera = []
@@ -62,6 +63,7 @@ class window_camera(Ui_cam_gui):
         self.pushButton_VSAmp.clicked.connect(self.setVSAmp)
         self.pushButton_preamp_gain.clicked.connect(self.set_preamp_gain)
         self.pushButton_EM_gain_mode.clicked.connect(self.set_EM_gain_mode)
+        self.pushButton_set_shutter.clicked.connect(self.set_shutter)
         
 
         #-- combo boxes-----------------------------------------------------#
@@ -70,6 +72,7 @@ class window_camera(Ui_cam_gui):
         self.comboBox_trig_mode.addItems(self.list_trig_modes)
         self.comboBox_preamp_gain.addItems(self.list_preamp_gain)
         self.comboBox_EM_gain_mode.addItems(self.list_EM_gain_mode)
+        self.comboBox_set_shutter.addItems(self.list_Shutter)
 
 #-- Initialise camera -----------------------------------------------------#
     def initialise_cam(self):
@@ -195,10 +198,22 @@ class window_camera(Ui_cam_gui):
         self.label_VSAmp.setText(str(v) + ' V')
 
 
+#-- sets EM gain mode -----------------------------------------------------#     
     def set_EM_gain_mode(self):
         mode = int(self.comboBox_EM_gain_mode.currentText())
         self.label_EM_gain_mode.setText(str(mode))
         self.cam.SetEMCCDGainMode(mode)
+        
+
+#-- sets shutter mode -----------------------------------------------------#      
+    def set_shutter(self):
+        if str(self.comboBox_set_shutter.currentText()) == 'Fully Auto':
+            self.cam.SetShutterEx(1,0,27,27,1)
+        elif str(self.comboBox_set_shutter.currentText()) == 'Permanrntly Open':
+            self.cam.SetShutterEx(1,1,27,27,1)
+        elif str(self.comboBox_set_shutter.currentText()) == 'Permanrntly Closed':
+            self.cam.SetShutterEx(1,2,27,27,2)
+        self.label_set_shutter.setText(str(self.comboBox_set_shutter.currentText()))
             
                         
 #-- sets modes, exposure time, EMCCD gain, image area and snaps pic -----------------------------------------------------#      
