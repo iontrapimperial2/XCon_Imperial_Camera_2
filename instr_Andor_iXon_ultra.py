@@ -339,7 +339,7 @@ class Andor:
         return ERROR_CODE[error]
      
     def SetEMCCDGainMode(self, gainMode):
-        error = self.dll.SetEMCCDGainMode(gainMode)
+        error = self.dll.SetEMGainMode(gainMode)
         self.verbose(ERROR_CODE[error], sys._getframe().f_code.co_name)
         return ERROR_CODE[error]   
         

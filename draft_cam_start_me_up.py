@@ -30,11 +30,12 @@ class window_camera(Ui_cam_gui):
         self.cooler_flag = False
         self.temp_flag = False
         
-        #--available read modes, acquisition modes, trigger modes and pre-amp gains-----------------------------------------------------#
+        #--available read modes, acquisition modes, trigger modes, EM gain modes and pre-amp gains-----------------------------------------------------#
         self.list_read_modes = ['Image', 'Full vertical binning','Multi track', 'Random track', 'Single track']
         self.list_Acq_modes = ['Single Scan', 'Kinetic Scan']
         self.list_trig_modes = ['Internal', 'External', 'External Start', 'External Exposure']
         self.list_preamp_gain = ['1','2','3']
+        self.list_EM_gain_mode = ['0','1','2','3']
         
         #--- data ------------------------------------------------------------#
         self.data_camera = []
@@ -60,6 +61,7 @@ class window_camera(Ui_cam_gui):
         self.pushButton_trig_mode.clicked.connect(self.set_trig_mode)
         self.pushButton_VSAmp.clicked.connect(self.setVSAmp)
         self.pushButton_preamp_gain.clicked.connect(self.set_preamp_gain)
+        self.pushButton_EM_gain_mode.clicked.connect(self.set_EM_gain_mode)
         
 
         #-- combo boxes-----------------------------------------------------#
@@ -67,6 +69,7 @@ class window_camera(Ui_cam_gui):
         self.comboBox_Acq_mode.addItems(self.list_Acq_modes)
         self.comboBox_trig_mode.addItems(self.list_trig_modes)
         self.comboBox_preamp_gain.addItems(self.list_preamp_gain)
+        self.comboBox_EM_gain_mode.addItems(self.list_EM_gain_mode)
 
 #-- Initialise camera -----------------------------------------------------#
     def initialise_cam(self):
@@ -190,6 +193,12 @@ class window_camera(Ui_cam_gui):
         v = int(self.doubleSpinBox_VSAmp.value())
         self.cam.SetVSAmplitude(v)
         self.label_VSAmp.setText(str(v) + ' V')
+
+
+    def set_EM_gain_mode(self):
+        mode = int(self.comboBox_EM_gain_mode.currentText())
+        self.label_EM_gain_mode.setText(str(mode))
+        self.cam.SetEMCCDGainMode(mode)
             
                         
 #-- sets modes, exposure time, EMCCD gain, image area and snaps pic -----------------------------------------------------#      
