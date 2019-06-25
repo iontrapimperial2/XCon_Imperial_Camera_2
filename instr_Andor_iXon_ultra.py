@@ -30,6 +30,7 @@ class Andor:
 
         # Check operating system and load library for Windows
         if platform.system() == "Windows":
+            print(platform.architecture()[0])
             if platform.architecture()[0] == "64bit":
                 self.dll = WinDLL('ATMCD64D.DLL')
                 print('found and loaded ATMCD64D.DLL')
