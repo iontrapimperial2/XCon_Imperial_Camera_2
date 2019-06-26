@@ -98,11 +98,11 @@ class Andor:
         tekst = c_char()  
         error = self.dll.Initialize(byref(tekst))
         self.verbose(ERROR_CODE[error], sys._getframe().f_code.co_name)
-        cw = c_int()
-        ch = c_int()
-        self.dll.GetDetector(byref(cw), byref(ch))
-        self.width       = cw.value
-        self.height      = ch.value
+        #cw = c_int()
+        #ch = c_int()
+        #self.dll.GetDetector(byref(cw), byref(ch))
+        #self.width       = cw.value
+        #self.height      = ch.value
         return ERROR_CODE[error]
         
     def ShutDown(self):

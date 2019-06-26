@@ -63,19 +63,19 @@ plt.figure('Experiment 1')
 plt.plot(t,counts, '.')
 plt.plot (t, line)
 plt.xlabel('Exposure Time')
-plt.ylabel('Total Signal Count')
+plt.ylabel('Mean Signal Count per Pixel')
 
 plt.figure('Experiment 2')
 plt.plot(t,counts1, '.')
 plt.plot (t, line1)
 plt.xlabel('Exposure Time')
-plt.ylabel('Total Signal Count')
+plt.ylabel('Mean Signal Count per Pixel')
 
 plt.figure('Commercial')
 plt.plot(t,counts2, '.')
 plt.plot (t, line2)
 plt.xlabel('Exposure Time')
-plt.ylabel('Total Signal Count')
+plt.ylabel('Mean Signal Count per Pixel')
 
 
 #plt.plot(t, np.array(counts) - np.array(counts1), '.')

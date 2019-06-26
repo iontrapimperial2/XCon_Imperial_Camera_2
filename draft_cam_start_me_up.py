@@ -29,6 +29,8 @@ class window_camera(Ui_cam_gui):
         self.cam_flag = False
         self.cooler_flag = False
         self.temp_flag = False
+        self.snap_flag = False
+        self.abort_flag = False
         
         #--available read modes, acquisition modes, trigger modes, EM gain modes and pre-amp gains-----------------------------------------------------#
         self.list_read_modes = ['Image', 'Full vertical binning','Multi track', 'Random track', 'Single track']
@@ -64,6 +66,7 @@ class window_camera(Ui_cam_gui):
         self.pushButton_preamp_gain.clicked.connect(self.set_preamp_gain)
         self.pushButton_EM_gain_mode.clicked.connect(self.set_EM_gain_mode)
         self.pushButton_set_shutter.clicked.connect(self.set_shutter)
+        self.pushButton_Abort.clicked.connect(self.Abort_snap)
         
 
         #-- combo boxes-----------------------------------------------------#
@@ -114,12 +117,32 @@ class window_camera(Ui_cam_gui):
             print('Camera Shutdown')
             self.cam_flag = False
             self.cooler_flag = False
+            self.snap_flag = False
+            self.abort_flag = False
             self.cam.CoolerOFF()
             self.cam.ShutDown()            
             self.label_Cam_OnOff.setText('OFF')
             self.label_Cam_OnOff.setStyleSheet('color: red')
             self.label_Cooler_OnOff.setText('OFF')
             self.label_Cooler_OnOff.setStyleSheet('color: red')
+            self.label_Accum_time.setText('0.000 s')
+            self.label_Acq_mode.setText('N/A')
+            self.label_EM_gain_mode.setText('0')
+            self.label_EMCCDGain_disp.setText('0')
+            self.label_Exp_time_disp.setText('0 s')
+            self.label_Start_col.setText('1')
+            self.label_Start_row.setText('1')
+            self.label_End_col.setText('512')
+            self.label_End_row.setText('512')
+            self.label_Kin_time.setText('0 s')
+            self.label_no_Accum.setText('1')
+            self.label_no_Kin.setText('1')
+            self.label_preamp_gain.setText('1')
+            self.label_Read_mode.setText('N/A')
+            self.label_set_shutter.setText('N/A')
+            self.label_Trig_mode.setText('N/A')
+            self.label_VSAmp.setText('0 V')
+            
             
         
         elif self.cam_flag == False:
@@ -209,15 +232,16 @@ class window_camera(Ui_cam_gui):
     def set_shutter(self):
         if str(self.comboBox_set_shutter.currentText()) == 'Fully Auto':
             self.cam.SetShutterEx(1,0,27,27,1)
-        elif str(self.comboBox_set_shutter.currentText()) == 'Permanrntly Open':
+        elif str(self.comboBox_set_shutter.currentText()) == 'Permanently Open':
             self.cam.SetShutterEx(1,1,27,27,1)
-        elif str(self.comboBox_set_shutter.currentText()) == 'Permanrntly Closed':
+        elif str(self.comboBox_set_shutter.currentText()) == 'Permanently Closed':
             self.cam.SetShutterEx(1,2,27,27,2)
         self.label_set_shutter.setText(str(self.comboBox_set_shutter.currentText()))
             
                         
 #-- sets modes, exposure time, EMCCD gain, image area and snaps pic -----------------------------------------------------#      
     def snap_pic(self):
+        self.abort_flag = False
         exp_time = self.doubleSpinBox_Exp_Time.value()
         EMCCD_gain = self.doubleSpinBox_EMCCD_Gain.value()
         self.cam.SetExposureTime(exp_time)
@@ -231,32 +255,64 @@ class window_camera(Ui_cam_gui):
         self.Acq_mode_disp()
         self.img_area_disp()
         if str(self.label_Acq_mode.text()).casefold() == 'kinetic Scan'.casefold():
-            accum_time = self.doubleSpinBox_Accum_time.value()
-            accum_no = self.doubleSpinBox_no_Accum.value()
-            Kin_time = self.doubleSpinBox_Kin_time.value()
-            Kin_no = self.doubleSpinBox_no_Kin.value()
-            self.cam.SetAccumulationCycleTime(accum_time)
-            self.cam.SetNumberAccumulations(round(accum_no))
-            self.cam.SetKineticCycleTime(Kin_time)
-            self.cam.SetNumberKinetics(round(Kin_no))
-            self.Kin_disp()
-            self.cam.StartAcquisition()
-            time.sleep((accum_time*accum_no+Kin_time)*Kin_no*1.1) #make sure sleep time longer than acquisition time
+            while self.abort_flag == False:
+                accum_time = self.doubleSpinBox_Accum_time.value()
+                accum_no = self.doubleSpinBox_no_Accum.value()
+                Kin_time = self.doubleSpinBox_Kin_time.value()
+                Kin_no = self.doubleSpinBox_no_Kin.value()
+                self.cam.SetAccumulationCycleTime(accum_time)
+                self.cam.SetNumberAccumulations(round(accum_no))
+                self.cam.SetKineticCycleTime(Kin_time)
+                self.cam.SetNumberKinetics(round(Kin_no))
+                self.Kin_disp()
+                self.cam.StartAcquisition()
+                print(1)
+                for i in range(1,int(Kin_no),1):
+                    
+                    self.cam.dll.WaitForAcquisition()
+                    print(i+1)
+                break
+                #time.sleep((accum_time*accum_no+Kin_time)*Kin_no*1.1) #make sure sleep time longer than acquisition time
+
+            
+
         else:
             self.cam.StartAcquisition()
-            time.sleep(exp_time*1.1) #make sure sleep time longer than acquisition time
+
         
         data_camera = []
         self.cam.GetAcquiredData(data_camera)
         self.data_camera = data_camera
         print(self.data_camera)
         print('Snap Complete!')
-
+        self.snap_flag = False
+        if str(self.label_Trig_mode.text()) == 'External':
+            if self.abort_flag == False:
+                self.snap_thread()
+                
+            else:
+                None
+        
 
 #-- starts thread which calls self.snap_pic -----------------------------------------------------#          
     def snap_thread(self):
-        snap = threading.Thread(target = self.snap_pic)
-        snap.start()
+        if self.snap_flag == False:
+            snap = threading.Thread(target = self.snap_pic)
+            snap.start()
+            self.snap_flag = True
+            print('yo')
+        else:
+            None
+
+
+#-- aborts acquisition -----------------------------------------------------#          
+    def Abort_snap(self):
+        if self.snap_flag == True:
+            self.abort_flag = True
+            self.cam.AbortAcquisition()
+            self.snap_flag = False
+        else:
+            None
 
 
 #-- displays kinetic scan settings-----------------------------------------------------#                 
