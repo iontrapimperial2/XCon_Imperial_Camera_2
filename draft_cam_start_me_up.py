@@ -240,8 +240,8 @@ class window_camera(Ui_cam_gui):
             
                         
 #-- sets modes, exposure time, EMCCD gain, image area and snaps pic -----------------------------------------------------#      
-    def snap_pic(self):
-        self.abort_flag = False
+    def snap_pic(self):    
+        
         exp_time = self.doubleSpinBox_Exp_Time.value()
         EMCCD_gain = self.doubleSpinBox_EMCCD_Gain.value()
         self.cam.SetExposureTime(exp_time)
@@ -255,44 +255,61 @@ class window_camera(Ui_cam_gui):
         self.Acq_mode_disp()
         self.img_area_disp()
         if str(self.label_Acq_mode.text()).casefold() == 'kinetic Scan'.casefold():
-            while self.abort_flag == False:
-                accum_time = self.doubleSpinBox_Accum_time.value()
-                accum_no = self.doubleSpinBox_no_Accum.value()
-                Kin_time = self.doubleSpinBox_Kin_time.value()
-                Kin_no = self.doubleSpinBox_no_Kin.value()
-                self.cam.SetAccumulationCycleTime(accum_time)
-                self.cam.SetNumberAccumulations(round(accum_no))
-                self.cam.SetKineticCycleTime(Kin_time)
-                self.cam.SetNumberKinetics(round(Kin_no))
-                self.Kin_disp()
-                self.cam.StartAcquisition()
-                print(1)
-                for i in range(1,int(Kin_no),1):
-                    
-                    self.cam.dll.WaitForAcquisition()
-                    print(i+1)
-                break
-                #time.sleep((accum_time*accum_no+Kin_time)*Kin_no*1.1) #make sure sleep time longer than acquisition time
-
+            accum_time = self.doubleSpinBox_Accum_time.value()
+            accum_no = self.doubleSpinBox_no_Accum.value()
+            Kin_time = self.doubleSpinBox_Kin_time.value()
+            Kin_no = self.doubleSpinBox_no_Kin.value()
+            self.cam.SetAccumulationCycleTime(accum_time)
+            self.cam.SetNumberAccumulations(round(accum_no))
+            self.cam.SetKineticCycleTime(Kin_time)
+            self.cam.SetNumberKinetics(round(Kin_no))
+            self.Kin_disp() 
+            self.cam.StartAcquisition()     
             
-
+            for i in range(1,int(Kin_no)+1,1): 
+                if self.abort_flag == False:
+                    for i in range(1, int(accum_no)+1, 1):
+                        if self.abort_flag == False:
+                            self.cam.dll.WaitForAcquisition()
+                            
+                        elif self.abort_flag == True:
+                            break
+                        print(i)
+                elif self.abort_flag == True:
+                    break
+                
+                #time.sleep((accum_time*accum_no+Kin_time)*Kin_no*1.1) #make sure sleep time longer than acquisition time            
         else:
             self.cam.StartAcquisition()
+            self.cam.dll.WaitForAcquisition()
 
-        
-        data_camera = []
-        self.cam.GetAcquiredData(data_camera)
-        self.data_camera = data_camera
-        print(self.data_camera)
-        print('Snap Complete!')
+        if self.abort_flag == False:
+            data_camera = []
+            self.cam.GetAcquiredData(data_camera)
+            self.data_camera = data_camera
+            print(self.data_camera)
+            print('Snap Complete!')
+            if self.checkBox_AutoSave.isChecked():
+                self.save_pic()
+                if str(self.lineEdit_Browse.text()) == '':
+                    None
+                else:
+                    print('Autosave complete!' + '\n' + "Don't forget to set new file name for next autosave! :D")
+            else:
+                None
+        elif self.abort_flag == True:
+            print('Snap Aborted')
         self.snap_flag = False
+        
+        """
         if str(self.label_Trig_mode.text()) == 'External':
             if self.abort_flag == False:
                 self.snap_thread()
                 
             else:
                 None
-        
+                """
+        self.abort_flag = False
 
 #-- starts thread which calls self.snap_pic -----------------------------------------------------#          
     def snap_thread(self):
@@ -362,22 +379,26 @@ class window_camera(Ui_cam_gui):
             
 #-- saves picture as .txt file -----------------------------------------------------#          
     def save_pic(self):
-        print(self.start_col)
-        print(self.end_col)
-        print(self.start_row)
-        print(self.end_row)
-        width = self.end_col - self.start_col + 1
-        height = self.end_row - self.start_row + 1
-        print(int(width))
-        print(int(height))
-        if str(self.label_Acq_mode.text()) == 'Single Scan':
-            self.cam.SaveAsTxt2(str(self.lineEdit_Browse.text()) + '.txt', 1, int(width), int(height))
+        if str(self.lineEdit_Browse.text()) == '':
+            print('Please set file name and location before saving!')
         
-        elif str(self.label_Acq_mode.text()) == 'Kinetic Scan':
-            self.cam.SaveAsTxt2(str(self.lineEdit_Browse.text()) + '.txt', self.label_no_Kin.text(), int(width), int(height))
+        else:
+            print(self.start_col)
+            print(self.end_col)
+            print(self.start_row)
+            print(self.end_row)
+            width = self.end_col - self.start_col + 1
+            height = self.end_row - self.start_row + 1
+            print(int(width))
+            print(int(height))
+            if str(self.label_Acq_mode.text()) == 'Single Scan':
+                self.cam.SaveAsTxt2(str(self.lineEdit_Browse.text()) + '.txt', 1, int(width), int(height))
             
-        self.save_cam_settings()
-        print('Save Complete!')
+            elif str(self.label_Acq_mode.text()) == 'Kinetic Scan':
+                self.cam.SaveAsTxt2(str(self.lineEdit_Browse.text()) + '.txt', self.label_no_Kin.text(), int(width), int(height))
+                
+            self.save_cam_settings()
+            print('Save Complete!')
 
 
 #-- saves cam setting of snap as .txt file -----------------------------------------------------#                
