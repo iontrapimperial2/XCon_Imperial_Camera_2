@@ -24,6 +24,11 @@ class window_camera(Ui_cam_gui):
         self.end_col = self.doubleSpinBox_End_col.value()
         self.start_row = self.doubleSpinBox_Start_row.value()
         self.end_row = self.doubleSpinBox_End_row.value()
+        
+        #--- sets initial OFF labels to red -----------------------------------------------------------#
+        self.label_Cam_OnOff.setStyleSheet('color: red')
+        self.label_Cooler_OnOff.setStyleSheet('color: red')
+        self.label_Frame_transfer.setStyleSheet('color: red')
 
         #--- flags -----------------------------------------------------------#
         self.cam_flag = False
@@ -67,6 +72,8 @@ class window_camera(Ui_cam_gui):
         self.pushButton_EM_gain_mode.clicked.connect(self.set_EM_gain_mode)
         self.pushButton_set_shutter.clicked.connect(self.set_shutter)
         self.pushButton_Abort.clicked.connect(self.Abort_snap)
+        self.pushButton_Frame_transfer_ON.clicked.connect(self.Frame_Transfer_ON)
+        self.pushButton_Frame_transfer_OFF.clicked.connect(self.Frame_Transfer_OFF)
         
 
         #-- combo boxes-----------------------------------------------------#
@@ -142,6 +149,8 @@ class window_camera(Ui_cam_gui):
             self.label_set_shutter.setText('N/A')
             self.label_Trig_mode.setText('N/A')
             self.label_VSAmp.setText('0 V')
+            self.label_Frame_transfer.setText('OFF')
+            self.label_Frame_transfer.setStyleSheet('color: red')
             
             
         
@@ -268,13 +277,14 @@ class window_camera(Ui_cam_gui):
             
             for i in range(1,int(Kin_no)+1,1): 
                 if self.abort_flag == False:
+                    print(i)
                     for i in range(1, int(accum_no)+1, 1):
                         if self.abort_flag == False:
                             self.cam.dll.WaitForAcquisition()
                             
                         elif self.abort_flag == True:
                             break
-                        print(i)
+                    
                 elif self.abort_flag == True:
                     break
                 
@@ -456,14 +466,28 @@ class window_camera(Ui_cam_gui):
         elif Acq == 'Kinetic Scan':
             self.cam.SetAcquisitionMode(3)
 
-                
+#-- Turn on frame Transfer mode -----------------------------------------------------#                        
+    def Frame_Transfer_ON(self):
+        self.cam.SetFrameTransferMode(1)
+        self.label_Frame_transfer.setText('ON')
+        self.label_Frame_transfer.setStyleSheet('color: green')
+        
 
+#-- Turn off frame Transfer mode -----------------------------------------------------#                        
+    def Frame_Transfer_OFF(self):
+        self.cam.SetFrameTransferMode(0)
+        self.label_Frame_transfer.setText('OFF')
+        self.label_Frame_transfer.setStyleSheet('color: red')
+        
+        
 #-- displays Acquisition mode from previous snap-----------------------------------------------------#            
     def Acq_mode_disp(self):
         self.acquistion_mode = self.cam.AcquisitionMode
         
         if self.acquistion_mode == 1:
             self.label_Acq_mode.setText('Single Scan')
+            self.label_Frame_transfer.setText('OFF')
+            self.label_Frame_transfer.setStyleSheet('color: red')
         elif self.acquistion_mode == 3:
             self.label_Acq_mode.setText('Kinetic Scan')
         else:
