@@ -10,9 +10,13 @@ import numpy as np
 from scipy import stats
 import matplotlib.pyplot as plt
 
-path = r"C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\Gain_test_with_noise\Experiment_1"
-path1 =r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\Gain_test_with_noise\Experiment_2'
-path2 =r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\Gain_test_with_noise\Com'
+#path = r"C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\Gain_test_with_noise\Experiment_1"
+#path1 =r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\Gain_test_with_noise\Experiment_2'
+#path2 =r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\Gain_test_with_noise\Com'
+
+path = r"C:\Users\yudiw\OneDrive\Documents\Imperial\MSc Optics and Photonics\Summer Project\code\python\XCon_Imperial_Camera_2\Gain_test_with_noise\Experiment_1"
+path1 =r'C:\Users\yudiw\OneDrive\Documents\Imperial\MSc Optics and Photonics\Summer Project\code\python\XCon_Imperial_Camera_2\Gain_test_with_noise\Experiment_2'
+path2 =r'C:\Users\yudiw\OneDrive\Documents\Imperial\MSc Optics and Photonics\Summer Project\code\python\XCon_Imperial_Camera_2\Gain_test_with_noise\Com'
 
 
 gain = np.arange(10,310,10)
@@ -63,13 +67,13 @@ plt.figure('Experiment 1')
 
 plt.plot(gain,counts, '.')
 plt.plot (gain, line)
-plt.xlabel('Exposure Time')
+plt.xlabel('EMCCD Gain')
 plt.ylabel('Mean Signal Count per Pixel')
 
 plt.figure('Experiment 2')
 plt.plot(gain,counts1, '.')
 plt.plot (gain, line1)
-plt.xlabel('Exposure Time')
+plt.xlabel('EMCCD Gain')
 plt.ylabel('Mean Signal Count per Pixel')
 
 plt.figure('Commercial')

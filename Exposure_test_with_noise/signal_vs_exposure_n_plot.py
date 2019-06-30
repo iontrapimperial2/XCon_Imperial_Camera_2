@@ -10,10 +10,13 @@ import numpy as np
 from scipy import stats
 import matplotlib.pyplot as plt
 
-path = r"C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\Exposure_test_with_noise\Experiment_1"
-path1 =r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\Exposure_test_with_noise\Experiment_2'
-path2 =r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\Exposure_test_with_noise\Com'
+#path = r"C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\Exposure_test_with_noise\Experiment_1"
+#path1 =r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\Exposure_test_with_noise\Experiment_2'
+#path2 =r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\Exposure_test_with_noise\Com'
 
+path = r"C:\Users\yudiw\OneDrive\Documents\Imperial\MSc Optics and Photonics\Summer Project\code\python\XCon_Imperial_Camera_2\Exposure_test_with_noise\Experiment_1"
+path1 =r'C:\Users\yudiw\OneDrive\Documents\Imperial\MSc Optics and Photonics\Summer Project\code\python\XCon_Imperial_Camera_2\Exposure_test_with_noise\Experiment_2'
+path2 =r'C:\Users\yudiw\OneDrive\Documents\Imperial\MSc Optics and Photonics\Summer Project\code\python\XCon_Imperial_Camera_2\Exposure_test_with_noise\Com'
 
 t = np.arange(0.1,2.1,0.1)
 counts = []
