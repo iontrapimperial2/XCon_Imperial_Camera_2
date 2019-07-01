@@ -426,7 +426,8 @@ class Andor:
 
         for i in range(self.noVSSpeeds):
             self.dll.GetVSSpeed(i,byref(VSSpeed))
-            self.preVSpeeds.append(VSSpeed.value)
+            #self.preVSpeeds.append(VSSpeed.value)
+            self.VSSpeeds.append(VSSpeed.value)
 
     def SetVSSpeed(self, index):
         error = self.dll.SetVSSpeed(index)

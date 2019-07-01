@@ -44,6 +44,7 @@ class window_camera(Ui_cam_gui):
         self.list_preamp_gain = ['1','2','3']
         self.list_EM_gain_mode = ['0','1','2','3']
         self.list_Shutter = ['Fully Auto', 'Permanently Open', 'Permanently Closed']
+        self.list_VSSpeeds = ['0.3', '0.5', '0.9', '1.7', '3.3']
         
         #--- data ------------------------------------------------------------#
         self.data_camera = []
@@ -57,7 +58,7 @@ class window_camera(Ui_cam_gui):
         self.read_mode = None
         self.exp_time = None
         self.EMCCD_Gain= None
-
+        self.VSSpeed = None
        
         #-- Push Buttons -----------------------------------------------------#
         self.pushButton_Cam_On.clicked.connect(self.initialise_thread)
@@ -74,6 +75,7 @@ class window_camera(Ui_cam_gui):
         self.pushButton_Abort.clicked.connect(self.Abort_snap)
         self.pushButton_Frame_transfer_ON.clicked.connect(self.Frame_Transfer_ON)
         self.pushButton_Frame_transfer_OFF.clicked.connect(self.Frame_Transfer_OFF)
+        self.pushButton_VSSpeed.clicked.connect(self.set_VSSpeed)
         
 
         #-- combo boxes-----------------------------------------------------#
@@ -83,6 +85,8 @@ class window_camera(Ui_cam_gui):
         self.comboBox_preamp_gain.addItems(self.list_preamp_gain)
         self.comboBox_EM_gain_mode.addItems(self.list_EM_gain_mode)
         self.comboBox_set_shutter.addItems(self.list_Shutter)
+        self.comboBox_VSSpeed.addItems(self.list_VSSpeeds)
+        
 
 #-- Initialise camera -----------------------------------------------------#
     def initialise_cam(self):
@@ -149,7 +153,7 @@ class window_camera(Ui_cam_gui):
             self.label_set_shutter.setText('N/A')
             self.label_Trig_mode.setText('N/A')
             self.label_VSAmp.setText('0 V')
-            self.label_Frame_transfer.setText('OFF')
+            self.label_Frame_transfer.setText('Frame Transfer OFF')
             self.label_Frame_transfer.setStyleSheet('color: red')
             
             
@@ -428,6 +432,7 @@ class window_camera(Ui_cam_gui):
         m = self.label_End_row.text()
         n = self.label_Trig_mode.text()
         o = self.label_VSAmp.text()
+        p = self.VSSpeed
         current_time = datetime.today()
         data_file = open(str(self.lineEdit_Browse.text()) + '_cam_settings.txt', 'a+') 
         if str(self.label_Acq_mode.text()).casefold() == 'Single Scan'.casefold():
@@ -436,7 +441,8 @@ class window_camera(Ui_cam_gui):
                             + '\n ' + 'Exposure Time: ' + str(d) + '\n ' + 'EMCCD Gain: ' + str(e) 
                             + '\n ' + 'Start Column: ' + str(j) + '\n ' + 'End Column: ' + str(k) 
                             + '\n ' + 'Start Row: ' + str(l) + '\n ' + 'End Row: ' + str(m)
-                            + '\n ' + 'Trigger Mode: ' + str(n) + '\n ' + 'Vertical Clock Voltage Amplitude: ' + str(o))
+                            + '\n ' + 'Trigger Mode: ' + str(n) + '\n ' + 'Vertical Clock Voltage Amplitude: ' + str(o) 
+                            + '\n ' + 'Vertical Shift Speed: ' + str(p) + ' usec')
             data_file.close()
         elif str(self.label_Acq_mode.text()).casefold() == 'Kinetic Scan'.casefold():
             data_file.write('\n ' + '\n ' + str(current_time) + '\n ' + 'Acquisition Mode: ' + str(a)
@@ -446,7 +452,8 @@ class window_camera(Ui_cam_gui):
                             + '\n ' + 'No. of Kinetic Series: ' + str(h) + '\n ' + 'Kinetic Cycle Time: ' + str(i)
                             + '\n ' + 'Start Column: ' + str(j) + '\n ' + 'End Column: ' + str(k) 
                             + '\n ' + 'Start Row: ' + str(l) + '\n ' + 'End Row: ' + str(m)
-                            + '\n ' + 'Trigger Mode: ' + str(n) + '\n ' + 'Vertical Clock Voltage Amplitude: ' + str(o))
+                            + '\n ' + 'Trigger Mode: ' + str(n) + '\n ' + 'Vertical Clock Voltage Amplitude: ' + str(o)
+                            + '\n ' + 'Vertical Shift Speed: ' + str(p) + ' usec')
             data_file.close()
 
 #-- displays the camera setting of previous snap -----------------------------------------------------#              
@@ -469,14 +476,14 @@ class window_camera(Ui_cam_gui):
 #-- Turn on frame Transfer mode -----------------------------------------------------#                        
     def Frame_Transfer_ON(self):
         self.cam.SetFrameTransferMode(1)
-        self.label_Frame_transfer.setText('ON')
+        self.label_Frame_transfer.setText('Frame Transfer ON')
         self.label_Frame_transfer.setStyleSheet('color: green')
         
 
 #-- Turn off frame Transfer mode -----------------------------------------------------#                        
     def Frame_Transfer_OFF(self):
         self.cam.SetFrameTransferMode(0)
-        self.label_Frame_transfer.setText('OFF')
+        self.label_Frame_transfer.setText('Frame Transfer OFF')
         self.label_Frame_transfer.setStyleSheet('color: red')
         
         
@@ -486,7 +493,7 @@ class window_camera(Ui_cam_gui):
         
         if self.acquistion_mode == 1:
             self.label_Acq_mode.setText('Single Scan')
-            self.label_Frame_transfer.setText('OFF')
+            self.label_Frame_transfer.setText('Frame Transfer OFF')
             self.label_Frame_transfer.setStyleSheet('color: red')
         elif self.acquistion_mode == 3:
             self.label_Acq_mode.setText('Kinetic Scan')
@@ -540,6 +547,22 @@ class window_camera(Ui_cam_gui):
             self.cam.SetTriggerMode(10)
         
 
+#-- sets vertical shift speed (VSSpeed) from user input and displays VSSpeed on label -----------------------------------------------------#        
+    def set_VSSpeed(self):
+        self.VSSpeed = str(self.comboBox_VSSpeed.currentText())
+        self.label_VSSpeed.setText(self.VSSpeed + ' \u03BCs')
+        if self.VSSpeed == '0.3':    
+            self.cam.SetVSSpeed(0)
+        elif self.VSSpeed == '0.5':
+            self.cam.SetVSSpeed(1)
+        elif self.VSSpeed == '0.9':
+            self.cam.SetVSSpeed(2)
+        elif self.VSSpeed == '1.7':
+            self.cam.SetVSSpeed(3)
+        elif self.VSSpeed == '3.3':
+            self.cam.SetVSSpeed(4)
+            
+            
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
     
