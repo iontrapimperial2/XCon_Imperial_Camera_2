@@ -350,7 +350,7 @@ class Ui_cam_gui(object):
         self.doubleSpinBox_Exp_Time.setFont(font)
         self.doubleSpinBox_Exp_Time.setDecimals(3)
         self.doubleSpinBox_Exp_Time.setMinimum(0.0)
-        self.doubleSpinBox_Exp_Time.setMaximum(5.0)
+        self.doubleSpinBox_Exp_Time.setMaximum(10.0)
         self.doubleSpinBox_Exp_Time.setSingleStep(0.001)
         self.doubleSpinBox_Exp_Time.setObjectName("doubleSpinBox_Exp_Time")
         self.gridLayout_7.addWidget(self.doubleSpinBox_Exp_Time, 0, 1, 1, 1)
