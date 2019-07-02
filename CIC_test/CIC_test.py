@@ -18,6 +18,12 @@ path4 =r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\C
 path5 =r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\CIC_test\Experiment_5'
 path6 =r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\CIC_test\Experiment_6'
 path7 =r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\CIC_test\Experiment_7'
+path8 =r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\CIC_test\Experiment_8'
+path9 =r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\CIC_test\Experiment_9'
+path10 =r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\CIC_test\Experiment_10'
+path11 =r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\CIC_test\Experiment_11'
+path12 =r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\CIC_test\Com_1'
+path13 =r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\CIC_test\Experiment_12'
 
 #path = r"C:\Users\yudiw\OneDrive\Documents\Imperial\MSc Optics and Photonics\Summer Project\code\python\XCon_Imperial_Camera_2\CIC_test"
 #path1 =r'C:\Users\yudiw\OneDrive\Documents\Imperial\MSc Optics and Photonics\Summer Project\code\python\XCon_Imperial_Camera_2\CIC_test\Experiment_2'
@@ -33,6 +39,12 @@ counts4 = []
 counts5 = []
 counts6 = []
 counts7 = []
+counts8 = []
+counts9 = []
+counts10 = []
+counts11 = []
+counts12 = []
+counts13 = []
 
 for i in range(1,6,1):
     df = pd.read_csv(path + "\\test" + str(i) + ".txt", header = None)
@@ -90,6 +102,46 @@ for i in range(1,6,1):
 
     a = sum(np.array(df).ravel())/(512**2)
     counts7.append(a.tolist())
+    
+for i in range(1,6,1):
+    df = pd.read_csv(path8 + "\\test" + str(i) + ".txt", header = None)
+    df.drop(df.columns[-1], axis=1, inplace=True)  #delete last column
+    df.drop(df.columns[0], axis=1, inplace=True)           #delete first column
+
+    a = sum(np.array(df).ravel())/(512**2)
+    counts8.append(a.tolist())
+    
+for i in range(1,6,1):
+    df = pd.read_csv(path9 + "\\test" + str(i) + ".txt", header = None)
+    df.drop(df.columns[-1], axis=1, inplace=True)  #delete last column
+    df.drop(df.columns[0], axis=1, inplace=True)           #delete first column
+
+    a = sum(np.array(df).ravel())/(512**2)
+    counts9.append(a.tolist())
+
+for i in range(1,6,1):
+    df = pd.read_csv(path10 + "\\test" + str(i) + ".txt", header = None)
+    df.drop(df.columns[-1], axis=1, inplace=True)  #delete last column
+    df.drop(df.columns[0], axis=1, inplace=True)           #delete first column
+
+    a = sum(np.array(df).ravel())/(512**2)
+    counts10.append(a.tolist())
+
+for i in range(1,6,1):
+    df = pd.read_csv(path11 + "\\test" + str(i) + ".txt", header = None)
+    df.drop(df.columns[-1], axis=1, inplace=True)  #delete last column
+    df.drop(df.columns[0], axis=1, inplace=True)           #delete first column
+
+    a = sum(np.array(df).ravel())/(512**2)
+    counts11.append(a.tolist())
+
+for i in range(1,6,1):
+    df = pd.read_csv(path13 + "\\test" + str(i) + ".txt", header = None)
+    df.drop(df.columns[-1], axis=1, inplace=True)  #delete last column
+    df.drop(df.columns[0], axis=1, inplace=True)           #delete first column
+
+    a = sum(np.array(df).ravel())/(512**2)
+    counts13.append(a.tolist())
 
 for i in range(1,6,1):
     df = pd.read_csv(path2 + "\\test" + str(i) + ".asc", header = None)
@@ -99,69 +151,105 @@ for i in range(1,6,1):
     a = sum(np.array(df).ravel())/(512**2)
     counts2.append(a.tolist())
  
-'''
-slope, intercept, r_value, p_value, std_err = stats.linregress(VSSpeeds,counts)
-slope1, intercept1, r_value1, p_value1, std_err1 = stats.linregress(VSSpeeds,counts1)
-slope2, intercept2, r_value2, p_value2, std_err2 = stats.linregress(VSSpeeds,counts2)
+for i in range(1,6,1):
+    df = pd.read_csv(path12 + "\\test" + str(i) + ".asc", header = None)
+    df.drop(df.columns[-1], axis=1, inplace=True)  #delete last column
+    df.drop(df.columns[0], axis=1, inplace=True)           #delete first column
 
-line = slope*VSSpeeds+intercept
-line1 = slope1*VSSpeeds+intercept1
-line2 = slope2*VSSpeeds+intercept2
-'''
+    a = sum(np.array(df).ravel())/(512**2)
+    counts12.append(a.tolist())
 
-
-
-
-
+"""
 plt.figure('Experiment 1')
 
 plt.plot(VSSpeeds,counts, '.')
-#plt.plot (VSSpeeds, line)
+plt.title('Vertical Clock Voltage Amplitude +2V')
 plt.xlabel('Vertical Shift speed/ \u03BCs')
 plt.ylabel('Mean Signal Count per Pixel')
 
 plt.figure('Experiment 2')
+plt.title('Vertical Clock Voltage Amplitude +2V')
 plt.plot(VSSpeeds,counts1, '.')
-#plt.plot (VSSpeeds, line1)
 plt.xlabel('Vertical Shift speed/ \u03BCs')
 plt.ylabel('Mean Signal Count per Pixel')
 
-plt.figure('Commercial')
+plt.figure('Commercial 1')
+plt.title('Vertical Clock Voltage Amplitude +2V')
 plt.plot(VSSpeeds,counts2, '.')
-#plt.plot (VSSpeeds, line2)
 plt.xlabel('Vertical Shift speed/ \u03BCs')
 plt.ylabel('Mean Signal Count per Pixel')
 
 plt.figure('Experiment 3')
+plt.title('Vertical Clock Voltage Amplitude +3V')
 plt.plot(VSSpeeds,counts3, '.')
-#plt.plot (VSSpeeds, line1)
 plt.xlabel('Vertical Shift speed/ \u03BCs')
 plt.ylabel('Mean Signal Count per Pixel')
 
 plt.figure('Experiment 4')
+plt.title('Vertical Clock Voltage Amplitude +3V')
 plt.plot(VSSpeeds,counts4, '.')
-#plt.plot (VSSpeeds, line1)
 plt.xlabel('Vertical Shift speed/ \u03BCs')
 plt.ylabel('Mean Signal Count per Pixel')
 
 plt.figure('Experiment 5')
+plt.title('Vertical Clock Voltage Amplitude +4V')
 plt.plot(VSSpeeds,counts5, '.')
-#plt.plot (VSSpeeds, line1)
 plt.xlabel('Vertical Shift speed/ \u03BCs')
 plt.ylabel('Mean Signal Count per Pixel')
 
 plt.figure('Experiment 6')
+plt.title('Vertical Clock Voltage Amplitude 0V')
 plt.plot(VSSpeeds,counts6, '.')
-#plt.plot (VSSpeeds, line1)
 plt.xlabel('Vertical Shift speed/ \u03BCs')
 plt.ylabel('Mean Signal Count per Pixel')
 
 plt.figure('Experiment 7')
+plt.title('Vertical Clock Voltage Amplitude 0V')
 plt.plot(VSSpeeds,counts7, '.')
-#plt.plot (VSSpeeds, line1)
 plt.xlabel('Vertical Shift speed/ \u03BCs')
 plt.ylabel('Mean Signal Count per Pixel')
 
+plt.figure('Experiment 8')
+plt.title('Vertical Clock Voltage Amplitude +1V')
+plt.plot(VSSpeeds,counts8, '.')
+plt.xlabel('Vertical Shift speed/ \u03BCs')
+plt.ylabel('Mean Signal Count per Pixel')
+
+plt.figure('Experiment 9')
+plt.title('Vertical Clock Voltage Amplitude +2V')
+plt.plot(VSSpeeds,counts9, '.')
+plt.xlabel('Vertical Shift speed/ \u03BCs')
+plt.ylabel('Mean Signal Count per Pixel')
+
+plt.figure('Experiment 10')
+plt.title('Vertical Clock Voltage Amplitude 0V')
+plt.plot(VSSpeeds,counts10, '.')
+plt.xlabel('Vertical Shift speed/ \u03BCs')
+plt.ylabel('Mean Signal Count per Pixel')
+
+plt.figure('Experiment 11')
+plt.title('Vertical Clock Voltage Amplitude +1V')
+plt.plot(VSSpeeds,counts11, '.')
+plt.xlabel('Vertical Shift speed/ \u03BCs')
+plt.ylabel('Mean Signal Count per Pixel')
+
+plt.figure('Commercial 2')
+plt.title('Vertical Clock Voltage Amplitude 0V')
+plt.plot(VSSpeeds,counts12, '.')
+plt.xlabel('Vertical Shift speed/ \u03BCs')
+plt.ylabel('Mean Signal Count per Pixel')
+"""
+
+plt.figure('Comparison')
+plt.title('Noise vs. Vertical Shift Speed for' + '\n ' + 'Vertical Clock Voltage Amplitudes 0 V to +4 V')
+line1, = plt.plot(VSSpeeds,counts7)
+line2, = plt.plot(VSSpeeds,counts11)
+line3, = plt.plot(VSSpeeds,counts9)
+line4, = plt.plot(VSSpeeds,counts4)
+line5, = plt.plot(VSSpeeds,counts5)
+plt.legend((line1, line2, line3, line4, line5), ('0 V', '+1 V', '+2 V', '+3 V', '+4 V'))
+plt.xlabel('Vertical Shift speed/ \u03BCs')
+plt.ylabel('Mean Signal Count per Pixel')
 #plt.plot(t, np.array(counts) - np.array(counts1), '.')
 
 plt.show()
