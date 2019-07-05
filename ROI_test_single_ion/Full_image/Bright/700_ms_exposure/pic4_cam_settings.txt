@@ -1,0 +1,15 @@
+
+ 
+ 2019-07-04 10:45:37.579388
+ Acquisition Mode: Single Scan
+ Read Mode: Image
+ Temperature: -70 °C
+ Exposure Time: 0.7 s
+ EMCCD Gain: 300
+ Start Column: 1
+ End Column: 512
+ Start Row: 1
+ End Row: 512
+ Trigger Mode: Internal
+ Vertical Clock Voltage Amplitude: 2 V
+ Vertical Shift Speed: 0.3 usec
