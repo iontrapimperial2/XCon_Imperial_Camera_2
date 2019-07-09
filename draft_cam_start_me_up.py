@@ -29,6 +29,7 @@ class window_camera(Ui_cam_gui):
         self.label_Cam_OnOff.setStyleSheet('color: red')
         self.label_Cooler_OnOff.setStyleSheet('color: red')
         self.label_Frame_transfer.setStyleSheet('color: red')
+        self.label_Adv_Gain.setStyleSheet('color: red')
 
         #--- flags -----------------------------------------------------------#
         self.cam_flag = False
@@ -76,6 +77,8 @@ class window_camera(Ui_cam_gui):
         self.pushButton_Frame_transfer_ON.clicked.connect(self.Frame_Transfer_ON)
         self.pushButton_Frame_transfer_OFF.clicked.connect(self.Frame_Transfer_OFF)
         self.pushButton_VSSpeed.clicked.connect(self.set_VSSpeed)
+        self.pushButton_Adv_Gain_Enable.clicked.connect(self.Adv_gain_Enable)
+        self.pushButton_Adv_Gain_Disable.clicked.connect(self.Adv_gain_Disable)
         
 
         #-- combo boxes-----------------------------------------------------#
@@ -131,6 +134,7 @@ class window_camera(Ui_cam_gui):
             self.snap_flag = False
             self.abort_flag = False
             self.cam.CoolerOFF()
+            self.cam.SetEMAdvanced(0)        
             self.cam.ShutDown()            
             self.label_Cam_OnOff.setText('OFF')
             self.label_Cam_OnOff.setStyleSheet('color: red')
@@ -155,6 +159,9 @@ class window_camera(Ui_cam_gui):
             self.label_VSAmp.setText('0 V')
             self.label_Frame_transfer.setText('Frame Transfer OFF')
             self.label_Frame_transfer.setStyleSheet('color: red')
+            self.label_Adv_Gain.setText('Advanced Gain OFF')
+            self.label_Adv_Gain.setStyleSheet('color: red')
+            self.doubleSpinBox_EMCCD_Gain.setMaximum(300.0)
             
             
         
@@ -239,6 +246,22 @@ class window_camera(Ui_cam_gui):
         mode = int(self.comboBox_EM_gain_mode.currentText())
         self.label_EM_gain_mode.setText(str(mode))
         self.cam.SetEMCCDGainMode(mode)
+        
+
+#-- Enable Higher EM gain -----------------------------------------------------#     
+    def Adv_gain_Enable(self):
+        self.cam.SetEMAdvanced(1)
+        self.doubleSpinBox_EMCCD_Gain.setMaximum(2837.0)
+        self.label_Adv_Gain.setText('Advanced Gain ON')
+        self.label_Adv_Gain.setStyleSheet('color: green')
+        
+
+#-- Disable Higher EM gain -----------------------------------------------------#     
+    def Adv_gain_Disable(self):
+        self.cam.SetEMAdvanced(0)
+        self.doubleSpinBox_EMCCD_Gain.setMaximum(300.0)
+        self.label_Adv_Gain.setText('Advanced Gain OFF')
+        self.label_Adv_Gain.setStyleSheet('color: red')
         
 
 #-- sets shutter mode -----------------------------------------------------#      

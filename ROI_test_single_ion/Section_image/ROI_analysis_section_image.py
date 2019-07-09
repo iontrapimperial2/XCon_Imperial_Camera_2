@@ -118,11 +118,57 @@ df23.drop(df23.columns[-1], axis=1, inplace=True)  #delete last column
 df23.drop(df23.columns[0], axis=1, inplace=True)           #delete first column
 
 
+df24 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\Bright_section\Higher_gain\50_ms_exposure\pic8.txt', header = None)
+df24.drop(df24.columns[-1], axis=1, inplace=True)  #delete last column
+df24.drop(df24.columns[0], axis=1, inplace=True)           #delete first column
 
+df25 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\Dark_section\Higher_gain\50_ms_exposure\pic10.txt', header = None)
+df25.drop(df25.columns[-1], axis=1, inplace=True)  #delete last column
+df25.drop(df25.columns[0], axis=1, inplace=True)           #delete first column
+
+
+df26 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\Bright_section\Higher_gain\40_ms_exposure\pic1.txt', header = None)
+df26.drop(df26.columns[-1], axis=1, inplace=True)  #delete last column
+df26.drop(df26.columns[0], axis=1, inplace=True)           #delete first column
+
+df27 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\Dark_section\Higher_gain\40_ms_exposure\pic7.txt', header = None)
+df27.drop(df27.columns[-1], axis=1, inplace=True)  #delete last column
+df27.drop(df27.columns[0], axis=1, inplace=True)           #delete first column
+
+
+df28 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\Bright_section\Higher_gain\30_ms_exposure\pic1.txt', header = None)
+df28.drop(df28.columns[-1], axis=1, inplace=True)  #delete last column
+df28.drop(df28.columns[0], axis=1, inplace=True)           #delete first column
+
+df29 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\Dark_section\Higher_gain\30_ms_exposure\pic1.txt', header = None)
+df29.drop(df29.columns[-1], axis=1, inplace=True)  #delete last column
+df29.drop(df29.columns[0], axis=1, inplace=True)           #delete first column
+
+
+df30 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\Bright_section\Higher_gain\20_ms_exposure\pic1.txt', header = None)
+df30.drop(df30.columns[-1], axis=1, inplace=True)  #delete last column
+df30.drop(df30.columns[0], axis=1, inplace=True)           #delete first column
+
+df31 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\Dark_section\Higher_gain\20_ms_exposure\pic1.txt', header = None)
+df31.drop(df31.columns[-1], axis=1, inplace=True)  #delete last column
+df31.drop(df31.columns[0], axis=1, inplace=True)           #delete first column
+
+
+df32 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\Bright_section\Higher_gain\10_ms_exposure\pic1.txt', header = None)
+df32.drop(df32.columns[-1], axis=1, inplace=True)  #delete last column
+df32.drop(df32.columns[0], axis=1, inplace=True)           #delete first column
+
+df33 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\Dark_section\Higher_gain\10_ms_exposure\pic1.txt', header = None)
+df33.drop(df33.columns[-1], axis=1, inplace=True)  #delete last column
+df33.drop(df33.columns[0], axis=1, inplace=True)           #delete first column
+
+
+
+'''
 plt.figure('5 s Exposure Bright Ion')
 plt.title('5 s Exposure Bright Ion', fontsize=16)
 plt.imshow(df, origin='lower')
-'''
+
 plt.figure('5 s Exposure Dark Ion')
 plt.title('5 s Exposure Dark Ion', fontsize=16)
 plt.imshow(df1)
@@ -135,6 +181,7 @@ plt.figure('2 s Exposure Dark Ion')
 plt.title('2 s Exposure Dark Ion', fontsize=16)
 plt.imshow(df3)
 '''
+#5 sec
 list1 = np.array(df).ravel().tolist()
 list1.sort(reverse = True)
 list2 = sorted(list1)
@@ -146,7 +193,7 @@ list4.sort(reverse = True)
 list5 = sorted(list4)
 list6 = list(reversed(list5))
 
-
+#2 sec
 list7 = np.array(df2).ravel().tolist()
 list7.sort(reverse = True)
 list8 = sorted(list7)
@@ -158,7 +205,7 @@ list10.sort(reverse = True)
 list11 = sorted(list10)
 list12 = list(reversed(list11))
 
-
+#1 sec
 list13 = np.array(df4).ravel().tolist()
 list13.sort(reverse = True)
 list14 = sorted(list13)
@@ -170,7 +217,7 @@ list16.sort(reverse = True)
 list17 = sorted(list16)
 list18 = list(reversed(list17))
 
-
+#0.9 sec
 list19 = np.array(df6).ravel().tolist()
 list19.sort(reverse = True)
 list20 = sorted(list19)
@@ -182,7 +229,7 @@ list22.sort(reverse = True)
 list23 = sorted(list22)
 list24 = list(reversed(list23))
 
-
+#0.8 sec
 list25 = np.array(df8).ravel().tolist()
 list25.sort(reverse = True)
 list26 = sorted(list25)
@@ -194,7 +241,7 @@ list28.sort(reverse = True)
 list29 = sorted(list28)
 list30 = list(reversed(list29))
 
-
+#0.7 sec
 list31 = np.array(df10).ravel().tolist()
 list31.sort(reverse = True)
 list32 = sorted(list31)
@@ -206,7 +253,7 @@ list34.sort(reverse = True)
 list35 = sorted(list34)
 list36 = list(reversed(list35))
 
-
+#0.6 sec
 list37 = np.array(df12).ravel().tolist()
 list37.sort(reverse = True)
 list38 = sorted(list37)
@@ -218,7 +265,7 @@ list40.sort(reverse = True)
 list41 = sorted(list40)
 list42 = list(reversed(list41))
 
-
+#0.5 sec
 list43 = np.array(df14).ravel().tolist()
 list43.sort(reverse = True)
 list44 = sorted(list43)
@@ -230,7 +277,7 @@ list46.sort(reverse = True)
 list47 = sorted(list46)
 list48 = list(reversed(list47))
 
-
+#0.4 sec
 list49 = np.array(df16).ravel().tolist()
 list49.sort(reverse = True)
 list50 = sorted(list49)
@@ -242,7 +289,7 @@ list52.sort(reverse = True)
 list53 = sorted(list52)
 list54 = list(reversed(list53))
 
-
+#0.3 sec
 list55 = np.array(df18).ravel().tolist()
 list55.sort(reverse = True)
 list56 = sorted(list55)
@@ -254,7 +301,7 @@ list58.sort(reverse = True)
 list59 = sorted(list58)
 list60 = list(reversed(list59))
 
-
+#0.2 sec
 list61 = np.array(df20).ravel().tolist()
 list61.sort(reverse = True)
 list62 = sorted(list61)
@@ -266,7 +313,7 @@ list64.sort(reverse = True)
 list65 = sorted(list64)
 list66 = list(reversed(list65))
 
-
+#0.1 sec
 list67 = np.array(df22).ravel().tolist()
 list67.sort(reverse = True)
 list68 = sorted(list67)
@@ -277,6 +324,134 @@ list70 = np.array(df23).ravel().tolist()
 list70.sort(reverse = True)
 list71 = sorted(list70)
 list72 = list(reversed(list71))
+
+#50 ms
+list73 = np.array(df24).ravel().tolist()
+list73.sort(reverse = True)
+list74 = sorted(list73)
+list75 = list(reversed(list74))
+
+
+list76 = np.array(df25).ravel().tolist()
+list76.sort(reverse = True)
+list77 = sorted(list76)
+list78 = list(reversed(list77))
+
+#40 ms
+list79 = np.array(df26).ravel().tolist()
+list79.sort(reverse = True)
+list80 = sorted(list79)
+list81 = list(reversed(list80))
+
+
+list82 = np.array(df27).ravel().tolist()
+list82.sort(reverse = True)
+list83 = sorted(list82)
+list84 = list(reversed(list83))
+
+
+list85 = np.array(df28).ravel().tolist()
+list85.sort(reverse = True)
+list86 = sorted(list85)
+list87 = list(reversed(list86))
+
+
+list88 = np.array(df29).ravel().tolist()
+list88.sort(reverse = True)
+list89 = sorted(list88)
+list90 = list(reversed(list89))
+
+
+list91 = np.array(df30).ravel().tolist()
+list91.sort(reverse = True)
+list92 = sorted(list91)
+list93 = list(reversed(list92))
+
+
+list94 = np.array(df31).ravel().tolist()
+list94.sort(reverse = True)
+list95 = sorted(list94)
+list96 = list(reversed(list95))
+
+
+list97 = np.array(df32).ravel().tolist()
+list97.sort(reverse = True)
+list98 = sorted(list97)
+list99 = list(reversed(list98))
+
+
+list100 = np.array(df33).ravel().tolist()
+list100.sort(reverse = True)
+list101 = sorted(list100)
+list102 = list(reversed(list101))
+
+five_sec_b_mean = np.mean(list3[:9])
+five_sec_d_mean = np.mean(list4)
+five_sec_dif = five_sec_b_mean - five_sec_d_mean
+
+two_sec_b_mean = np.mean(list9[:9])
+two_sec_d_mean = np.mean(list10)
+two_sec_dif = two_sec_b_mean - two_sec_d_mean
+
+one_sec_b_mean = np.mean(list15[:9])
+one_sec_d_mean = np.mean(list16)
+one_sec_dif = one_sec_b_mean - one_sec_d_mean
+
+ninehundred_ms_b_mean = np.mean(list21[:9])
+ninehundred_ms_d_mean = np.mean(list22)
+ninehundred_ms_dif = ninehundred_ms_b_mean - ninehundred_ms_d_mean
+
+eighthundred_ms_b_mean = np.mean(list27[:9])
+eighthundred_ms_d_mean = np.mean(list28)
+eighthundred_ms_dif = eighthundred_ms_b_mean - eighthundred_ms_d_mean
+
+sevenhundred_ms_b_mean = np.mean(list33[:9])
+sevenhundred_ms_d_mean = np.mean(list34)
+sevenhundred_ms_dif = sevenhundred_ms_b_mean - sevenhundred_ms_d_mean
+
+sixhundred_ms_b_mean = np.mean(list39[:9])
+sixhundred_ms_d_mean = np.mean(list40)
+sixhundred_ms_dif = sixhundred_ms_b_mean - sixhundred_ms_d_mean
+
+fivehundred_ms_b_mean = np.mean(list45[:9])
+fivehundred_ms_d_mean = np.mean(list46)
+fivehundred_ms_dif = fivehundred_ms_b_mean - fivehundred_ms_d_mean
+
+fourhundred_ms_b_mean = np.mean(list51[:9])
+fourhundred_ms_d_mean = np.mean(list52)
+fourhundred_ms_dif = fourhundred_ms_b_mean - fourhundred_ms_d_mean
+
+threehundred_ms_b_mean = np.mean(list57[:9])
+threehundred_ms_d_mean = np.mean(list58)
+threehundred_ms_dif = threehundred_ms_b_mean - threehundred_ms_d_mean
+
+twohundred_ms_b_mean = np.mean(list63[:9])
+twohundred_ms_d_mean = np.mean(list64)
+twohundred_ms_dif = twohundred_ms_b_mean - twohundred_ms_d_mean
+
+onehundred_ms_b_mean = np.mean(list69[:9])
+onehundred_ms_d_mean = np.mean(list70)
+onehundred_ms_dif = onehundred_ms_b_mean - onehundred_ms_d_mean
+
+fifty_ms_b_mean = np.mean(list75[:9])
+fifty_ms_d_mean = np.mean(list76)
+fifty_ms_dif = fifty_ms_b_mean - fifty_ms_d_mean
+
+fourty_ms_b_mean = np.mean(list81[:9])
+fourty_ms_d_mean = np.mean(list82)
+fourty_ms_dif = fourty_ms_b_mean - fourty_ms_d_mean
+
+mean = [five_sec_dif, two_sec_dif, one_sec_dif, ninehundred_ms_dif, eighthundred_ms_dif, sevenhundred_ms_dif,
+        sixhundred_ms_dif,fivehundred_ms_dif, fourhundred_ms_dif, threehundred_ms_dif, twohundred_ms_dif,
+        onehundred_ms_dif, fifty_ms_dif, fourty_ms_dif]
+
+t = [5,2,1,0.9,0.8,0.7,0.6,0.5,0.4,0.3,0.2,0.1,0.05,0.04]
+
+plt.figure('Difference between mean bright ion and dark ion reading vs Exposure time')
+plt.title('Difference between mean bright ion and dark ion reading vs Exposure time', fontsize=16)
+plt.plot(t,mean,'.')
+plt.ylabel('Count reading')
+plt.xlabel('Exposure time/s')
 
 
 '''
@@ -328,28 +503,28 @@ ax1.set_ylim((0,16))
 ax1.set_aspect('equal')
 #fig1.show()
 #print(data)
- 
- 
+  
+
 r2 = []
 c2 = []
-a2 = list27[:122]
+a2 = list81[:10]
 
     
 for j in a2:
-    for row in range(df8.shape[0]): 
-        for col in range(df8.shape[1]):
+    for row in range(df26.shape[0]): 
+        for col in range(df26.shape[1]):
             
-            if df8.iat[row,col] == j:
+            if df26.iat[row,col] == j:
                 print(row, col)
                 r2.append(row)
                 c2.append(col)
 
 #data1 = c1, r1
-fig2 = plt.figure('Brightest pixels for 16x16 image at 0.8 s Exposure')
+fig2 = plt.figure('Brightest pixels for 12x12 image at 40 ms Exposure at 1800 gain')
 ax2 = fig2.add_subplot(111)
 ax2.plot(c2,r2, '.')
-ax2.set_xlim((0,16))
-ax2.set_ylim((0,16))
+ax2.set_xlim((0,12))
+ax2.set_ylim((0,12))
 ax2.set_aspect('equal')
 '''
 
@@ -359,7 +534,7 @@ ax2.set_aspect('equal')
 '''
 plt.figure('Histogram for 5 s Exposure for 16x16 section')
 plt.title('Bright and Dark Histogram overlap: 5 s Exposure for 16x16 section', fontsize=16)
-plt.hist(list3[:194], bins = 200)
+plt.hist(list3, bins = 200)#[:194]
 plt.hist(list6, bins = 200)
 
 plt.figure('Histogram for 2 s Exposure for 16x16 section')
@@ -416,8 +591,33 @@ plt.figure('Histogram for 0.1 s Exposure for 16x16 section')
 plt.title('Bright and Dark Histogram overlap: 0.1 s Exposure for 16x16 section', fontsize=16)
 plt.hist(list69[:45], bins = 200)
 plt.hist(list72[:100], bins = 200)
-'''
-'''
+
+plt.figure('Histogram for 50 ms Exposure for 12x12 section at 1800 gain')
+plt.title('Bright and Dark Histogram overlap: 50 ms Exposure for 12x12 section at 1800 gain', fontsize=16)
+plt.hist(list75[:19], bins = 150)#
+plt.hist(list78, bins = 150)
+
+plt.figure('Histogram for 40 ms Exposure for 12x12 section at 1800 gain')
+plt.title('Bright and Dark Histogram overlap: 40 ms Exposure for 12x12 section at 1800 gain', fontsize=16)
+plt.hist(list81[:10], bins = 150)
+plt.hist(list84, bins = 150)
+
+plt.figure('Histogram for 30 ms Exposure for 12x12 section at 1800 gain')
+plt.title('Bright and Dark Histogram overlap: 30 ms Exposure for 12x12 section at 1800 gain', fontsize=16)
+plt.hist(list87, bins = 150)
+plt.hist(list90, bins = 150)
+
+plt.figure('Histogram for 20 ms Exposure for 12x12 section at 1800 gain')
+plt.title('Bright and Dark Histogram overlap: 20 ms Exposure for 12x12 section at 1800 gain', fontsize=16)
+plt.hist(list93, bins = 150)
+plt.hist(list96, bins = 150)
+
+plt.figure('Histogram for 10 ms Exposure for 12x12 section at 1800 gain')
+plt.title('Bright and Dark Histogram overlap: 10 ms Exposure for 12x12 section at 1800 gain', fontsize=16)
+plt.hist(list99, bins = 150)
+plt.hist(list102, bins = 150)
+
+
 t = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9,1.0, 2.0, 5.0]
 n = [45,57,103,108,133,118,118,122,111,137,152,194]
 
