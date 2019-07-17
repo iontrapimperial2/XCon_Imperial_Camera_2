@@ -1,0 +1,1 @@
+"C:\Users\iontrap\AppData\Local\Programs\Python\Python37\python.exe" "C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\draft_cam_start_me_up.py"

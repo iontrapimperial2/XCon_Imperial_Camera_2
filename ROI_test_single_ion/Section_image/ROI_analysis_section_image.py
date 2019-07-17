@@ -446,7 +446,7 @@ mean = [five_sec_dif, two_sec_dif, one_sec_dif, ninehundred_ms_dif, eighthundred
         onehundred_ms_dif, fifty_ms_dif, fourty_ms_dif]
 
 t = [5,2,1,0.9,0.8,0.7,0.6,0.5,0.4,0.3,0.2,0.1,0.05,0.04]
-
+'''
 plt.figure('Difference between mean bright ion and dark ion reading vs Exposure time')
 plt.title('Difference between mean bright ion and dark ion reading vs Exposure time', fontsize=16)
 plt.plot(t,mean,'.')
@@ -454,7 +454,7 @@ plt.ylabel('Count reading')
 plt.xlabel('Exposure time/s')
 
 
-'''
+
 r = []
 c = []
 a = list3[:194]
@@ -503,18 +503,18 @@ ax1.set_ylim((0,16))
 ax1.set_aspect('equal')
 #fig1.show()
 #print(data)
-  
+'''  
 
 r2 = []
 c2 = []
-a2 = list81[:10]
+a2 = list75[:19]
 
     
 for j in a2:
-    for row in range(df26.shape[0]): 
-        for col in range(df26.shape[1]):
+    for row in range(df24.shape[0]): 
+        for col in range(df24.shape[1]):
             
-            if df26.iat[row,col] == j:
+            if df24.iat[row,col] == j:
                 print(row, col)
                 r2.append(row)
                 c2.append(col)
@@ -526,7 +526,7 @@ ax2.plot(c2,r2, '.')
 ax2.set_xlim((0,12))
 ax2.set_ylim((0,12))
 ax2.set_aspect('equal')
-'''
+
 
                     
 
