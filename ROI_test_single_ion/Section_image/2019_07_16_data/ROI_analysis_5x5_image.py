@@ -2,7 +2,7 @@
 """
 Created on Sun Jun  9 16:45:08 2019
 
-@author: IonTrap/JMHeinrich
+@author: IonTrap/JMHeinrich, YWu
 """
    
 import pandas as pd
@@ -87,8 +87,8 @@ df15.drop(df15.columns[0], axis=1, inplace=True)           #delete first column
 
 
 '''
-plt.figure('5 s Exposure Bright Ion')
-plt.title('5 s Exposure Bright Ion', fontsize=16)
+plt.figure('1 s Exposure Bright Ion')
+plt.title('1 s Exposure Bright Ion', fontsize=16)
 plt.imshow(df, origin='lower')
 
 plt.figure('5 s Exposure Dark Ion')
@@ -201,9 +201,9 @@ list48 = list(reversed(list47))
 
 
 
-l1 = [0,1,2,3]
-l2 = [1,2,3,4]
-''''''
+l1 = [1,2,3]
+l2 = [1,2,3]
+'''
 #bright
 a = np.mean([df.iat[i,j] for i in l1 for j in l2])     #1 sec
 b = np.mean([df2.iat[i,j] for i in l1 for j in l2])    #0.5 sec
@@ -229,12 +229,14 @@ diff = [a-a1,b-b1,c-c1,d-d1,e-e1,f-f1,g-g1,h-h1]
 t = [1,0.5,0.1,0.05,0.04,0.03,0.02,0.01]
 
 
-plt.figure('Difference between mean bright ion and dark ion reading vs Exposure time with 4x4 ROI')
-plt.title('Difference between mean bright ion and dark ion reading vs Exposure time with 4x4 ROI', fontsize=20)
-plt.plot(t,diff,'.')
-plt.ylabel('Count reading')
-plt.xlabel('Exposure time/s')
-
+fig = plt.figure('Difference between mean bright ion and dark ion reading vs Exposure time with 3x3 ROI')
+fig.suptitle('Difference between mean bright ion and dark ion reading vs Exposure time with 3x3 ROI', fontsize=20)
+axes = fig.add_subplot(111)
+axes.plot(t,diff,'.')
+axes.tick_params(axis = 'both', labelsize =16)
+plt.ylabel('Count reading', fontsize=18)
+plt.xlabel('Exposure time/s', fontsize=18)
+'''
 '''
 #1 sec
 r = []
@@ -257,6 +259,9 @@ ax = fig.add_subplot(111)
 ax.plot(c,r, '.')
 ax.set_xlim((0,5))
 ax.set_ylim((0,5))
+plt.xlabel('x',fontsize=18)
+plt.ylabel('y',fontsize=18)
+ax.tick_params(axis='both', labelsize = 16)
 ax.set_aspect('equal')
 
 
@@ -282,6 +287,9 @@ ax1 = fig1.add_subplot(111)
 ax1.plot(c1,r1, '.')
 ax1.set_xlim((0,5))
 ax1.set_ylim((0,5))
+plt.xlabel('x',fontsize=18)
+plt.ylabel('y',fontsize=18)
+ax1.tick_params(axis='both', labelsize = 16)
 ax1.set_aspect('equal')
 
   
@@ -307,6 +315,9 @@ ax2 = fig2.add_subplot(111)
 ax2.plot(c2,r2, '.')
 ax2.set_xlim((0,5))
 ax2.set_ylim((0,5))
+plt.xlabel('x',fontsize=18)
+plt.ylabel('y',fontsize=18)
+ax2.tick_params(axis='both', labelsize = 16)
 ax2.set_aspect('equal')
 
 
@@ -332,6 +343,9 @@ ax3 = fig3.add_subplot(111)
 ax3.plot(c3,r3, '.')
 ax3.set_xlim((0,5))
 ax3.set_ylim((0,5))
+plt.xlabel('x',fontsize=18)
+plt.ylabel('y',fontsize=18)
+ax3.tick_params(axis='both', labelsize = 16)
 ax3.set_aspect('equal')   
 
 
@@ -357,6 +371,9 @@ ax4 = fig4.add_subplot(111)
 ax4.plot(c4,r4, '.')
 ax4.set_xlim((0,5))
 ax4.set_ylim((0,5))
+plt.xlabel('x',fontsize=18)
+plt.ylabel('y',fontsize=18)
+ax4.tick_params(axis='both', labelsize = 16)
 ax4.set_aspect('equal')          
 
 
@@ -382,6 +399,9 @@ ax5 = fig5.add_subplot(111)
 ax5.plot(c5,r5, '.')
 ax5.set_xlim((0,5))
 ax5.set_ylim((0,5))
+plt.xlabel('x',fontsize=18)
+plt.ylabel('y',fontsize=18)
+ax5.tick_params(axis='both', labelsize = 16)
 ax5.set_aspect('equal')      
 
 
@@ -407,6 +427,9 @@ ax6 = fig6.add_subplot(111)
 ax6.plot(c6,r6, '.')
 ax6.set_xlim((0,5))
 ax6.set_ylim((0,5))
+plt.xlabel('x',fontsize=18)
+plt.ylabel('y',fontsize=18)
+ax6.tick_params(axis='both', labelsize = 16)
 ax6.set_aspect('equal') 
 
 
@@ -432,6 +455,9 @@ ax7 = fig7.add_subplot(111)
 ax7.plot(c7,r7, '.')
 ax7.set_xlim((0,5))
 ax7.set_ylim((0,5))
+plt.xlabel('x',fontsize=18)
+plt.ylabel('y',fontsize=18)
+ax7.tick_params(axis='both', labelsize = 16)
 ax7.set_aspect('equal')       
 '''
 
@@ -458,46 +484,77 @@ g3 = [df13.iat[i,j] for i in l1 for j in l2]  #20 ms
 h3 = [df15.iat[i,j] for i in l1 for j in l2]  #10 ms
 
 
-plt.figure('Histogram for 1 s Exposure for 4x4 ROI at 1800 gain')
-plt.title('Bright and Dark Histogram overlap: 1 s Exposure for 4x4 ROI at 1800 gain', fontsize=16)
-plt.hist(a2, bins = 9)
-plt.hist(a3, bins = 9)
+fi = plt.figure('Histogram for 1 s Exposure for 3x3 ROI at 1800 gain')
+fi.suptitle('Bright and Dark Histogram overlap: 1 s Exposure for 3x3 ROI at 1800 gain', fontsize=20)
+axe = fi.add_subplot(111)
+axe.hist(a2, bins = 9)
+axe.hist(a3, bins = 9)
+axe.tick_params(axis='both', labelsize = 16)
+plt.xlabel('Count reading', fontsize=18)
+plt.ylabel('No. of Pixels', fontsize=18)
 
-plt.figure('Histogram for 0.5 s Exposure for 4x4 ROI at 1800 gain')
-plt.title('Bright and Dark Histogram overlap: 0.5 s Exposure for 4x4 ROI at 1800 gain', fontsize=16)
-plt.hist(b2, bins = 9)
-plt.hist(b3, bins = 9)
+fi1 = plt.figure('Histogram for 0.5 s Exposure for 3x3 ROI at 1800 gain')
+fi1.suptitle('Bright and Dark Histogram overlap: 0.5 s Exposure for 3x3 ROI at 1800 gain', fontsize=20)
+axe1 = fi1.add_subplot(111)
+axe1.hist(b2, bins = 9)
+axe1.hist(b3, bins = 9)
+axe1.tick_params(axis='both', labelsize = 16)
+plt.xlabel('Count reading', fontsize=18)
+plt.ylabel('No. of Pixels', fontsize=18)
 
-plt.figure('Histogram for 0.1 s Exposure for 4x4 ROI at 1800 gain')
-plt.title('Bright and Dark Histogram overlap: 0.1 s Exposure for 4x4 ROI at 1800 gain', fontsize=16)
-plt.hist(c2, bins = 9)
-plt.hist(c3, bins = 9)
+fi2 = plt.figure('Histogram for 0.1 s Exposure for 3x3 ROI at 1800 gain')
+fi2.suptitle('Bright and Dark Histogram overlap: 0.1 s Exposure for 3x3 ROI at 1800 gain', fontsize=20)
+axe2 = fi2.add_subplot(111)
+axe2.hist(c2, bins = 9)
+axe2.hist(c3, bins = 9)
+axe2.tick_params(axis='both', labelsize = 16)
+plt.xlabel('Count reading', fontsize=18)
+plt.ylabel('No. of Pixels', fontsize=18)
 
-plt.figure('Histogram for 50 ms Exposure for 4x4 ROI at 1800 gain')
-plt.title('Bright and Dark Histogram overlap: 50 ms Exposure for 4x4 ROI at 1800 gain', fontsize=16)
-plt.hist(d2, bins = 9)
-plt.hist(d3, bins = 9)
+fi3 =plt.figure('Histogram for 50 ms Exposure for 3x3 ROI at 1800 gain')
+fi3.suptitle('Bright and Dark Histogram overlap: 50 ms Exposure for 3x3 ROI at 1800 gain', fontsize=20)
+axe3 = fi3.add_subplot(111)
+axe3.hist(d2, bins = 9)
+axe3.hist(d3, bins = 9)
+axe3.tick_params(axis='both', labelsize = 16)
+plt.xlabel('Count reading', fontsize=18)
+plt.ylabel('No. of Pixels', fontsize=18)
 
-plt.figure('Histogram for 40 ms Exposure for 4x4 ROI at 1800 gain')
-plt.title('Bright and Dark Histogram overlap: 40 ms Exposure for 4x4 ROI at 1800 gain', fontsize=16)
-plt.hist(e2, bins = 9)
-plt.hist(e3, bins = 9)
+fi4 = plt.figure('Histogram for 40 ms Exposure for 3x3 ROI at 1800 gain')
+fi4.suptitle('Bright and Dark Histogram overlap: 40 ms Exposure for 3x3 ROI at 1800 gain', fontsize=20)
+axe4 = fi4.add_subplot(111)
+axe4.hist(e2, bins = 9)
+axe4.hist(e3, bins = 9)
+axe4.tick_params(axis='both', labelsize = 16)
+plt.xlabel('Count reading', fontsize=18)
+plt.ylabel('No. of Pixels', fontsize=18)
+''''''
+fi5 = plt.figure('Histogram for 30 ms Exposure for 3x3 ROI at 1800 gain')
+fi5.suptitle('Bright and Dark Histogram overlap: 30 ms Exposure for 3x3 ROI at 1800 gain', fontsize=20)
+axe5 = fi5.add_subplot(111)
+axe5.hist(f2, bins = 9)
+axe5.hist(f3, bins = 9)
+axe5.tick_params(axis='both', labelsize = 16)
+plt.xlabel('Count reading', fontsize=18)
+plt.ylabel('No. of Pixels', fontsize=18)
 
-plt.figure('Histogram for 30 ms Exposure for 4x4 ROI at 1800 gain')
-plt.title('Bright and Dark Histogram overlap: 30 ms Exposure for 4x4 ROI at 1800 gain', fontsize=16)
-plt.hist(f2, bins = 9)
-plt.hist(f3, bins = 9)
+fi6 = plt.figure('Histogram for 20 ms Exposure for 3x3 ROI at 1800 gain')
+fi6.suptitle('Bright and Dark Histogram overlap: 20 ms Exposure for 3x3 ROI at 1800 gain', fontsize=20)
+axe6 = fi6.add_subplot(111)
+axe6.hist(g2, bins = 9)
+axe6.hist(g3, bins = 9)
+axe6.tick_params(axis='both', labelsize = 16)
+plt.xlabel('Count reading', fontsize=18)
+plt.ylabel('No. of Pixels', fontsize=18)
 
-plt.figure('Histogram for 20 ms Exposure for 4x4 ROI at 1800 gain')
-plt.title('Bright and Dark Histogram overlap: 20 ms Exposure for 4x4 ROI at 1800 gain', fontsize=16)
-plt.hist(g2, bins = 9)
-plt.hist(g3, bins = 9)
-
-plt.figure('Histogram for 10 ms Exposure for 4x4 ROI at 1800 gain')
-plt.title('Bright and Dark Histogram overlap: 10 ms Exposure for 4x4 ROI at 1800 gain', fontsize=16)
-plt.hist(h2, bins = 9)
-plt.hist(h3, bins = 9)
-
+fi7 =plt.figure('Histogram for 10 ms Exposure for 3x3 ROI at 1800 gain')
+fi7.suptitle('Bright and Dark Histogram overlap: 10 ms Exposure for 3x3 ROI at 1800 gain', fontsize=20)
+axe7 = fi7.add_subplot(111)
+axe7.hist(h2, bins = 9)
+axe7.hist(h3, bins = 9)
+axe7.tick_params(axis='both', labelsize = 16)
+plt.xlabel('Count reading', fontsize=18)
+plt.ylabel('No. of Pixels', fontsize=18)
 
 
 '''
