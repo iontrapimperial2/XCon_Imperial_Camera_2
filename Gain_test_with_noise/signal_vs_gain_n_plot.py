@@ -10,17 +10,18 @@ import numpy as np
 from scipy import stats
 import matplotlib.pyplot as plt
 
-#path = r"C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\Gain_test_with_noise\Experiment_1"
-#path1 =r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\Gain_test_with_noise\Experiment_2'
-#path2 =r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\Gain_test_with_noise\Com'
+path = r"C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\Gain_test_with_noise\Experiment_1"
+path1 =r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\Gain_test_with_noise\Experiment_2'
+path2 =r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\Gain_test_with_noise\Com'
 
-path = r"C:\Users\yudiw\OneDrive\Documents\Imperial\MSc Optics and Photonics\Summer Project\code\python\XCon_Imperial_Camera_2\Gain_test_with_noise\Experiment_1"
-path1 =r'C:\Users\yudiw\OneDrive\Documents\Imperial\MSc Optics and Photonics\Summer Project\code\python\XCon_Imperial_Camera_2\Gain_test_with_noise\Experiment_2'
-path2 =r'C:\Users\yudiw\OneDrive\Documents\Imperial\MSc Optics and Photonics\Summer Project\code\python\XCon_Imperial_Camera_2\Gain_test_with_noise\Com'
+#path = r"C:\Users\yudiw\OneDrive\Documents\Imperial\MSc Optics and Photonics\Summer Project\code\python\XCon_Imperial_Camera_2\Gain_test_with_noise\Experiment_1"
+#path1 =r'C:\Users\yudiw\OneDrive\Documents\Imperial\MSc Optics and Photonics\Summer Project\code\python\XCon_Imperial_Camera_2\Gain_test_with_noise\Experiment_2'
+#path2 =r'C:\Users\yudiw\OneDrive\Documents\Imperial\MSc Optics and Photonics\Summer Project\code\python\XCon_Imperial_Camera_2\Gain_test_with_noise\Com'
 
 
 gain = np.arange(10,310,10)
 counts = []
+counts_err = []
 counts1 = []
 counts2 = []
 
@@ -31,6 +32,7 @@ for i in range(1,31,1):
     df.drop(df.columns[0], axis=1, inplace=True)           #delete first column
 
     a = sum(np.array(df).ravel())/(512**2)
+    counts_err.append(np.std(np.array(df).ravel()))
     counts.append(a.tolist())
     
 for i in range(1,31,1):
@@ -39,6 +41,7 @@ for i in range(1,31,1):
     df.drop(df.columns[0], axis=1, inplace=True)           #delete first column
 
     a = sum(np.array(df).ravel())/(512**2)
+    
     counts1.append(a.tolist())
 
 for i in range(1,31,1):
@@ -66,10 +69,11 @@ line2 = slope2*gain+intercept2
 plt.figure('Experiment 1')
 
 plt.plot(gain,counts, '.')
+plt.errorbar(gain, counts, yerr=counts_err, fmt = 'x')
 plt.plot (gain, line)
 plt.xlabel('EMCCD Gain')
 plt.ylabel('Mean Signal Count per Pixel')
-
+'''
 plt.figure('Experiment 2')
 plt.plot(gain,counts1, '.')
 plt.plot (gain, line1)
@@ -84,5 +88,5 @@ plt.ylabel('Mean Signal Count per Pixel')
 
 
 #plt.plot(t, np.array(counts) - np.array(counts1), '.')
-
+'''
 plt.show()

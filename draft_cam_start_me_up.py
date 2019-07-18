@@ -10,6 +10,7 @@ from PyQt5.QtWidgets import QFileDialog
 import time
 from datetime import datetime
 import threading
+import numpy as np
 from cam_gui import Ui_cam_gui
 from instr_Andor_iXon_ultra import Andor
 
@@ -325,6 +326,8 @@ class window_camera(Ui_cam_gui):
             self.cam.GetAcquiredData(data_camera)
             self.data_camera = data_camera
             print(self.data_camera)
+            print(np.mean(data_camera))
+            print(np.std(data_camera))
             print('Snap Complete!')
             if self.checkBox_AutoSave.isChecked():
                 self.save_pic()
@@ -354,7 +357,7 @@ class window_camera(Ui_cam_gui):
             snap = threading.Thread(target = self.snap_pic)
             snap.start()
             self.snap_flag = True
-            print('yo')
+            print('acquiring image...')
         else:
             None
 
