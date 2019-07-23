@@ -14,89 +14,89 @@ from scipy.optimize import curve_fit
 
 
 #1 sec
-df = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_19_data\Bright\1s.txt', header = None)
+df = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_23_data\Bright\1s.txt', header = None)
 df.drop(df.columns[-1], axis=1, inplace=True)  #delete last column
 df.drop(df.columns[0], axis=1, inplace=True)           #delete first column
 a = np.array(df).ravel().tolist()
 
-df1 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_19_data\Dark\1s.txt', header = None)
+df1 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_23_data\Dark\1s.txt', header = None)
 df1.drop(df1.columns[-1], axis=1, inplace=True)  #delete last column
 df1.drop(df1.columns[0], axis=1, inplace=True)           #delete first column
 a1 = np.array(df1).ravel().tolist()
 
 #0.5 sec
-df2 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_19_data\Bright\05s.txt', header = None)
+df2 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_23_data\Bright\05s.txt', header = None)
 df2.drop(df2.columns[-1], axis=1, inplace=True)  #delete last column
 df2.drop(df2.columns[0], axis=1, inplace=True)           #delete first column
 b = np.array(df2).ravel().tolist()
 
-df3 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_19_data\Dark\05s.txt', header = None)
+df3 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_23_data\Dark\05s.txt', header = None)
 df3.drop(df3.columns[-1], axis=1, inplace=True)  #delete last column
 df3.drop(df3.columns[0], axis=1, inplace=True)           #delete first column
 b1 = np.array(df3).ravel().tolist()
 
 #0.1 sec
-df4 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_19_data\Bright\01s.txt', header = None)
+df4 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_23_data\Bright\01s.txt', header = None)
 df4.drop(df4.columns[-1], axis=1, inplace=True)  #delete last column
 df4.drop(df4.columns[0], axis=1, inplace=True)           #delete first column
 c = np.array(df4).ravel().tolist()
 
-df5 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_19_data\Dark\01s.txt', header = None)
+df5 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_23_data\Dark\01s.txt', header = None)
 df5.drop(df5.columns[-1], axis=1, inplace=True)  #delete last column
 df5.drop(df5.columns[0], axis=1, inplace=True)           #delete first column
 c1 = np.array(df5).ravel().tolist()
 
 #50 ms
-df6 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_19_data\Bright\50ms.txt', header = None)
+df6 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_23_data\Bright\50ms.txt', header = None)
 df6.drop(df6.columns[-1], axis=1, inplace=True)  #delete last column
 df6.drop(df6.columns[0], axis=1, inplace=True)           #delete first column
 d = np.array(df6).ravel().tolist()
 
-df7 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_19_data\Dark\50ms.txt', header = None)
+df7 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_23_data\Dark\50ms.txt', header = None)
 df7.drop(df7.columns[-1], axis=1, inplace=True)  #delete last column
 df7.drop(df7.columns[0], axis=1, inplace=True)           #delete first column
 d1 = np.array(df7).ravel().tolist()
 
 #40 ms
-df8 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_19_data\Bright\40ms.txt', header = None)
+df8 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_23_data\Bright\40ms.txt', header = None)
 df8.drop(df8.columns[-1], axis=1, inplace=True)  #delete last column
 df8.drop(df8.columns[0], axis=1, inplace=True)           #delete first column
 e = np.array(df8).ravel().tolist()
 
-df9 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_19_data\Dark\40ms.txt', header = None)
+df9 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_23_data\Dark\40ms.txt', header = None)
 df9.drop(df9.columns[-1], axis=1, inplace=True)  #delete last column
 df9.drop(df9.columns[0], axis=1, inplace=True)           #delete first column
 e1 = np.array(df9).ravel().tolist()
 
 #30 ms
-df10 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_19_data\Bright\30ms.txt', header = None)
+df10 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_23_data\Bright\30ms.txt', header = None)
 df10.drop(df10.columns[-1], axis=1, inplace=True)  #delete last column
 df10.drop(df10.columns[0], axis=1, inplace=True)           #delete first column
 f = np.array(df10).ravel().tolist()
 
-df11 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_19_data\Dark\30ms.txt', header = None)
+df11 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_23_data\Dark\30ms.txt', header = None)
 df11.drop(df11.columns[-1], axis=1, inplace=True)  #delete last column
 df11.drop(df11.columns[0], axis=1, inplace=True)           #delete first column
 f1 = np.array(df11).ravel().tolist()
 
 #20 ms
-df12 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_19_data\Bright\20ms.txt', header = None)
+df12 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_23_data\Bright\20ms.txt', header = None)
 df12.drop(df12.columns[-1], axis=1, inplace=True)  #delete last column
 df12.drop(df12.columns[0], axis=1, inplace=True)           #delete first column
 g = np.array(df12).ravel().tolist()
 
-df13 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_19_data\Dark\20ms.txt', header = None)
+df13 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_23_data\Dark\20ms.txt', header = None)
 df13.drop(df13.columns[-1], axis=1, inplace=True)  #delete last column
 df13.drop(df13.columns[0], axis=1, inplace=True)           #delete first column
 g1 = np.array(df13).ravel().tolist()
 
 #10 ms
-df14 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_19_data\Bright\10ms.txt', header = None)
+df14 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_23_data\Bright\10ms.txt', header = None)
 df14.drop(df14.columns[-1], axis=1, inplace=True)  #delete last column
 df14.drop(df14.columns[0], axis=1, inplace=True)           #delete first column
 h = np.array(df14).ravel().tolist()
 
-df15 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_19_data\Dark\10ms.txt', header = None)
+df15 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_23_data\Dark\10ms.txt', header = None)
 df15.drop(df15.columns[-1], axis=1, inplace=True)  #delete last column
 df15.drop(df15.columns[0], axis=1, inplace=True)           #delete first column
 h1 = np.array(df15).ravel().tolist()
@@ -148,8 +148,8 @@ slope = str(popt[0]) + ' +/- ' + str(np.sqrt(pcov[0,0]))
 
 
 
-fig = plt.figure('Difference Between Mean Bright and Dark Ion Reading vs Exposure Time with 3x3 ROI over 100 Exposures')
-fig.suptitle('Difference Between Mean Bright and Dark Ion Reading vs Exposure Time with 3x3 ROI over 100 Exposures', fontsize=20)
+fig = plt.figure('Difference Between Mean Bright and Dark Ion Reading vs Exposure Time with 5x5 ROI over 100 Exposures')
+fig.suptitle('Difference Between Mean Bright and Dark Ion Reading vs Exposure Time with 5x5 ROI over 100 Exposures', fontsize=20)
 axes = fig.add_subplot(111)
 #axes.plot(t,diff,'.')
 axes.errorbar(t,diff,yerr=err, fmt = 'x')
@@ -189,8 +189,8 @@ slope1, intercept1, r_value1, p_value1, std_err1 = stats.linregress(t,diff1)
 line1 = [slope1*i+intercept1 for i in t]
 
 
-fig1 = plt.figure('Difference Between Total Bright and Dark Ion Reading vs Exposure Time with 3x3 ROI over 100 Exposures')
-fig1.suptitle('Difference Between Total Bright and Dark Ion Reading vs Exposure Time with 3x3 ROI over 100 Exposures', fontsize=20)
+fig1 = plt.figure('Difference Between Total Bright and Dark Ion Reading vs Exposure Time with 5x5 ROI over 100 Exposures')
+fig1.suptitle('Difference Between Total Bright and Dark Ion Reading vs Exposure Time with 5x5 ROI over 100 Exposures', fontsize=20)
 axes1 = fig1.add_subplot(111)
 axes1.plot(t,diff1,'.')
 t.insert(0,0)
@@ -206,8 +206,8 @@ plt.xlabel('Exposure time/s', fontsize=18)
 
 
 #Histograms
-fi = plt.figure('Histogram for 1 s Exposure for 3x3 ROI over 100 Exposures')
-fi.suptitle('Bright and Dark Histogram overlap: 1 s Exposure for 3x3 ROI over 100 Exposures', fontsize=20)
+fi = plt.figure('Histogram for 1 s Exposure for 5x5 ROI over 100 Exposures')
+fi.suptitle('Bright and Dark Histogram overlap: 1 s Exposure for 5x5 ROI over 100 Exposures', fontsize=20)
 axe = fi.add_subplot(111)
 x, bins, p = axe.hist(a, density=True, bins = 200, label = 'Bright Ion')
 x1, bins1, p1 = axe.hist(a1, density=True, bins = 200, label = 'Dark Ion')
@@ -232,8 +232,8 @@ plt.xlabel('Count reading', fontsize=18)
 plt.ylabel('Probability Density', fontsize=18)
 
 
-fi1 = plt.figure('Histogram for 0.5 s Exposure for 3x3 ROI over 100 Exposures')
-fi1.suptitle('Bright and Dark Histogram overlap: 0.5 s Exposure for 3x3 ROI over 100 Exposures', fontsize=20)
+fi1 = plt.figure('Histogram for 0.5 s Exposure for 5x5 ROI over 100 Exposures')
+fi1.suptitle('Bright and Dark Histogram overlap: 0.5 s Exposure for 5x5 ROI over 100 Exposures', fontsize=20)
 axe1 = fi1.add_subplot(111)
 x, bins, p = axe1.hist(b, density=True, bins = 200, label = 'Bright Ion')
 x1, bins1, p1 = axe1.hist(b1, density=True, bins = 200, label = 'Dark Ion')
@@ -259,8 +259,8 @@ plt.ylabel('Probability Density', fontsize=18)
 
 
 
-fi2 = plt.figure('Histogram for 0.1 s Exposure for 3x3 ROI over 100 Exposures')
-fi2.suptitle('Bright and Dark Histogram overlap: 0.1 s Exposure for 3x3 ROI over 100 Exposures', fontsize=20)
+fi2 = plt.figure('Histogram for 0.1 s Exposure for 5x5 ROI over 100 Exposures')
+fi2.suptitle('Bright and Dark Histogram overlap: 0.1 s Exposure for 5x5 ROI over 100 Exposures', fontsize=20)
 axe2 = fi2.add_subplot(111)
 x, bins, p = axe2.hist(c, density=True, bins = 200, label = 'Bright Ion')
 x1, bins1, p1 = axe2.hist(c1, density=True, bins = 200, label = 'Dark Ion')
@@ -285,8 +285,8 @@ plt.xlabel('Count reading', fontsize=18)
 plt.ylabel('Probability Density', fontsize=18)
 
 
-fi3 =plt.figure('Histogram for 50 ms Exposure for 3x3 ROI over 100 Exposures')
-fi3.suptitle('Bright and Dark Histogram overlap: 50 ms Exposure for 3x3 ROI over 100 Exposures', fontsize=20)
+fi3 =plt.figure('Histogram for 50 ms Exposure for 5x5 ROI over 100 Exposures')
+fi3.suptitle('Bright and Dark Histogram overlap: 50 ms Exposure for 5x5 ROI over 100 Exposures', fontsize=20)
 axe3 = fi3.add_subplot(111)
 x, bins, p = axe3.hist(d, density=True, bins = 200, label = 'Bright Ion')
 x1, bins1, p1 = axe3.hist(d1, density=True, bins = 200, label = 'Dark Ion')
@@ -311,8 +311,8 @@ plt.xlabel('Count reading', fontsize=18)
 plt.ylabel('Probability Density', fontsize=18)
 
 
-fi4 = plt.figure('Histogram for 40 ms Exposure for 3x3 ROI over 100 Exposures')
-fi4.suptitle('Bright and Dark Histogram overlap: 40 ms Exposure for 3x3 ROI over 100 Exposures', fontsize=20)
+fi4 = plt.figure('Histogram for 40 ms Exposure for 5x5 ROI over 100 Exposures')
+fi4.suptitle('Bright and Dark Histogram overlap: 40 ms Exposure for 5x5 ROI over 100 Exposures', fontsize=20)
 axe4 = fi4.add_subplot(111)
 x, bins, p = axe4.hist(e, density=True, bins = 200, label = 'Bright Ion')
 x1, bins1, p1 = axe4.hist(e1, density=True, bins = 200, label = 'Dark Ion')
@@ -337,8 +337,8 @@ plt.xlabel('Count reading', fontsize=18)
 plt.ylabel('Probability Density', fontsize=18)
 
 
-fi5 = plt.figure('Histogram for 30 ms Exposure for 3x3 ROI over 100 Exposures')
-fi5.suptitle('Bright and Dark Histogram overlap: 30 ms Exposure for 3x3 ROI over 100 Exposures', fontsize=20)
+fi5 = plt.figure('Histogram for 30 ms Exposure for 5x5 ROI over 100 Exposures')
+fi5.suptitle('Bright and Dark Histogram overlap: 30 ms Exposure for 5x5 ROI over 100 Exposures', fontsize=20)
 axe5 = fi5.add_subplot(111)
 x, bins, p = axe5.hist(f, density=True, bins = 200, label = 'Bright Ion')
 x1, bins1, p1 = axe5.hist(f1, density=True, bins = 200, label = 'Dark Ion')
@@ -363,8 +363,8 @@ plt.xlabel('Count reading', fontsize=18)
 plt.ylabel('Probability Density', fontsize=18)
 
 
-fi6 = plt.figure('Histogram for 20 ms Exposure for 3x3 ROI over 100 Exposures')
-fi6.suptitle('Bright and Dark Histogram overlap: 20 ms Exposure for 3x3 ROI over 100 Exposures', fontsize=20)
+fi6 = plt.figure('Histogram for 20 ms Exposure for 5x5 ROI over 100 Exposures')
+fi6.suptitle('Bright and Dark Histogram overlap: 20 ms Exposure for 5x5 ROI over 100 Exposures', fontsize=20)
 axe6 = fi6.add_subplot(111)
 x, bins, p = axe6.hist(g, density=True, bins = 200, label = 'Bright Ion')
 x1, bins1, p1 = axe6.hist(g1, density=True, bins = 200, label = 'Dark Ion')
@@ -389,8 +389,8 @@ plt.xlabel('Count reading', fontsize=18)
 plt.ylabel('Probability Density', fontsize=18)
 
 
-fi7 =plt.figure('Histogram for 10 ms Exposure for 3x3 ROI over 100 Exposures')
-fi7.suptitle('Bright and Dark Histogram overlap: 10 ms Exposure for 3x3 ROI over 100 Exposures', fontsize=20)
+fi7 =plt.figure('Histogram for 10 ms Exposure for 5x5 ROI over 100 Exposures')
+fi7.suptitle('Bright and Dark Histogram overlap: 10 ms Exposure for 5x5 ROI over 100 Exposures', fontsize=20)
 axe7 = fi7.add_subplot(111)
 x, bins, p = axe7.hist(h, density=True, bins = 200, label = 'Bright Ion')
 x1, bins1, p1 = axe7.hist(h1, density=True, bins = 200, label = 'Dark Ion')
