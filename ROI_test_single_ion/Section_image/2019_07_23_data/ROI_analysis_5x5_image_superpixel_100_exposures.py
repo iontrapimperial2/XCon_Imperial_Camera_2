@@ -10,6 +10,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy import stats
 from scipy.optimize import curve_fit
+from math import erf, sqrt
 
 a = []
 a1 = []
@@ -238,8 +239,12 @@ plt.ylabel('Count reading', fontsize=18)
 plt.xlabel('Exposure time/s', fontsize=18)
 
 
-
-
+#find intercept of B and D distributions
+def solve(m1,m2,std1,std2):
+  a = 1/(2*std1**2) - 1/(2*std2**2)
+  b = m2/(std2**2) - m1/(std1**2)
+  c = m1**2 /(2*std1**2) - m2**2 / (2*std2**2) - np.log(std2/std1)
+  return np.roots([a,b,c])
 
 
 #Histograms
@@ -263,10 +268,26 @@ m1, s1 = stats.norm.fit(a1) # get mean and standard deviation
 pdf_g1 = stats.norm.pdf(lnspc1, m1, s1) # now get theoretical values in our interval  
 axe.plot(lnspc1, pdf_g1, 'g', label="Super Pixel Dark Ion Gaussian fit") 
 axe.legend(fontsize = 16)
-#axe.set_xlim((0,3600))
-#axe.set_ylim((0,0.025))
 plt.xlabel('Count reading', fontsize=18)
 plt.ylabel('Probability Density', fontsize=18)
+
+result = solve(m,m1,s,s1)
+print(result)
+x1 = 0      
+x2 = result[0]
+x3 = 9999999999
+double_prob = erf( (x1-m) / (s*sqrt(2)) )
+p_lower = double_prob/2
+double_prob1 = erf( (x2-m) / (s*sqrt(2)) )
+p_upper = double_prob1/2
+double_prob2 = erf( (x2-m1) / (s1*sqrt(2)) )
+p_lower1 = double_prob2/2
+double_prob3 = erf( (x3-m1) / (s1*sqrt(2)) )
+p_upper1 = double_prob3/2
+Pin = (p_upper) - (p_lower)
+Pin1 = (p_upper1) - (p_lower1)
+print('probability of misinterpreting bright ion as dark ion at 1 s exposure: ' + str(Pin))
+print('probability of misinterpreting dark ion as bright ion at 1 s exposure: ' + str(Pin1))
 
 
 fi1 = plt.figure('Histogram for 0.5 s Exposure for 5x5 ROI over 100 Exposures')
@@ -289,10 +310,26 @@ m1, s1 = stats.norm.fit(b1) # get mean and standard deviation
 pdf_g1 = stats.norm.pdf(lnspc1, m1, s1) # now get theoretical values in our interval  
 axe1.plot(lnspc1, pdf_g1, 'g', label="Super Pixel Dark Ion Gaussian fit") 
 axe1.legend(fontsize = 16)
-#axe1.set_xlim((0,2000))
-#axe1.set_ylim((0,0.031))
 plt.xlabel('Count reading', fontsize=18)
 plt.ylabel('Probability Density', fontsize=18)
+
+result = solve(m,m1,s,s1)
+print(result)
+x1 = 0      
+x2 = result[0]
+x3 = 9999999999
+double_prob = erf( (x1-m) / (s*sqrt(2)) )
+p_lower = double_prob/2
+double_prob1 = erf( (x2-m) / (s*sqrt(2)) )
+p_upper = double_prob1/2
+double_prob2 = erf( (x2-m1) / (s1*sqrt(2)) )
+p_lower1 = double_prob2/2
+double_prob3 = erf( (x3-m1) / (s1*sqrt(2)) )
+p_upper1 = double_prob3/2
+Pin = (p_upper) - (p_lower)
+Pin1 = (p_upper1) - (p_lower1)
+print('probability of misinterpreting bright ion as dark ion at 0.5 s exposure: ' + str(Pin))
+print('probability of misinterpreting dark ion as bright ion at 0.5 s exposure: ' + str(Pin1))
 
 
 
@@ -316,10 +353,26 @@ m1, s1 = stats.norm.fit(c1) # get mean and standard deviation
 pdf_g1 = stats.norm.pdf(lnspc1, m1, s1) # now get theoretical values in our interval  
 axe2.plot(lnspc1, pdf_g1, 'g', label="Super Pixel Dark Ion Gaussian fit") 
 axe2.legend(fontsize = 16)
-#axe2.set_xlim((100,800))
-#axe2.set_ylim((0,0.047))
 plt.xlabel('Count reading', fontsize=18)
 plt.ylabel('Probability Density', fontsize=18)
+
+result = solve(m,m1,s,s1)
+print(result)
+x1 = 0      
+x2 = result[0]
+x3 = 9999999999
+double_prob = erf( (x1-m) / (s*sqrt(2)) )
+p_lower = double_prob/2
+double_prob1 = erf( (x2-m) / (s*sqrt(2)) )
+p_upper = double_prob1/2
+double_prob2 = erf( (x2-m1) / (s1*sqrt(2)) )
+p_lower1 = double_prob2/2
+double_prob3 = erf( (x3-m1) / (s1*sqrt(2)) )
+p_upper1 = double_prob3/2
+Pin = (p_upper) - (p_lower)
+Pin1 = (p_upper1) - (p_lower1)
+print('probability of misinterpreting bright ion as dark ion at 0.1 s exposure: ' + str(Pin))
+print('probability of misinterpreting dark ion as bright ion at 0.1 s exposure: ' + str(Pin1))
 
 
 fi3 =plt.figure('Histogram for 50 ms Exposure for 5x5 ROI over 100 Exposures')
@@ -342,10 +395,26 @@ m1, s1 = stats.norm.fit(d1) # get mean and standard deviation
 pdf_g1 = stats.norm.pdf(lnspc1, m1, s1) # now get theoretical values in our interval  
 axe3.plot(lnspc1, pdf_g1, 'g', label="Super Pixel Dark Ion Gaussian fit") 
 axe3.legend(fontsize = 16)
-#axe3.set_xlim((100,700))
-#axe3.set_ylim((0,0.082))
 plt.xlabel('Count reading', fontsize=18)
 plt.ylabel('Probability Density', fontsize=18)
+
+result = solve(m,m1,s,s1)
+print(result)
+x1 = 0      
+x2 = result[0]
+x3 = 9999999999
+double_prob = erf( (x1-m) / (s*sqrt(2)) )
+p_lower = double_prob/2
+double_prob1 = erf( (x2-m) / (s*sqrt(2)) )
+p_upper = double_prob1/2
+double_prob2 = erf( (x2-m1) / (s1*sqrt(2)) )
+p_lower1 = double_prob2/2
+double_prob3 = erf( (x3-m1) / (s1*sqrt(2)) )
+p_upper1 = double_prob3/2
+Pin = (p_upper) - (p_lower)
+Pin1 = (p_upper1) - (p_lower1)
+print('probability of misinterpreting bright ion as dark ion at 50 ms exposure: ' + str(Pin))
+print('probability of misinterpreting dark ion as bright ion at 50 ms exposure: ' + str(Pin1))
 
 
 fi4 = plt.figure('Histogram for 40 ms Exposure for 5x5 ROI over 100 Exposures')
@@ -368,10 +437,26 @@ m1, s1 = stats.norm.fit(e1) # get mean and standard deviation
 pdf_g1 = stats.norm.pdf(lnspc1, m1, s1) # now get theoretical values in our interval  
 axe4.plot(lnspc1, pdf_g1, 'g', label="Super Pixel Dark Ion Gaussian fit") 
 axe4.legend(fontsize = 16)
-#axe4.set_xlim((100,600))
-#axe4.set_ylim((0,0.086))
 plt.xlabel('Count reading', fontsize=18)
 plt.ylabel('Probability Density', fontsize=18)
+
+result = solve(m,m1,s,s1)
+print(result)
+x1 = 0      
+x2 = result[0]
+x3 = 9999999999
+double_prob = erf( (x1-m) / (s*sqrt(2)) )
+p_lower = double_prob/2
+double_prob1 = erf( (x2-m) / (s*sqrt(2)) )
+p_upper = double_prob1/2
+double_prob2 = erf( (x2-m1) / (s1*sqrt(2)) )
+p_lower1 = double_prob2/2
+double_prob3 = erf( (x3-m1) / (s1*sqrt(2)) )
+p_upper1 = double_prob3/2
+Pin = (p_upper) - (p_lower)
+Pin1 = (p_upper1) - (p_lower1)
+print('probability of misinterpreting bright ion as dark ion at 40 ms exposure: ' + str(Pin))
+print('probability of misinterpreting dark ion as bright ion at 40 ms exposure: ' + str(Pin1))
 
 
 fi5 = plt.figure('Histogram for 30 ms Exposure for 5x5 ROI over 100 Exposures')
@@ -394,10 +479,26 @@ m1, s1 = stats.norm.fit(f1) # get mean and standard deviation
 pdf_g1 = stats.norm.pdf(lnspc1, m1, s1) # now get theoretical values in our interval  
 axe5.plot(lnspc1, pdf_g1, 'g', label="Super Pixel Dark Ion Gaussian fit") 
 axe5.legend(fontsize = 16)
-#axe5.set_xlim((100,500))
-#axe5.set_ylim((0,0.050))
 plt.xlabel('Count reading', fontsize=18)
 plt.ylabel('Probability Density', fontsize=18)
+
+result = solve(m,m1,s,s1)
+print(result)
+x1 = 0      
+x2 = result[0]
+x3 = 9999999999
+double_prob = erf( (x1-m) / (s*sqrt(2)) )
+p_lower = double_prob/2
+double_prob1 = erf( (x2-m) / (s*sqrt(2)) )
+p_upper = double_prob1/2
+double_prob2 = erf( (x2-m1) / (s1*sqrt(2)) )
+p_lower1 = double_prob2/2
+double_prob3 = erf( (x3-m1) / (s1*sqrt(2)) )
+p_upper1 = double_prob3/2
+Pin = (p_upper) - (p_lower)
+Pin1 = (p_upper1) - (p_lower1)
+print('probability of misinterpreting bright ion as dark ion at 30 ms exposure: ' + str(Pin))
+print('probability of misinterpreting dark ion as bright ion at 30 ms exposure: ' + str(Pin1))
 
 
 fi6 = plt.figure('Histogram for 20 ms Exposure for 5x5 ROI over 100 Exposures')
@@ -420,10 +521,26 @@ m1, s1 = stats.norm.fit(g1) # get mean and standard deviation
 pdf_g1 = stats.norm.pdf(lnspc1, m1, s1) # now get theoretical values in our interval  
 axe6.plot(lnspc1, pdf_g1, 'g', label="Super Pixel Dark Ion Gaussian fit") 
 axe6.legend(fontsize = 16)
-#axe6.set_xlim((100,600))
-#axe6.set_ylim((0,0.056))
 plt.xlabel('Count reading', fontsize=18)
 plt.ylabel('Probability Density', fontsize=18)
+
+result = solve(m,m1,s,s1)
+print(result)
+x1 = 0      
+x2 = result[0]
+x3 = 9999999999
+double_prob = erf( (x1-m) / (s*sqrt(2)) )
+p_lower = double_prob/2
+double_prob1 = erf( (x2-m) / (s*sqrt(2)) )
+p_upper = double_prob1/2
+double_prob2 = erf( (x2-m1) / (s1*sqrt(2)) )
+p_lower1 = double_prob2/2
+double_prob3 = erf( (x3-m1) / (s1*sqrt(2)) )
+p_upper1 = double_prob3/2
+Pin = (p_upper) - (p_lower)
+Pin1 = (p_upper1) - (p_lower1)
+print('probability of misinterpreting bright ion as dark ion at 20 ms exposure: ' + str(Pin))
+print('probability of misinterpreting dark ion as bright ion at 20 ms exposure: ' + str(Pin1))
 
 
 fi7 =plt.figure('Histogram for 10 ms Exposure for 5x5 ROI over 100 Exposures')
@@ -434,7 +551,7 @@ x1, bins1, p1 = axe7.hist(h1, density=True, bins = 30, label = 'Super Pixel Dark
 axe7.tick_params(axis='both', labelsize = 16)
 xt = plt.xticks()[0]  
 xmin, xmax = min(xt), max(xt)  
-lnspc = np.linspace(xmin, xmax, len(h))
+lnspc = np.linspace(xmin, xmax, 10000)
 m, s = stats.norm.fit(h) # get mean and standard deviation  
 pdf_g = stats.norm.pdf(lnspc, m, s) # now get theoretical values in our interval  
 axe7.plot(lnspc, pdf_g, 'r', label="Super Pixel Bright Ion Gaussian fit") # plot it
@@ -446,10 +563,25 @@ m1, s1 = stats.norm.fit(h1) # get mean and standard deviation
 pdf_g1 = stats.norm.pdf(lnspc1, m1, s1) # now get theoretical values in our interval  
 axe7.plot(lnspc1, pdf_g1, 'g', label="Super Pixel Dark Ion Gaussian fit") 
 axe7.legend(fontsize = 16)
-#axe7.set_xlim((100,450))
-#axe7.set_ylim((0,0.058))
 plt.xlabel('Count reading', fontsize=18)
 plt.ylabel('Probability Density', fontsize=18)
 
+result = solve(m,m1,s,s1)
+print(result)
+x1 = 0      
+x2 = result[0]
+x3 = 9999999999
+double_prob = erf( (x1-m) / (s*sqrt(2)) )
+p_lower = double_prob/2
+double_prob1 = erf( (x2-m) / (s*sqrt(2)) )
+p_upper = double_prob1/2
+double_prob2 = erf( (x2-m1) / (s1*sqrt(2)) )
+p_lower1 = double_prob2/2
+double_prob3 = erf( (x3-m1) / (s1*sqrt(2)) )
+p_upper1 = double_prob3/2
+Pin = (p_upper) - (p_lower)
+Pin1 = (p_upper1) - (p_lower1)
+print('probability of misinterpreting bright ion as dark ion at 10 ms exposure: ' + str(Pin))
+print('probability of misinterpreting dark ion as bright ion at 10 ms exposure: ' + str(Pin1))
 
 plt.show()
