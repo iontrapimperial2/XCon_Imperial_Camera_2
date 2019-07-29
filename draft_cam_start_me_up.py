@@ -401,6 +401,8 @@ class window_camera(Ui_cam_gui):
         self.label_End_col.setText(str(self.doubleSpinBox_End_col.text()))
         self.label_Start_row.setText(str(self.doubleSpinBox_Start_row.text()))
         self.label_End_row.setText(str(self.doubleSpinBox_End_row.text()))
+        self.label_hbin.setText(str(self.doubleSpinBox_hbin.text()))
+        self.label_vbin.setText(str(self.doubleSpinBox_vbin.text()))
         
         
 #-- set preamplifier gain-----------------------------------------------------#           
@@ -436,10 +438,10 @@ class window_camera(Ui_cam_gui):
             print(int(width))
             print(int(height))
             if str(self.label_Acq_mode.text()) == 'Single Scan':
-                self.cam.SaveAsTxt2(str(self.lineEdit_Browse.text()) + '.txt', 1, int(width), int(height))
+                self.cam.SaveAsTxt2(str(self.lineEdit_Browse.text()) + '.txt', 1, int(width), int(height),int(self.hbin),int(self.vbin))
             
             elif str(self.label_Acq_mode.text()) == 'Kinetic Scan':
-                self.cam.SaveAsTxt2(str(self.lineEdit_Browse.text()) + '.txt', self.label_no_Kin.text(), int(width), int(height))
+                self.cam.SaveAsTxt2(str(self.lineEdit_Browse.text()) + '.txt', self.label_no_Kin.text(), int(width), int(height),int(self.hbin),int(self.vbin))
                 
             self.save_cam_settings()
             print('Save Complete!')
@@ -463,6 +465,8 @@ class window_camera(Ui_cam_gui):
         n = self.label_Trig_mode.text()
         o = self.label_VSAmp.text()
         p = self.VSSpeed
+        q = self.label_hbin.text()
+        r = self.label_vbin.text()
         current_time = datetime.today()
         data_file = open(str(self.lineEdit_Browse.text()) + '_cam_settings.txt', 'a+') 
         if str(self.label_Acq_mode.text()).casefold() == 'Single Scan'.casefold():
@@ -471,6 +475,7 @@ class window_camera(Ui_cam_gui):
                             + '\n ' + 'Exposure Time: ' + str(d) + '\n ' + 'EMCCD Gain: ' + str(e) 
                             + '\n ' + 'Start Column: ' + str(j) + '\n ' + 'End Column: ' + str(k) 
                             + '\n ' + 'Start Row: ' + str(l) + '\n ' + 'End Row: ' + str(m)
+                            + '\n ' + 'Horizontal binning: ' + str(q) + '\n ' + 'Vertical Binning: ' + str(r)
                             + '\n ' + 'Trigger Mode: ' + str(n) + '\n ' + 'Vertical Clock Voltage Amplitude: ' + str(o) 
                             + '\n ' + 'Vertical Shift Speed: ' + str(p) + ' usec')
             data_file.close()
@@ -482,6 +487,7 @@ class window_camera(Ui_cam_gui):
                             + '\n ' + 'No. of Kinetic Series: ' + str(h) + '\n ' + 'Kinetic Cycle Time: ' + str(i)
                             + '\n ' + 'Start Column: ' + str(j) + '\n ' + 'End Column: ' + str(k) 
                             + '\n ' + 'Start Row: ' + str(l) + '\n ' + 'End Row: ' + str(m)
+                            + '\n ' + 'Horizontal binning: ' + str(q) + '\n ' + 'Vertical Binning: ' + str(r)
                             + '\n ' + 'Trigger Mode: ' + str(n) + '\n ' + 'Vertical Clock Voltage Amplitude: ' + str(o)
                             + '\n ' + 'Vertical Shift Speed: ' + str(p) + ' usec')
             data_file.close()
