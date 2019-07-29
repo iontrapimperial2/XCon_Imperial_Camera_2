@@ -12,8 +12,6 @@ from scipy import stats
 from scipy.optimize import curve_fit
 from math import erf, sqrt
 
-l1 = [0,1,2,3,4]
-l2 = [0,1,2,3,4]
 
 #bright
 a = []     #1 sec
@@ -42,125 +40,90 @@ for i in range(1,10,1):
     df = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_16_data\bright\1s' + str(i) + '.txt', header = None)
     df.drop(df.columns[-1], axis=1, inplace=True)  #delete last column
     df.drop(df.columns[0], axis=1, inplace=True)           #delete first column
+    a.append(sum(np.array(df).ravel().tolist()))
     
     df1 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_16_data\dark\1t' + str(i) + '.txt', header = None)
     df1.drop(df1.columns[-1], axis=1, inplace=True)  #delete last column
     df1.drop(df1.columns[0], axis=1, inplace=True)           #delete first column
+    a1.append(sum(np.array(df1).ravel().tolist()))
     
     #0.5 sec
     df2 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_16_data\bright\05s' + str(i) + '.txt', header = None)
     df2.drop(df2.columns[-1], axis=1, inplace=True)  #delete last column
     df2.drop(df2.columns[0], axis=1, inplace=True)           #delete first column
+    b.append(sum(np.array(df2).ravel().tolist()))
     
     df3 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_16_data\dark\05t' + str(i) + '.txt', header = None)
     df3.drop(df3.columns[-1], axis=1, inplace=True)  #delete last column
     df3.drop(df3.columns[0], axis=1, inplace=True)           #delete first column
+    b1.append(sum(np.array(df3).ravel().tolist()))
     
     #0.1 sec
     df4 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_16_data\bright\01s' + str(i) + '.txt', header = None)
     df4.drop(df4.columns[-1], axis=1, inplace=True)  #delete last column
     df4.drop(df4.columns[0], axis=1, inplace=True)           #delete first column
+    c.append(sum(np.array(df4).ravel().tolist()))
     
     df5 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_16_data\dark\01t' + str(i) + '.txt', header = None)
     df5.drop(df5.columns[-1], axis=1, inplace=True)  #delete last column
     df5.drop(df5.columns[0], axis=1, inplace=True)           #delete first column
+    c1.append(sum(np.array(df5).ravel().tolist()))
     
     #50 ms
     df6 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_16_data\bright\005s' + str(i) + '.txt', header = None)
     df6.drop(df6.columns[-1], axis=1, inplace=True)  #delete last column
     df6.drop(df6.columns[0], axis=1, inplace=True)           #delete first column
+    d.append(sum(np.array(df6).ravel().tolist()))
     
     df7 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_16_data\dark\005t' + str(i) + '.txt', header = None)
     df7.drop(df7.columns[-1], axis=1, inplace=True)  #delete last column
     df7.drop(df7.columns[0], axis=1, inplace=True)           #delete first column
+    d1.append(sum(np.array(df7).ravel().tolist()))
     
     #40 ms
     df8 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_16_data\bright\004s' + str(i) + '.txt', header = None)
     df8.drop(df8.columns[-1], axis=1, inplace=True)  #delete last column
     df8.drop(df8.columns[0], axis=1, inplace=True)           #delete first column
+    e.append(sum(np.array(df8).ravel().tolist()))
     
     df9 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_16_data\dark\004t' + str(i) + '.txt', header = None)
     df9.drop(df9.columns[-1], axis=1, inplace=True)  #delete last column
     df9.drop(df9.columns[0], axis=1, inplace=True)           #delete first column
+    e1.append(sum(np.array(df9).ravel().tolist()))
     
     #30 ms
     df10 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_16_data\bright\003s' + str(i) + '.txt', header = None)
     df10.drop(df10.columns[-1], axis=1, inplace=True)  #delete last column
     df10.drop(df10.columns[0], axis=1, inplace=True)           #delete first column
+    f.append(sum(np.array(df10).ravel().tolist()))
     
     df11 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_16_data\dark\003t' + str(i) + '.txt', header = None)
     df11.drop(df11.columns[-1], axis=1, inplace=True)  #delete last column
     df11.drop(df11.columns[0], axis=1, inplace=True)           #delete first column
+    f1.append(sum(np.array(df11).ravel().tolist()))
     
     #20 ms
     df12 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_16_data\bright\002s' + str(i) + '.txt', header = None)
     df12.drop(df12.columns[-1], axis=1, inplace=True)  #delete last column
     df12.drop(df12.columns[0], axis=1, inplace=True)           #delete first column
+    g.append(sum(np.array(df12).ravel().tolist()))
     
     df13 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_16_data\dark\002t' + str(i) + '.txt', header = None)
     df13.drop(df13.columns[-1], axis=1, inplace=True)  #delete last column
     df13.drop(df13.columns[0], axis=1, inplace=True)           #delete first column
+    g1.append(sum(np.array(df13).ravel().tolist()))
     
     #10 ms
     df14 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_16_data\bright\001s' + str(i) + '.txt', header = None)
     df14.drop(df14.columns[-1], axis=1, inplace=True)  #delete last column
     df14.drop(df14.columns[0], axis=1, inplace=True)           #delete first column
+    h.append(sum(np.array(df14).ravel().tolist()))
     
     df15 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_16_data\dark\001t' + str(i) + '.txt', header = None)
     df15.drop(df15.columns[-1], axis=1, inplace=True)  #delete last column
     df15.drop(df15.columns[0], axis=1, inplace=True)           #delete first column
+    h1.append(sum(np.array(df15).ravel().tolist()))
 
-    
-    #bright
-    a2 = [sum([df.iat[i,j] for i in l1 for j in l2])]     #1 sec
-    a = a + a2
-    
-    b2 = [sum([df2.iat[i,j] for i in l1 for j in l2])]    #0.5 sec
-    b = b + b2
-    
-    c2 = [sum([df4.iat[i,j] for i in l1 for j in l2])]     #0.1 sec
-    c = c + c2
-    
-    d2 = [sum([df6.iat[i,j] for i in l1 for j in l2])]     #50 ms
-    d = d + d2
-    
-    e2 = [sum([df8.iat[i,j] for i in l1 for j in l2])]     #40 ms
-    e = e + e2
-    
-    f2 = [sum([df10.iat[i,j] for i in l1 for j in l2])]    #30 ms
-    f = f + f2
-    
-    g2 = [sum([df12.iat[i,j] for i in l1 for j in l2])]    #20 ms
-    g = g + g2
-    
-    h2 = [sum([df14.iat[i,j] for i in l1 for j in l2])]    #10 ms
-    h = h + h2
-
-
-    #dark
-    a3 = [sum([df1.iat[i,j] for i in l1 for j in l2])]    #1 sec
-    a1 = a1 + a3
-    
-    b3 = [sum([df3.iat[i,j] for i in l1 for j in l2])]    #0.5 sec
-    b1 = b1 + b3
-    
-    c3 = [sum([df5.iat[i,j] for i in l1 for j in l2])]    #0.1 sec
-    c1 = c1 + c3
-    
-    d3 = [sum([df7.iat[i,j] for i in l1 for j in l2])]    #50 ms
-    d1 = d1 + d3
-    
-    e3 = [sum([df9.iat[i,j] for i in l1 for j in l2])]    #40 ms
-    e1 = e1 + e3
-    
-    f3 = [sum([df11.iat[i,j] for i in l1 for j in l2])]   #30 ms
-    f1 = f1 + f3
-    
-    g3 = [sum([df13.iat[i,j] for i in l1 for j in l2])]   #20 ms
-    g1 = g1 + g3
-    
-    h3 = [sum([df15.iat[i,j] for i in l1 for j in l2])]   #10 ms
-    h1 = h1 + h3
 
 
 

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>840</width>
-    <height>877</height>
+    <height>1006</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -405,8 +405,8 @@
         <layout class="QGridLayout" name="gridLayout_17">
          <item row="0" column="0">
           <layout class="QGridLayout" name="gridLayout_3">
-           <item row="1" column="6">
-            <widget class="QDoubleSpinBox" name="doubleSpinBox_End_row">
+           <item row="2" column="2">
+            <widget class="QDoubleSpinBox" name="doubleSpinBox_vbin">
              <property name="font">
               <font>
                <pointsize>11</pointsize>
@@ -415,8 +415,14 @@
              <property name="decimals">
               <number>0</number>
              </property>
+             <property name="minimum">
+              <double>1.000000000000000</double>
+             </property>
              <property name="maximum">
               <double>512.000000000000000</double>
+             </property>
+             <property name="value">
+              <double>1.000000000000000</double>
              </property>
             </widget>
            </item>
@@ -438,35 +444,41 @@
              </property>
             </widget>
            </item>
-           <item row="0" column="4">
-            <widget class="QLabel" name="label_10">
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_9">
              <property name="font">
               <font>
                <pointsize>11</pointsize>
               </font>
              </property>
              <property name="text">
-              <string>Start Row:</string>
+              <string>End Column:</string>
              </property>
             </widget>
            </item>
-           <item row="1" column="1">
-            <widget class="QLabel" name="label_End_col">
+           <item row="2" column="6">
+            <widget class="QDoubleSpinBox" name="doubleSpinBox_hbin">
              <property name="font">
               <font>
                <pointsize>11</pointsize>
               </font>
              </property>
-             <property name="text">
-              <string>512</string>
+             <property name="decimals">
+              <number>0</number>
              </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
+             <property name="minimum">
+              <double>1.000000000000000</double>
+             </property>
+             <property name="maximum">
+              <double>512.000000000000000</double>
+             </property>
+             <property name="value">
+              <double>1.000000000000000</double>
              </property>
             </widget>
            </item>
-           <item row="0" column="5">
-            <widget class="QLabel" name="label_Start_row">
+           <item row="2" column="5">
+            <widget class="QLabel" name="label_hbin">
              <property name="font">
               <font>
                <pointsize>11</pointsize>
@@ -495,42 +507,15 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="2">
-            <widget class="QDoubleSpinBox" name="doubleSpinBox_End_col">
-             <property name="font">
-              <font>
-               <pointsize>11</pointsize>
-              </font>
-             </property>
-             <property name="decimals">
-              <number>0</number>
-             </property>
-             <property name="maximum">
-              <double>512.000000000000000</double>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="label_9">
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_12">
              <property name="font">
               <font>
                <pointsize>11</pointsize>
               </font>
              </property>
              <property name="text">
-              <string>End Column:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="4">
-            <widget class="QLabel" name="label_11">
-             <property name="font">
-              <font>
-               <pointsize>11</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>End Row:</string>
+              <string>Vertical Binning:</string>
              </property>
             </widget>
            </item>
@@ -546,8 +531,23 @@
              </property>
             </widget>
            </item>
-           <item row="0" column="1">
-            <widget class="QLabel" name="label_Start_col">
+           <item row="2" column="1">
+            <widget class="QLabel" name="label_vbin">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="5">
+            <widget class="QLabel" name="label_Start_row">
              <property name="font">
               <font>
                <pointsize>11</pointsize>
@@ -579,7 +579,109 @@
              </property>
             </widget>
            </item>
-           <item row="0" column="3" rowspan="2">
+           <item row="1" column="6">
+            <widget class="QDoubleSpinBox" name="doubleSpinBox_End_row">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="decimals">
+              <number>0</number>
+             </property>
+             <property name="maximum">
+              <double>512.000000000000000</double>
+             </property>
+             <property name="value">
+              <double>512.000000000000000</double>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="4">
+            <widget class="QLabel" name="label_6">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Horizontal Binning:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QDoubleSpinBox" name="doubleSpinBox_End_col">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="decimals">
+              <number>0</number>
+             </property>
+             <property name="maximum">
+              <double>512.000000000000000</double>
+             </property>
+             <property name="value">
+              <double>512.000000000000000</double>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLabel" name="label_End_col">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>512</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLabel" name="label_Start_col">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="4">
+            <widget class="QLabel" name="label_10">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Start Row:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="4">
+            <widget class="QLabel" name="label_11">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>End Row:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3" rowspan="3">
             <widget class="Line" name="line_2">
              <property name="orientation">
               <enum>Qt::Vertical</enum>

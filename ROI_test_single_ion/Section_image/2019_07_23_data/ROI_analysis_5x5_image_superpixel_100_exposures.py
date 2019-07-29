@@ -41,104 +41,104 @@ for num in range(1,101,1):
     df.drop(df.columns[-1], axis=1, inplace=True)  #delete last column
     df.drop(df.columns[0], axis=1, inplace=True)           #delete first column
     a2 = df.drop(y)
-    a2 = a.append(sum(np.array(a2).ravel().tolist()))
+    a.append(sum(np.array(a2).ravel().tolist()))
     
     df1 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_23_data\Dark\1s.txt', header = None)
     df1.drop(df1.columns[-1], axis=1, inplace=True)  #delete last column
     df1.drop(df1.columns[0], axis=1, inplace=True)           #delete first column
     a3 = df1.drop(y)
-    a3 = a1.append(sum(np.array(a3).ravel().tolist()))
+    a1.append(sum(np.array(a3).ravel().tolist()))
 
     #0.5 sec
     df2 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_23_data\Bright\05s.txt', header = None)
     df2.drop(df2.columns[-1], axis=1, inplace=True)  #delete last column
     df2.drop(df2.columns[0], axis=1, inplace=True)           #delete first column
     b2 = df2.drop(y)
-    b2 = b.append(sum(np.array(b2).ravel().tolist()))
+    b.append(sum(np.array(b2).ravel().tolist()))
     
     df3 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_23_data\Dark\05s.txt', header = None)
     df3.drop(df3.columns[-1], axis=1, inplace=True)  #delete last column
     df3.drop(df3.columns[0], axis=1, inplace=True)           #delete first column
     b3 = df3.drop(y)
-    b3 = b1.append(sum(np.array(b3).ravel().tolist()))
+    b1.append(sum(np.array(b3).ravel().tolist()))
     
     #0.1 sec
     df4 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_23_data\Bright\01s.txt', header = None)
     df4.drop(df4.columns[-1], axis=1, inplace=True)  #delete last column
     df4.drop(df4.columns[0], axis=1, inplace=True)           #delete first column
     c2 = df4.drop(y)
-    c2 = c.append(sum(np.array(c2).ravel().tolist()))
+    c.append(sum(np.array(c2).ravel().tolist()))
     
     df5 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_23_data\Dark\01s.txt', header = None)
     df5.drop(df5.columns[-1], axis=1, inplace=True)  #delete last column
     df5.drop(df5.columns[0], axis=1, inplace=True)           #delete first column
     c3 = df5.drop(y)
-    c3 = c1.append(sum(np.array(c3).ravel().tolist()))
+    c1.append(sum(np.array(c3).ravel().tolist()))
     
     #50 ms
     df6 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_23_data\Bright\50ms.txt', header = None)
     df6.drop(df6.columns[-1], axis=1, inplace=True)  #delete last column
     df6.drop(df6.columns[0], axis=1, inplace=True)           #delete first column
     d2 = df6.drop(y)
-    d2 = d.append(sum(np.array(d2).ravel().tolist()))
+    d.append(sum(np.array(d2).ravel().tolist()))
     
     df7 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_23_data\Dark\50ms.txt', header = None)
     df7.drop(df7.columns[-1], axis=1, inplace=True)  #delete last column
     df7.drop(df7.columns[0], axis=1, inplace=True)           #delete first column
     d3 = df7.drop(y)
-    d3 = d1.append(sum(np.array(d3).ravel().tolist()))
+    d1.append(sum(np.array(d3).ravel().tolist()))
     
     #40 ms
     df8 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_23_data\Bright\40ms.txt', header = None)
     df8.drop(df8.columns[-1], axis=1, inplace=True)  #delete last column
     df8.drop(df8.columns[0], axis=1, inplace=True)           #delete first column
     e2 = df8.drop(y)
-    e2 = e.append(sum(np.array(e2).ravel().tolist()))
+    e.append(sum(np.array(e2).ravel().tolist()))
     
     df9 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_23_data\Dark\40ms.txt', header = None)
     df9.drop(df9.columns[-1], axis=1, inplace=True)  #delete last column
     df9.drop(df9.columns[0], axis=1, inplace=True)           #delete first column
     e3 = df9.drop(y)
-    e3 = e1.append(sum(np.array(e3).ravel().tolist()))
+    e1.append(sum(np.array(e3).ravel().tolist()))
     
     #30 ms
     df10 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_23_data\Bright\30ms.txt', header = None)
     df10.drop(df10.columns[-1], axis=1, inplace=True)  #delete last column
     df10.drop(df10.columns[0], axis=1, inplace=True)           #delete first column
     f2 = df10.drop(y)
-    f2 = f.append(sum(np.array(f2).ravel().tolist()))
+    f.append(sum(np.array(f2).ravel().tolist()))
     
     df11 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_23_data\Dark\30ms.txt', header = None)
     df11.drop(df11.columns[-1], axis=1, inplace=True)  #delete last column
     df11.drop(df11.columns[0], axis=1, inplace=True)           #delete first column
     f3 = df11.drop(y)
-    f3 = f1.append(sum(np.array(f3).ravel().tolist()))
+    f1.append(sum(np.array(f3).ravel().tolist()))
     
     #20 ms
     df12 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_23_data\Bright\20ms.txt', header = None)
     df12.drop(df12.columns[-1], axis=1, inplace=True)  #delete last column
     df12.drop(df12.columns[0], axis=1, inplace=True)           #delete first column
     g2 = df12.drop(y)
-    g2 = g.append(sum(np.array(g2).ravel().tolist()))
+    g.append(sum(np.array(g2).ravel().tolist()))
     
     df13 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_23_data\Dark\20ms.txt', header = None)
     df13.drop(df13.columns[-1], axis=1, inplace=True)  #delete last column
     df13.drop(df13.columns[0], axis=1, inplace=True)           #delete first column
     g3 = df13.drop(y)
-    g3 = g1.append(sum(np.array(g3).ravel().tolist()))
+    g1.append(sum(np.array(g3).ravel().tolist()))
     
     #10 ms
     df14 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_23_data\Bright\10ms.txt', header = None)
     df14.drop(df14.columns[-1], axis=1, inplace=True)  #delete last column
     df14.drop(df14.columns[0], axis=1, inplace=True)           #delete first column
     h2 = df14.drop(y)
-    h2 = h.append(sum(np.array(h2).ravel().tolist()))
+    h.append(sum(np.array(h2).ravel().tolist()))
     
     df15 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_23_data\Dark\10ms.txt', header = None)
     df15.drop(df15.columns[-1], axis=1, inplace=True)  #delete last column
     df15.drop(df15.columns[0], axis=1, inplace=True)           #delete first column
     h3 = df15.drop(y)
-    h3 = h1.append(sum(np.array(h3).ravel().tolist()))
+    h1.append(sum(np.array(h3).ravel().tolist()))
 
     
 

@@ -25,6 +25,8 @@ class window_camera(Ui_cam_gui):
         self.end_col = self.doubleSpinBox_End_col.value()
         self.start_row = self.doubleSpinBox_Start_row.value()
         self.end_row = self.doubleSpinBox_End_row.value()
+        self.hbin = self.doubleSpinBox_hbin.value()
+        self.vbin = self.doubleSpinBox_vbin.value()
         
         #--- sets initial OFF labels to red -----------------------------------------------------------#
         self.label_Cam_OnOff.setStyleSheet('color: red')
@@ -386,9 +388,11 @@ class window_camera(Ui_cam_gui):
         self.end_col = self.doubleSpinBox_End_col.value()
         self.start_row = self.doubleSpinBox_Start_row.value()
         self.end_row = self.doubleSpinBox_End_row.value()
+        self.hbin = self.doubleSpinBox_hbin.value()
+        self.vbin = self.doubleSpinBox_vbin.value()
         self.cam.width = int(self.end_col) - int(self.start_col) +1
         self.cam.height = int(self.end_row) - int(self.start_row) +1
-        self.cam.SetImage(1,1,int(self.start_col),int(self.end_col),int(self.start_row),int(self.end_row))
+        self.cam.SetImage(int(self.hbin),int(self.vbin),int(self.start_col),int(self.end_col),int(self.start_row),int(self.end_row)) #SetImage(int hbin, int vbin, int hstart, int hend, int vstart, int vend)
         
         
 #-- displays image area settings-----------------------------------------------------#         
