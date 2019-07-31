@@ -79,61 +79,61 @@ for num in range(1,101,1):
     h2 = df14.drop(y)
     #h2 = [h2.iat[i,j] for i in l1 for j in l2]
     b1.append(h2.iat[0,0])
-    b2.append(h2.iat[0,1])
-    b3.append(h2.iat[0,2])
-    b4.append(h2.iat[0,3])
-    b5.append(h2.iat[0,4])
-    b6.append(h2.iat[1,0])
+    #b2.append(h2.iat[0,1])
+    #b3.append(h2.iat[0,2])
+    #b4.append(h2.iat[0,3])
+    #b5.append(h2.iat[0,4])
+    #b6.append(h2.iat[1,0])
     b7.append(h2.iat[1,1])
     b8.append(h2.iat[1,2])
     b9.append(h2.iat[1,3])
-    b10.append(h2.iat[1,4])
-    b11.append(h2.iat[2,0])
+    #b10.append(h2.iat[1,4])
+    #b11.append(h2.iat[2,0])
     b12.append(h2.iat[2,1])
     b13.append(h2.iat[2,2])
     b14.append(h2.iat[2,3])
-    b15.append(h2.iat[2,4])
-    b16.append(h2.iat[3,0])
+    #b15.append(h2.iat[2,4])
+    #b16.append(h2.iat[3,0])
     b17.append(h2.iat[3,1])
     b18.append(h2.iat[3,2])
     b19.append(h2.iat[3,3])
-    b20.append(h2.iat[3,4])
-    b21.append(h2.iat[4,0])
-    b22.append(h2.iat[4,1])
-    b23.append(h2.iat[4,2])
-    b24.append(h2.iat[4,3])
-    b25.append(h2.iat[4,4])
+    #b20.append(h2.iat[3,4])
+    #b21.append(h2.iat[4,0])
+    #b22.append(h2.iat[4,1])
+    #b23.append(h2.iat[4,2])
+    #b24.append(h2.iat[4,3])
+    #b25.append(h2.iat[4,4])
     
     df15 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_07_23_data\Dark\10ms.txt', header = None)
     df15.drop(df15.columns[-1], axis=1, inplace=True)  #delete last column
     df15.drop(df15.columns[0], axis=1, inplace=True)           #delete first column
     h3 = df15.drop(y)
     #h3 = [h3.iat[i,j] for i in l1 for j in l2]
-    d1.append(h3.iat[0,0])
-    d2.append(h3.iat[0,1])
-    d3.append(h3.iat[0,2])
-    d4.append(h3.iat[0,3])
-    d5.append(h3.iat[0,4])
-    d6.append(h3.iat[1,0])
+    #d1.append(h3.iat[0,0])
+    #d2.append(h3.iat[0,1])
+    #d3.append(h3.iat[0,2])
+    #d4.append(h3.iat[0,3])
+    #d5.append(h3.iat[0,4])
+    #d6.append(h3.iat[1,0])
     d7.append(h3.iat[1,1])
     d8.append(h3.iat[1,2])
     d9.append(h3.iat[1,3])
-    d10.append(h3.iat[1,4])
-    d11.append(h3.iat[2,0])
+    #d10.append(h3.iat[1,4])
+    #d11.append(h3.iat[2,0])
     d12.append(h3.iat[2,1])
     d13.append(h3.iat[2,2])
     d14.append(h3.iat[2,3])
-    d15.append(h3.iat[2,4])
-    d16.append(h3.iat[3,0])
+    #d15.append(h3.iat[2,4])
+    #d16.append(h3.iat[3,0])
     d17.append(h3.iat[3,1])
     d18.append(h3.iat[3,2])
     d19.append(h3.iat[3,3])
-    d20.append(h3.iat[3,4])
-    d21.append(h3.iat[4,0])
-    d22.append(h3.iat[4,1])
-    d23.append(h3.iat[4,2])
-    d24.append(h3.iat[4,3])
-    d25.append(h3.iat[4,4])
+    #d20.append(h3.iat[3,4])
+    #d21.append(h3.iat[4,0])
+    #d22.append(h3.iat[4,1])
+    #d23.append(h3.iat[4,2])
+    #d24.append(h3.iat[4,3])
+    #d25.append(h3.iat[4,4])
 
 
     
@@ -163,7 +163,6 @@ def solve(m1,m2,std1,std2):
 fi = plt.figure('Histogram 10 ms Exposure for 5x5 ROI over 100 Exposures')
 fi.suptitle('Histogram of pixel 1 for 10 ms Exposure for 5x5 ROI over 100 Exposures', fontsize=20)
 axe = fi.add_subplot(111)
-
 x1, bins1, p1 = axe.hist(b1, density=True, bins = 50)
 x2, bins2, p2 = axe.hist(b2, density=True, bins = 50)
 x3, bins3, p3 = axe.hist(b3, density=True, bins = 50)
@@ -189,38 +188,13 @@ x22, bins22, p22 = axe.hist(b22, density=True, bins = 50)
 x23, bins23, p23 = axe.hist(b23, density=True, bins = 50)
 x24, bins24, p24 = axe.hist(b24, density=True, bins = 50)
 x25, bins25, p25 = axe.hist(b25, density=True, bins = 50)
-
-x26, bins26, p26 = axe.hist(d1, density=True, bins = 50)
-x27, bins27, p27 = axe.hist(d2, density=True, bins = 50)
-x28, bins28, p28 = axe.hist(d3, density=True, bins = 50)
-x29, bins29, p29 = axe.hist(d4, density=True, bins = 50)
-x30, bins30, p30 = axe.hist(d5, density=True, bins = 50)
-x31, bins31, p31 = axe.hist(d6, density=True, bins = 50)
-x32, bins32, p32 = axe.hist(d7, density=True, bins = 50)
-x33, bins33, p33 = axe.hist(d8, density=True, bins = 50)
-x34, bins34, p34 = axe.hist(d9, density=True, bins = 50)
-x35, bins35, p35 = axe.hist(d10, density=True, bins = 50)
-x36, bins36, p36 = axe.hist(d11, density=True, bins = 50)
-x37, bins37, p37 = axe.hist(d12, density=True, bins = 50)
-x38, bins38, p38 = axe.hist(d13, density=True, bins = 50)
-x39, bins39, p39 = axe.hist(d14, density=True, bins = 50)
-x40, bins40, p40 = axe.hist(d15, density=True, bins = 50)
-x41, bins41, p41 = axe.hist(d16, density=True, bins = 50)
-x42, bins42, p42 = axe.hist(d17, density=True, bins = 50)
-x43, bins43, p43 = axe.hist(d18, density=True, bins = 50)
-x44, bins44, p44 = axe.hist(d19, density=True, bins = 50)
-x45, bins45, p45 = axe.hist(d20, density=True, bins = 50)
-x46, bins46, p46 = axe.hist(d21, density=True, bins = 50)
-x47, bins47, p47 = axe.hist(d22, density=True, bins = 50)
-x48, bins48, p48 = axe.hist(d23, density=True, bins = 50)
-x49, bins49, p49 = axe.hist(d24, density=True, bins = 50)
-x50, bins50, p50 = axe.hist(d25, density=True, bins = 50)
 axe.tick_params(axis='both', labelsize = 16)
 '''
 
 xt1 = b1  
 xmin1, xmax1 = min(xt1), max(xt1)
 lnspc1 = np.linspace(xmin1, xmax1, 10000)
+'''
 m1, s1 = stats.norm.fit(b1) # get mean and standard deviation  
 
 xt2 = b2  
@@ -247,7 +221,7 @@ xt6 = b6
 xmin6, xmax6 = min(xt6), max(xt6)  
 lnspc6 = np.linspace(xmin6, xmax6, 10000)
 m6, s6 = stats.norm.fit(b6) # get mean and standard deviation  
-
+'''
 xt7 = b7  
 xmin7, xmax7 = min(xt7), max(xt7)  
 lnspc7 = np.linspace(xmin7, xmax7, 10000)
@@ -262,7 +236,7 @@ xt9 = b9
 xmin9, xmax9 = min(xt9), max(xt9)  
 lnspc9 = np.linspace(xmin9, xmax9, 10000)
 m9, s9 = stats.norm.fit(b9) # get mean and standard deviation  
-
+'''
 xt10 = b10  
 xmin10, xmax10 = min(xt10), max(xt10)  
 lnspc10 = np.linspace(xmin10, xmax10, 10000)
@@ -272,7 +246,7 @@ xt11 = b11
 xmin11, xmax11 = min(xt11), max(xt11)  
 lnspc11 = np.linspace(xmin11, xmax11, 10000)
 m11, s11 = stats.norm.fit(b11) # get mean and standard deviation  
-
+'''
 xt12 = b12  
 xmin12, xmax12 = min(xt12), max(xt12)  
 lnspc12 = np.linspace(xmin12, xmax12, 10000)
@@ -287,7 +261,7 @@ xt14 = b14
 xmin14, xmax14 = min(xt14), max(xt14)  
 lnspc14 = np.linspace(xmin14, xmax14, 10000)
 m14, s14 = stats.norm.fit(b14) # get mean and standard deviation  
-
+'''
 xt15 = b15  
 xmin15, xmax15 = min(xt15), max(xt15)  
 lnspc15 = np.linspace(xmin15, xmax15, 10000)
@@ -297,7 +271,7 @@ xt16 = b16
 xmin16, xmax16 = min(xt16), max(xt16)  
 lnspc16 = np.linspace(xmin16, xmax16, 10000)
 m16, s16 = stats.norm.fit(b16) # get mean and standard deviation  
-
+'''
 xt17 = b17  
 xmin17, xmax17 = min(xt17), max(xt17)  
 lnspc17 = np.linspace(xmin17, xmax17, 10000)
@@ -312,7 +286,7 @@ xt19 = b19
 xmin19, xmax19 = min(xt19), max(xt19)  
 lnspc19 = np.linspace(xmin19, xmax19, 10000)
 m19, s19 = stats.norm.fit(b19) # get mean and standard deviation  
-
+'''
 xt20 = b20  
 xmin20, xmax20 = min(xt20), max(xt20)  
 lnspc20 = np.linspace(xmin20, xmax20, 10000)
@@ -342,7 +316,8 @@ xt25 = b25
 xmin25, xmax25 = min(xt25), max(xt25)  
 lnspc25 = np.linspace(xmin25, xmax25, 10000)
 m25, s25 = stats.norm.fit(b25) # get mean and standard deviation  
-
+'''
+'''
 xt26 = d1  
 xmin26, xmax26 = min(xt26), max(xt26)
 lnspc26 = np.linspace(xmin26, xmax26, 10000)
@@ -372,7 +347,7 @@ xt31 = d6
 xmin31, xmax31 = min(xt31), max(xt31)  
 lnspc31 = np.linspace(xmin31, xmax31, 10000)
 m31, s31 = stats.norm.fit(d6) # get mean and standard deviation  
-
+'''
 xt32 = d7  
 xmin32, xmax32 = min(xt32), max(xt32)  
 lnspc32 = np.linspace(xmin32, xmax32, 10000)
@@ -387,7 +362,7 @@ xt34 = d9
 xmin34, xmax34 = min(xt34), max(xt34)  
 lnspc34 = np.linspace(xmin34, xmax34, 10000)
 m34, s34 = stats.norm.fit(d9) # get mean and standard deviation  
-
+'''
 xt35 = d10  
 xmin35, xmax35 = min(xt35), max(xt35)  
 lnspc35 = np.linspace(xmin35, xmax35, 10000)
@@ -397,7 +372,7 @@ xt36 = d11
 xmin36, xmax36 = min(xt36), max(xt36)  
 lnspc36 = np.linspace(xmin36, xmax36, 10000)
 m36, s36 = stats.norm.fit(d11) # get mean and standard deviation  
-
+'''
 xt37 = d12  
 xmin37, xmax37 = min(xt37), max(xt37)  
 lnspc37 = np.linspace(xmin37, xmax37, 10000)
@@ -412,7 +387,7 @@ xt39 = d14
 xmin39, xmax39 = min(xt39), max(xt39)  
 lnspc39 = np.linspace(xmin39, xmax39, 10000)
 m39, s39 = stats.norm.fit(d14) # get mean and standard deviation  
-
+'''
 xt40 = d15  
 xmin40, xmax40 = min(xt40), max(xt40)  
 lnspc40 = np.linspace(xmin40, xmax40, 10000)
@@ -422,7 +397,7 @@ xt41 = d16
 xmin41, xmax41 = min(xt41), max(xt41)  
 lnspc41 = np.linspace(xmin41, xmax41, 10000)
 m41, s41 = stats.norm.fit(d16) # get mean and standard deviation  
-
+'''
 xt42 = d17  
 xmin42, xmax42 = min(xt42), max(xt42)  
 lnspc42 = np.linspace(xmin42, xmax42, 10000)
@@ -437,7 +412,7 @@ xt44 = d19
 xmin44, xmax44 = min(xt44), max(xt44)  
 lnspc44 = np.linspace(xmin44, xmax44, 10000)
 m44, s44 = stats.norm.fit(d19) # get mean and standard deviation  
-
+'''
 xt45 = d20  
 xmin45, xmax45 = min(xt45), max(xt45)  
 lnspc45 = np.linspace(xmin45, xmax45, 10000)
@@ -467,21 +442,18 @@ xt50 = d25
 xmin50, xmax50 = min(xt50), max(xt50)  
 lnspc50 = np.linspace(xmin50, xmax50, 10000)
 m50, s50 = stats.norm.fit(d25) # get mean and standard deviation 
-
+'''
 
 fi1 = plt.figure('Maximum Likelihood for 10 ms Exposure for 5x5 ROI over 100 Exposures')
 fi1.suptitle('Maximum Likelihood for 10 ms Exposure for 5x5 ROI over 100 Exposures', fontsize=20)
 ax = fi1.add_subplot(111)
-pdf_g = stats.norm.pdf(lnspc1, m1, s1)*stats.norm.pdf(lnspc1, m2, s2)*stats.norm.pdf(lnspc1, m3, s3)*stats.norm.pdf(lnspc1, m4, s4)*stats.norm.pdf(lnspc1, m5, s5)*stats.norm.pdf(lnspc1, m6, s6)*stats.norm.pdf(lnspc1, m7, s7)*stats.norm.pdf(lnspc1, m8, s8)*stats.norm.pdf(lnspc1, m9, s9)*stats.norm.pdf(lnspc1, m10, s10)*stats.norm.pdf(lnspc1, m11, s11)*stats.norm.pdf(lnspc1, m12, s12)*stats.norm.pdf(lnspc1, m13, s13)*stats.norm.pdf(lnspc1, m14, s14)*stats.norm.pdf(lnspc1, m15, s15)*stats.norm.pdf(lnspc1, m16, s16)*stats.norm.pdf(lnspc1, m17, s17)*stats.norm.pdf(lnspc1, m18, s18)*stats.norm.pdf(lnspc1, m19, s19)*stats.norm.pdf(lnspc1, m20, s20)*stats.norm.pdf(lnspc1, m21, s21)*stats.norm.pdf(lnspc1, m22, s22)*stats.norm.pdf(lnspc1, m23, s23)*stats.norm.pdf(lnspc1, m24, s24)*stats.norm.pdf(lnspc1, m25, s25) # now get theoretical values in our interval  
-ax.plot(lnspc1, 10000000*pdf_g, 'r', label="Super Pixel Bright Ion Gaussian fit") 
-pdf_g1 = stats.norm.pdf(lnspc26, m26, s26)*stats.norm.pdf(lnspc26, m27, s27)*stats.norm.pdf(lnspc26, m28, s28)*stats.norm.pdf(lnspc26, m29, s29)*stats.norm.pdf(lnspc26, m30, s30)*stats.norm.pdf(lnspc26, m31, s31)*stats.norm.pdf(lnspc26, m32, s32)*stats.norm.pdf(lnspc26, m33, s33)*stats.norm.pdf(lnspc26, m34, s34)*stats.norm.pdf(lnspc26, m35, s35)*stats.norm.pdf(lnspc26, m36, s36)*stats.norm.pdf(lnspc26, m37, s37)*stats.norm.pdf(lnspc26, m38, s38)*stats.norm.pdf(lnspc26, m39, s39)*stats.norm.pdf(lnspc26, m40, s40)*stats.norm.pdf(lnspc26, m41, s41)*stats.norm.pdf(lnspc26, m42, s42)*stats.norm.pdf(lnspc26, m43, s43)*stats.norm.pdf(lnspc26, m44, s44)*stats.norm.pdf(lnspc26, m45, s45)*stats.norm.pdf(lnspc26, m46, s46)*stats.norm.pdf(lnspc26, m47, s47)*stats.norm.pdf(lnspc26, m48, s48)*stats.norm.pdf(lnspc26, m49, s49)*stats.norm.pdf(lnspc26, m50, s50) # now get theoretical values in our interval  
-ax.plot(lnspc26, pdf_g1, 'g', label="Super Pixel Dark Ion Gaussian fit") 
+pdf_g = stats.norm.pdf(lnspc7, m7, s7)*stats.norm.pdf(lnspc7, m8, s8)*stats.norm.pdf(lnspc7, m9, s9)*stats.norm.pdf(lnspc7, m12, s12)*stats.norm.pdf(lnspc7, m13, s13)*stats.norm.pdf(lnspc7, m14, s14)*stats.norm.pdf(lnspc7, m17, s17)*stats.norm.pdf(lnspc7, m18, s18)*stats.norm.pdf(lnspc7, m19, s19) # now get theoretical values in our interval  
+ax.plot(lnspc7, 3000*pdf_g, 'r', label="Super Pixel Bright Ion Gaussian fit") 
+pdf_g1 = stats.norm.pdf(lnspc7, m32, s32)*stats.norm.pdf(lnspc7, m33, s33)*stats.norm.pdf(lnspc7, m34, s34)*stats.norm.pdf(lnspc7, m37, s37)*stats.norm.pdf(lnspc7, m38, s38)*stats.norm.pdf(lnspc7, m39, s39)*stats.norm.pdf(lnspc7, m42, s42)*stats.norm.pdf(lnspc7, m43, s43)*stats.norm.pdf(lnspc7, m44, s44) # now get theoretical values in our interval  
+ax.plot(lnspc7, pdf_g1, 'g', label="Super Pixel Dark Ion Gaussian fit") 
 ax.legend(fontsize = 16)
 plt.xlabel('Count reading', fontsize=18)
 plt.ylabel('Probability Density', fontsize=18)
-
-''''''
-
 
 '''
 xmin51, xmax51 = -max(pdf_g), max(pdf_g)  
