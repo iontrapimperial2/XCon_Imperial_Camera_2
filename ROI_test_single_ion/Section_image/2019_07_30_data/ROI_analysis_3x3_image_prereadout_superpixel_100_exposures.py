@@ -168,7 +168,7 @@ plt.xlabel('Exposure time/s', fontsize=18)
 
 
 
-#find intercept of B and D distributions
+#find intercept of B and D distributions (FOR GAUSSIAN ONLY)
 def solve(m1,m2,std1,std2):
   a = 1/(2*std1**2) - 1/(2*std2**2)
   b = m2/(std2**2) - m1/(std1**2)
@@ -176,45 +176,48 @@ def solve(m1,m2,std1,std2):
   return np.roots([a,b,c])
 
 
+#Gaussian function for fitting
+def fit_function(x, A, mu, sigma):
+    return (A*np.exp(-1.0 * (x - mu)**2 / (2 * sigma**2)))
+
+
 #Histograms
 fi = plt.figure('Histogram for 1 s Exposure for 3x3 ROI over 100 Exposures')
 fi.suptitle('Bright and Dark Histogram overlap: 1 s Exposure for 3x3 ROI over 100 Exposures', fontsize=20)
 axe = fi.add_subplot(111)
-x, bins, p = axe.hist(a, density=True, bins = 50, label = 'Prereadout Super Pixel Bright Ion')
-x1, bins1, p1 = axe.hist(a1, density=True, bins = 50, label = 'Prereadout Super Pixel Dark Ion')
+x, bins, p = axe.hist(a, density=True, bins = 20, label = 'Prereadout Super Pixel Bright Ion')
+x1, bins1, p1 = axe.hist(a1, density=True, bins = 20, label = 'Prereadout Super Pixel Dark Ion')
 axe.tick_params(axis='both', labelsize = 16)
+
 xt = plt.xticks()[0]  
 xmin, xmax = min(xt), max(xt)  
-lnspc = np.linspace(xmin, xmax, len(a))
-m, s = stats.norm.fit(a) # get mean and standard deviation  
-pdf_g = stats.norm.pdf(lnspc, m, s) # now get theoretical values in our interval  
-axe.plot(lnspc, pdf_g, 'r', label="Prereadout Super Pixel Bright Ion Gaussian fit") # plot it
+lnspc = np.linspace(xmin, xmax, 10000)
+binscenters = np.array([0.5 * (bins[i] + bins[i+1]) for i in range(len(bins)-1)])
+popt, pcov = curve_fit(fit_function, xdata=binscenters, ydata=x, p0 = [0.0004, 24100, 2000])
+print(popt) 
+axe.plot(lnspc, fit_function(lnspc,*popt), 'r', label="Prereadout Super Pixel Bright Ion Gaussian fit") # plot it
+
 
 xt1 = plt.xticks()[0]  
 xmin1, xmax1 = min(xt1), max(xt1)  
 lnspc1 = np.linspace(xmin1, xmax1, 10000)
-m1, s1 = stats.norm.fit(a1) # get mean and standard deviation  
-pdf_g1 = stats.norm.pdf(lnspc1, m1, s1) # now get theoretical values in our interval  
-axe.plot(lnspc1, pdf_g1, 'g', label="Prereadout Super Pixel Dark Ion Gaussian fit") 
+binscenters1 = np.array([0.5 * (bins1[i] + bins1[i+1]) for i in range(len(bins1)-1)])
+popt1, pcov1 = curve_fit(fit_function, xdata=binscenters1, ydata=x1, p0 = [0.003, 584, 250])
+print(popt1)
+axe.plot(lnspc1, fit_function(lnspc1,*popt1), 'g', label="Prereadout Super Pixel Dark Ion Gaussian fit") 
 axe.legend(fontsize = 16)
+
 plt.xlabel('Count reading', fontsize=18)
 plt.ylabel('Probability Density', fontsize=18)
 
-result = solve(m,m1,s,s1)
+result = solve(popt[1],popt1[1],popt[2],popt1[2])
 print(result)
 x1 = 0      
 x2 = result[0]
-x3 = 9999999999
-double_prob = erf( (x1-m) / (s*sqrt(2)) )
-p_lower = double_prob/2
-double_prob1 = erf( (x2-m) / (s*sqrt(2)) )
-p_upper = double_prob1/2
-double_prob2 = erf( (x2-m1) / (s1*sqrt(2)) )
-p_lower1 = double_prob2/2
-double_prob3 = erf( (x3-m1) / (s1*sqrt(2)) )
-p_upper1 = double_prob3/2
-Pin = (p_upper) - (p_lower)
-Pin1 = (p_upper1) - (p_lower1)
+#x3 = 9999999999
+
+Pin = stats.norm.cdf(x2,popt[1],popt[2])
+Pin1 = 1- stats.norm.cdf(x2, popt1[1], popt1[2])#(p_upper1) - (p_lower1)
 print('probability of misinterpreting bright ion as dark ion at 1 s exposure: ' + str(Pin))
 print('probability of misinterpreting dark ion as bright ion at 1 s exposure: ' + str(Pin1))
 
@@ -222,41 +225,39 @@ print('probability of misinterpreting dark ion as bright ion at 1 s exposure: ' 
 fi1 = plt.figure('Histogram for 0.5 s Exposure for 3x3 ROI over 100 Exposures')
 fi1.suptitle('Bright and Dark Histogram overlap: 0.5 s Exposure for 3x3 ROI over 100 Exposures', fontsize=20)
 axe1 = fi1.add_subplot(111)
-x, bins, p = axe1.hist(b, density=True, bins = 50, label = 'Prereadout Super Pixel Bright Ion')
-x1, bins1, p1 = axe1.hist(b1, density=True, bins = 50, label = 'Prereadout Super Pixel Dark Ion')
+x, bins, p = axe1.hist(b, density=True, bins = 20, label = 'Prereadout Super Pixel Bright Ion')
+x1, bins1, p1 = axe1.hist(b1, density=True, bins = 20, label = 'Prereadout Super Pixel Dark Ion')
 axe1.tick_params(axis='both', labelsize = 16)
+
 xt = plt.xticks()[0]  
 xmin, xmax = min(xt), max(xt)  
-lnspc = np.linspace(xmin, xmax, len(b))
-m, s = stats.norm.fit(b) # get mean and standard deviation  
-pdf_g = stats.norm.pdf(lnspc, m, s) # now get theoretical values in our interval  
-axe1.plot(lnspc, pdf_g, 'r', label="Prereadout Super Pixel Bright Ion Gaussian fit") # plot it
+lnspc = np.linspace(xmin, xmax, 10000)
+binscenters = np.array([0.5 * (bins[i] + bins[i+1]) for i in range(len(bins)-1)])
+popt, pcov = curve_fit(fit_function, xdata=binscenters, ydata=x, p0 = [0.0004, 12700, 2000])
+print(popt) 
+axe1.plot(lnspc, fit_function(lnspc,*popt), 'r', label="Prereadout Super Pixel Bright Ion Gaussian fit") # plot it
+
 
 xt1 = plt.xticks()[0]  
 xmin1, xmax1 = min(xt1), max(xt1)  
 lnspc1 = np.linspace(xmin1, xmax1, 10000)
-m1, s1 = stats.norm.fit(b1) # get mean and standard deviation  
-pdf_g1 = stats.norm.pdf(lnspc1, m1, s1) # now get theoretical values in our interval  
-axe1.plot(lnspc1, pdf_g1, 'g', label="Prereadout Super Pixel Dark Ion Gaussian fit") 
+binscenters1 = np.array([0.5 * (bins1[i] + bins1[i+1]) for i in range(len(bins1)-1)])
+popt1, pcov1 = curve_fit(fit_function, xdata=binscenters1, ydata=x1, p0 = [0.0046, 305, 200])
+print(popt1)
+axe1.plot(lnspc1, fit_function(lnspc1,*popt1), 'g', label="Prereadout Super Pixel Dark Ion Gaussian fit") 
 axe1.legend(fontsize = 16)
+
 plt.xlabel('Count reading', fontsize=18)
 plt.ylabel('Probability Density', fontsize=18)
 
-result = solve(m,m1,s,s1)
+result = solve(popt[1],popt1[1],popt[2],popt1[2])
 print(result)
 x1 = 0      
 x2 = result[0]
-x3 = 9999999999
-double_prob = erf( (x1-m) / (s*sqrt(2)) )
-p_lower = double_prob/2
-double_prob1 = erf( (x2-m) / (s*sqrt(2)) )
-p_upper = double_prob1/2
-double_prob2 = erf( (x2-m1) / (s1*sqrt(2)) )
-p_lower1 = double_prob2/2
-double_prob3 = erf( (x3-m1) / (s1*sqrt(2)) )
-p_upper1 = double_prob3/2
-Pin = (p_upper) - (p_lower)
-Pin1 = (p_upper1) - (p_lower1)
+#x3 = 9999999999
+
+Pin = stats.norm.cdf(x2,popt[1],popt[2])
+Pin1 = 1- stats.norm.cdf(x2, popt1[1], popt1[2])#(p_upper1) - (p_lower1)
 print('probability of misinterpreting bright ion as dark ion at 0.5 s exposure: ' + str(Pin))
 print('probability of misinterpreting dark ion as bright ion at 0.5 s exposure: ' + str(Pin1))
 
@@ -265,41 +266,39 @@ print('probability of misinterpreting dark ion as bright ion at 0.5 s exposure: 
 fi2 = plt.figure('Histogram for 0.1 s Exposure for 3x3 ROI over 100 Exposures')
 fi2.suptitle('Bright and Dark Histogram overlap: 0.1 s Exposure for 3x3 ROI over 100 Exposures', fontsize=20)
 axe2 = fi2.add_subplot(111)
-x, bins, p = axe2.hist(c, density=True, bins = 50, label = 'Prereadout Super Pixel Bright Ion')
-x1, bins1, p1 = axe2.hist(c1, density=True, bins = 50, label = 'Prereadout Super Pixel Dark Ion')
+x, bins, p = axe2.hist(c, density=True, bins = 20, label = 'Prereadout Super Pixel Bright Ion')
+x1, bins1, p1 = axe2.hist(c1, density=True, bins = 20, label = 'Prereadout Super Pixel Dark Ion')
 axe2.tick_params(axis='both', labelsize = 16)
+
 xt = plt.xticks()[0]  
 xmin, xmax = min(xt), max(xt)  
-lnspc = np.linspace(xmin, xmax, len(c))
-m, s = stats.norm.fit(c) # get mean and standard deviation  
-pdf_g = stats.norm.pdf(lnspc, m, s) # now get theoretical values in our interval  
-axe2.plot(lnspc, pdf_g, 'r', label="Prereadout Super Pixel Bright Ion Gaussian fit") # plot it
+lnspc = np.linspace(xmin, xmax, 10000)
+binscenters = np.array([0.5 * (bins[i] + bins[i+1]) for i in range(len(bins)-1)])
+popt, pcov = curve_fit(fit_function, xdata=binscenters, ydata=x, p0 = [0.001, 2700, 700])
+print(popt) 
+axe2.plot(lnspc, fit_function(lnspc,*popt), 'r', label="Prereadout Super Pixel Bright Ion Gaussian fit") # plot it
+
 
 xt1 = plt.xticks()[0]  
 xmin1, xmax1 = min(xt1), max(xt1)  
 lnspc1 = np.linspace(xmin1, xmax1, 10000)
-m1, s1 = stats.norm.fit(c1) # get mean and standard deviation  
-pdf_g1 = stats.norm.pdf(lnspc1, m1, s1) # now get theoretical values in our interval  
-axe2.plot(lnspc1, pdf_g1, 'g', label="Prereadout Super Pixel Dark Ion Gaussian fit") 
+binscenters1 = np.array([0.5 * (bins1[i] + bins1[i+1]) for i in range(len(bins1)-1)])
+popt1, pcov1 = curve_fit(fit_function, xdata=binscenters1, ydata=x1, p0 = [0.017, 184, 50])
+print(popt1)
+axe2.plot(lnspc1, fit_function(lnspc1,*popt1), 'g', label="Prereadout Super Pixel Dark Ion Gaussian fit") 
 axe2.legend(fontsize = 16)
+
 plt.xlabel('Count reading', fontsize=18)
 plt.ylabel('Probability Density', fontsize=18)
 
-result = solve(m,m1,s,s1)
+result = solve(popt[1],popt1[1],popt[2],popt1[2])
 print(result)
 x1 = 0      
 x2 = result[0]
-x3 = 9999999999
-double_prob = erf( (x1-m) / (s*sqrt(2)) )
-p_lower = double_prob/2
-double_prob1 = erf( (x2-m) / (s*sqrt(2)) )
-p_upper = double_prob1/2
-double_prob2 = erf( (x2-m1) / (s1*sqrt(2)) )
-p_lower1 = double_prob2/2
-double_prob3 = erf( (x3-m1) / (s1*sqrt(2)) )
-p_upper1 = double_prob3/2
-Pin = (p_upper) - (p_lower)
-Pin1 = (p_upper1) - (p_lower1)
+#x3 = 9999999999
+
+Pin = stats.norm.cdf(x2,popt[1],popt[2])
+Pin1 = 1- stats.norm.cdf(x2, popt1[1], popt1[2])#(p_upper1) - (p_lower1)
 print('probability of misinterpreting bright ion as dark ion at 0.1 s exposure: ' + str(Pin))
 print('probability of misinterpreting dark ion as bright ion at 0.1 s exposure: ' + str(Pin1))
 
@@ -307,41 +306,39 @@ print('probability of misinterpreting dark ion as bright ion at 0.1 s exposure: 
 fi3 =plt.figure('Histogram for 50 ms Exposure for 3x3 ROI over 100 Exposures')
 fi3.suptitle('Bright and Dark Histogram overlap: 50 ms Exposure for 3x3 ROI over 100 Exposures', fontsize=20)
 axe3 = fi3.add_subplot(111)
-x, bins, p = axe3.hist(d, density=True, bins = 50, label = 'Prereadout Super Pixel Bright Ion')
-x1, bins1, p1 = axe3.hist(d1, density=True, bins = 50, label = 'Prereadout Super Pixel Dark Ion')
+x, bins, p = axe3.hist(d, density=True, bins = 20, label = 'Prereadout Super Pixel Bright Ion')
+x1, bins1, p1 = axe3.hist(d1, density=True, bins = 20, label = 'Prereadout Super Pixel Dark Ion')
 axe3.tick_params(axis='both', labelsize = 16)
+
 xt = plt.xticks()[0]  
 xmin, xmax = min(xt), max(xt)  
-lnspc = np.linspace(xmin, xmax, len(d))
-m, s = stats.norm.fit(d) # get mean and standard deviation  
-pdf_g = stats.norm.pdf(lnspc, m, s) # now get theoretical values in our interval  
-axe3.plot(lnspc, pdf_g, 'r', label="Prereadout Super Pixel Bright Ion Gaussian fit") # plot it
+lnspc = np.linspace(xmin, xmax, 10000)
+binscenters = np.array([0.5 * (bins[i] + bins[i+1]) for i in range(len(bins)-1)])
+popt, pcov = curve_fit(fit_function, xdata=binscenters, ydata=x, p0 = [0.0013, 1464, 400])
+print(popt) 
+axe3.plot(lnspc, fit_function(lnspc,*popt), 'r', label="Prereadout Super Pixel Bright Ion Gaussian fit") # plot it
+
 
 xt1 = plt.xticks()[0]  
 xmin1, xmax1 = min(xt1), max(xt1)  
 lnspc1 = np.linspace(xmin1, xmax1, 10000)
-m1, s1 = stats.norm.fit(d1) # get mean and standard deviation  
-pdf_g1 = stats.norm.pdf(lnspc1, m1, s1) # now get theoretical values in our interval  
-axe3.plot(lnspc1, pdf_g1, 'g', label="Prereadout Super Pixel Dark Ion Gaussian fit") 
+binscenters1 = np.array([0.5 * (bins1[i] + bins1[i+1]) for i in range(len(bins1)-1)])
+popt1, pcov1 = curve_fit(fit_function, xdata=binscenters1, ydata=x1, p0 = [0.03, 182, 32])
+print(popt1)
+axe3.plot(lnspc1, fit_function(lnspc1,*popt1), 'g', label="Prereadout Super Pixel Dark Ion Gaussian fit") 
 axe3.legend(fontsize = 16)
+
 plt.xlabel('Count reading', fontsize=18)
 plt.ylabel('Probability Density', fontsize=18)
 
-result = solve(m,m1,s,s1)
+result = solve(popt[1],popt1[1],popt[2],popt1[2])
 print(result)
 x1 = 0      
 x2 = result[0]
-x3 = 9999999999
-double_prob = erf( (x1-m) / (s*sqrt(2)) )
-p_lower = double_prob/2
-double_prob1 = erf( (x2-m) / (s*sqrt(2)) )
-p_upper = double_prob1/2
-double_prob2 = erf( (x2-m1) / (s1*sqrt(2)) )
-p_lower1 = double_prob2/2
-double_prob3 = erf( (x3-m1) / (s1*sqrt(2)) )
-p_upper1 = double_prob3/2
-Pin = (p_upper) - (p_lower)
-Pin1 = (p_upper1) - (p_lower1)
+#x3 = 9999999999
+
+Pin = stats.norm.cdf(x2,popt[1],popt[2])
+Pin1 = 1- stats.norm.cdf(x2, popt1[1], popt1[2])#(p_upper1) - (p_lower1)
 print('probability of misinterpreting bright ion as dark ion at 50 ms exposure: ' + str(Pin))
 print('probability of misinterpreting dark ion as bright ion at 50 ms exposure: ' + str(Pin1))
 
@@ -349,41 +346,39 @@ print('probability of misinterpreting dark ion as bright ion at 50 ms exposure: 
 fi4 = plt.figure('Histogram for 40 ms Exposure for 3x3 ROI over 100 Exposures')
 fi4.suptitle('Bright and Dark Histogram overlap: 40 ms Exposure for 3x3 ROI over 100 Exposures', fontsize=20)
 axe4 = fi4.add_subplot(111)
-x, bins, p = axe4.hist(e, density=True, bins = 50, label = 'Prereadout Super Pixel Bright Ion')
-x1, bins1, p1 = axe4.hist(e1, density=True, bins = 50, label = 'Prereadout Super Pixel Dark Ion')
+x, bins, p = axe4.hist(e, density=True, bins = 20, label = 'Prereadout Super Pixel Bright Ion')
+x1, bins1, p1 = axe4.hist(e1, density=True, bins = 20, label = 'Prereadout Super Pixel Dark Ion')
 axe4.tick_params(axis='both', labelsize = 16)
+
 xt = plt.xticks()[0]  
 xmin, xmax = min(xt), max(xt)  
-lnspc = np.linspace(xmin, xmax, len(e))
-m, s = stats.norm.fit(e) # get mean and standard deviation  
-pdf_g = stats.norm.pdf(lnspc, m, s) # now get theoretical values in our interval  
-axe4.plot(lnspc, pdf_g, 'r', label="Prereadout Super Pixel Bright Ion Gaussian fit") # plot it
+lnspc = np.linspace(xmin, xmax, 10000)
+binscenters = np.array([0.5 * (bins[i] + bins[i+1]) for i in range(len(bins)-1)])
+popt, pcov = curve_fit(fit_function, xdata=binscenters, ydata=x, p0 = [0.0014, 1200, 500])
+print(popt) 
+axe4.plot(lnspc, fit_function(lnspc,*popt), 'r', label="Prereadout Super Pixel Bright Ion Gaussian fit") # plot it
+
 
 xt1 = plt.xticks()[0]  
 xmin1, xmax1 = min(xt1), max(xt1)  
 lnspc1 = np.linspace(xmin1, xmax1, 10000)
-m1, s1 = stats.norm.fit(e1) # get mean and standard deviation  
-pdf_g1 = stats.norm.pdf(lnspc1, m1, s1) # now get theoretical values in our interval  
-axe4.plot(lnspc1, pdf_g1, 'g', label="Prereadout Super Pixel Dark Ion Gaussian fit") 
+binscenters1 = np.array([0.5 * (bins1[i] + bins1[i+1]) for i in range(len(bins1)-1)])
+popt1, pcov1 = curve_fit(fit_function, xdata=binscenters1, ydata=x1, p0 = [0.02, 190, 40])
+print(popt1)
+axe4.plot(lnspc1, fit_function(lnspc1,*popt1), 'g', label="Prereadout Super Pixel Dark Ion Gaussian fit") 
 axe4.legend(fontsize = 16)
+
 plt.xlabel('Count reading', fontsize=18)
 plt.ylabel('Probability Density', fontsize=18)
 
-result = solve(m,m1,s,s1)
+result = solve(popt[1],popt1[1],popt[2],popt1[2])
 print(result)
 x1 = 0      
 x2 = result[0]
-x3 = 9999999999
-double_prob = erf( (x1-m) / (s*sqrt(2)) )
-p_lower = double_prob/2
-double_prob1 = erf( (x2-m) / (s*sqrt(2)) )
-p_upper = double_prob1/2
-double_prob2 = erf( (x2-m1) / (s1*sqrt(2)) )
-p_lower1 = double_prob2/2
-double_prob3 = erf( (x3-m1) / (s1*sqrt(2)) )
-p_upper1 = double_prob3/2
-Pin = (p_upper) - (p_lower)
-Pin1 = (p_upper1) - (p_lower1)
+#x3 = 9999999999
+
+Pin = stats.norm.cdf(x2,popt[1],popt[2])
+Pin1 = 1- stats.norm.cdf(x2, popt1[1], popt1[2])#(p_upper1) - (p_lower1)
 print('probability of misinterpreting bright ion as dark ion at 40 ms exposure: ' + str(Pin))
 print('probability of misinterpreting dark ion as bright ion at 40 ms exposure: ' + str(Pin1))
 
@@ -391,41 +386,39 @@ print('probability of misinterpreting dark ion as bright ion at 40 ms exposure: 
 fi5 = plt.figure('Histogram for 30 ms Exposure for 3x3 ROI over 100 Exposures')
 fi5.suptitle('Bright and Dark Histogram overlap: 30 ms Exposure for 3x3 ROI over 100 Exposures', fontsize=20)
 axe5 = fi5.add_subplot(111)
-x, bins, p = axe5.hist(f, density=True, bins = 50, label = 'Prereadout Super Pixel Bright Ion')
-x1, bins1, p1 = axe5.hist(f1, density=True, bins = 50, label = 'Prereadout Super Pixel Dark Ion')
+x, bins, p = axe5.hist(f, density=True, bins = 20, label = 'Prereadout Super Pixel Bright Ion')
+x1, bins1, p1 = axe5.hist(f1, density=True, bins = 20, label = 'Prereadout Super Pixel Dark Ion')
 axe5.tick_params(axis='both', labelsize = 16)
+
 xt = plt.xticks()[0]  
 xmin, xmax = min(xt), max(xt)  
-lnspc = np.linspace(xmin, xmax, len(f))
-m, s = stats.norm.fit(f) # get mean and standard deviation  
-pdf_g = stats.norm.pdf(lnspc, m, s) # now get theoretical values in our interval  
-axe5.plot(lnspc, pdf_g, 'r', label="Prereadout Super Pixel Bright Ion Gaussian fit") # plot it
+lnspc = np.linspace(xmin, xmax, 10000)
+binscenters = np.array([0.5 * (bins[i] + bins[i+1]) for i in range(len(bins)-1)])
+popt, pcov = curve_fit(fit_function, xdata=binscenters, ydata=x, p0 = [0.0017, 970, 400])
+print(popt) 
+axe5.plot(lnspc, fit_function(lnspc,*popt), 'r', label="Prereadout Super Pixel Bright Ion Gaussian fit") # plot it
+
 
 xt1 = plt.xticks()[0]  
 xmin1, xmax1 = min(xt1), max(xt1)  
 lnspc1 = np.linspace(xmin1, xmax1, 10000)
-m1, s1 = stats.norm.fit(f1) # get mean and standard deviation  
-pdf_g1 = stats.norm.pdf(lnspc1, m1, s1) # now get theoretical values in our interval  
-axe5.plot(lnspc1, pdf_g1, 'g', label="Prereadout Super Pixel Dark Ion Gaussian fit") 
+binscenters1 = np.array([0.5 * (bins1[i] + bins1[i+1]) for i in range(len(bins1)-1)])
+popt1, pcov1 = curve_fit(fit_function, xdata=binscenters1, ydata=x1, p0 = [0.028, 180, 40])
+print(popt1)
+axe5.plot(lnspc1, fit_function(lnspc1,*popt1), 'g', label="Prereadout Super Pixel Dark Ion Gaussian fit") 
 axe5.legend(fontsize = 16)
+
 plt.xlabel('Count reading', fontsize=18)
 plt.ylabel('Probability Density', fontsize=18)
 
-result = solve(m,m1,s,s1)
+result = solve(popt[1],popt1[1],popt[2],popt1[2])
 print(result)
 x1 = 0      
 x2 = result[0]
-x3 = 9999999999
-double_prob = erf( (x1-m) / (s*sqrt(2)) )
-p_lower = double_prob/2
-double_prob1 = erf( (x2-m) / (s*sqrt(2)) )
-p_upper = double_prob1/2
-double_prob2 = erf( (x2-m1) / (s1*sqrt(2)) )
-p_lower1 = double_prob2/2
-double_prob3 = erf( (x3-m1) / (s1*sqrt(2)) )
-p_upper1 = double_prob3/2
-Pin = (p_upper) - (p_lower)
-Pin1 = (p_upper1) - (p_lower1)
+#x3 = 9999999999
+
+Pin = stats.norm.cdf(x2,popt[1],popt[2])
+Pin1 = 1- stats.norm.cdf(x2, popt1[1], popt1[2])#(p_upper1) - (p_lower1)
 print('probability of misinterpreting bright ion as dark ion at 30 ms exposure: ' + str(Pin))
 print('probability of misinterpreting dark ion as bright ion at 30 ms exposure: ' + str(Pin1))
 
@@ -433,84 +426,83 @@ print('probability of misinterpreting dark ion as bright ion at 30 ms exposure: 
 fi6 = plt.figure('Histogram for 20 ms Exposure for 3x3 ROI over 100 Exposures')
 fi6.suptitle('Bright and Dark Histogram overlap: 20 ms Exposure for 3x3 ROI over 100 Exposures', fontsize=20)
 axe6 = fi6.add_subplot(111)
-x, bins, p = axe6.hist(g, density=True, bins = 50, label = 'Prereadout Super Pixel Bright Ion')
-x1, bins1, p1 = axe6.hist(g1, density=True, bins = 50, label = 'Prereadout Super Pixel Dark Ion')
+x, bins, p = axe6.hist(g, density=True, bins = 20, label = 'Prereadout Super Pixel Bright Ion')
+x1, bins1, p1 = axe6.hist(g1, density=True, bins = 20, label = 'Prereadout Super Pixel Dark Ion')
 axe6.tick_params(axis='both', labelsize = 16)
+
 xt = plt.xticks()[0]  
 xmin, xmax = min(xt), max(xt)  
-lnspc = np.linspace(xmin, xmax, len(g))
-m, s = stats.norm.fit(g) # get mean and standard deviation  
-pdf_g = stats.norm.pdf(lnspc, m, s) # now get theoretical values in our interval  
-axe6.plot(lnspc, pdf_g, 'r', label="Prereadout Super Pixel Bright Ion Gaussian fit") # plot it
+lnspc = np.linspace(xmin, xmax, 10000)
+binscenters = np.array([0.5 * (bins[i] + bins[i+1]) for i in range(len(bins)-1)])
+popt, pcov = curve_fit(fit_function, xdata=binscenters, ydata=x, p0 = [0.0024, 620, 250])
+print(popt) 
+axe6.plot(lnspc, fit_function(lnspc,*popt), 'r', label="Prereadout Super Pixel Bright Ion Gaussian fit") # plot it
+
 
 xt1 = plt.xticks()[0]  
 xmin1, xmax1 = min(xt1), max(xt1)  
 lnspc1 = np.linspace(xmin1, xmax1, 10000)
-m1, s1 = stats.norm.fit(g1) # get mean and standard deviation  
-pdf_g1 = stats.norm.pdf(lnspc1, m1, s1) # now get theoretical values in our interval  
-axe6.plot(lnspc1, pdf_g1, 'g', label="Prereadout Super Pixel Dark Ion Gaussian fit") 
+binscenters1 = np.array([0.5 * (bins1[i] + bins1[i+1]) for i in range(len(bins1)-1)])
+popt1, pcov1 = curve_fit(fit_function, xdata=binscenters1, ydata=x1, p0 = [0.03, 176, 30])
+print(popt1)
+axe6.plot(lnspc1, fit_function(lnspc1,*popt1), 'g', label="Prereadout Super Pixel Dark Ion Gaussian fit") 
 axe6.legend(fontsize = 16)
+
 plt.xlabel('Count reading', fontsize=18)
 plt.ylabel('Probability Density', fontsize=18)
 
-result = solve(m,m1,s,s1)
+result = solve(popt[1],popt1[1],popt[2],popt1[2])
 print(result)
 x1 = 0      
 x2 = result[0]
-x3 = 9999999999
-double_prob = erf( (x1-m) / (s*sqrt(2)) )
-p_lower = double_prob/2
-double_prob1 = erf( (x2-m) / (s*sqrt(2)) )
-p_upper = double_prob1/2
-double_prob2 = erf( (x2-m1) / (s1*sqrt(2)) )
-p_lower1 = double_prob2/2
-double_prob3 = erf( (x3-m1) / (s1*sqrt(2)) )
-p_upper1 = double_prob3/2
-Pin = (p_upper) - (p_lower)
-Pin1 = (p_upper1) - (p_lower1)
+#x3 = 9999999999
+
+Pin = stats.norm.cdf(x2,popt[1],popt[2])
+Pin1 = 1- stats.norm.cdf(x2, popt1[1], popt1[2])#(p_upper1) - (p_lower1)
 print('probability of misinterpreting bright ion as dark ion at 20 ms exposure: ' + str(Pin))
 print('probability of misinterpreting dark ion as bright ion at 20 ms exposure: ' + str(Pin1))
+
+
 
 
 fi7 =plt.figure('Histogram for 10 ms Exposure for 3x3 ROI over 100 Exposures')
 fi7.suptitle('Bright and Dark Histogram overlap: 10 ms Exposure for 3x3 ROI over 100 Exposures', fontsize=20)
 axe7 = fi7.add_subplot(111)
-x, bins, p = axe7.hist(h, density=True, bins = 30, label = 'Prereadout Super Pixel Bright Ion')
-x1, bins1, p1 = axe7.hist(h1, density=True, bins = 30, label = 'Prereadout Super Pixel Dark Ion')
+x, bins, p = axe7.hist(h, density=True, bins = 20, label = 'Prereadout Super Pixel Bright Ion')
+x1, bins1, p1 = axe7.hist(h1, density=True, bins = 20, label = 'Prereadout Super Pixel Dark Ion')
 axe7.tick_params(axis='both', labelsize = 16)
+
 xt = plt.xticks()[0]  
 xmin, xmax = min(xt), max(xt)  
-lnspc = np.linspace(xmin, xmax, 10000)
-m, s = stats.norm.fit(h) # get mean and standard deviation  
-pdf_g = stats.norm.pdf(lnspc, m, s) # now get theoretical values in our interval  
-axe7.plot(lnspc, pdf_g, 'r', label="Prereadout Super Pixel Bright Ion Gaussian fit") # plot it
+lnspc = np.linspace(0, xmax, 10000)
+binscenters = np.array([0.5 * (bins[i] + bins[i+1]) for i in range(len(bins)-1)])
+popt, pcov = curve_fit(fit_function, xdata=binscenters, ydata=x, p0 = [0.003, 380, 130])
+print(popt) 
+axe7.plot(lnspc, fit_function(lnspc,*popt), 'r', label="Prereadout Super Pixel Bright Ion Gaussian fit") # plot it
+
 
 xt1 = plt.xticks()[0]  
 xmin1, xmax1 = min(xt1), max(xt1)  
 lnspc1 = np.linspace(xmin1, xmax1, 10000)
-m1, s1 = stats.norm.fit(h1) # get mean and standard deviation  
-pdf_g1 = stats.norm.pdf(lnspc1, m1, s1) # now get theoretical values in our interval  
-axe7.plot(lnspc1, pdf_g1, 'g', label="Super Pixel Dark Ion Gaussian fit") 
+binscenters1 = np.array([0.5 * (bins1[i] + bins1[i+1]) for i in range(len(bins1)-1)])
+popt1, pcov1 = curve_fit(fit_function, xdata=binscenters1, ydata=x1, p0 = [0.029, 178, 14])
+print(popt1)
+axe7.plot(lnspc1, fit_function(lnspc1,*popt1), 'g', label="Prereadout Super Pixel Dark Ion Gaussian fit") 
 axe7.legend(fontsize = 16)
+
 plt.xlabel('Count reading', fontsize=18)
 plt.ylabel('Probability Density', fontsize=18)
 
-result = solve(m,m1,s,s1)
+result = solve(popt[1],popt1[1],popt[2],popt1[2])
 print(result)
 x1 = 0      
 x2 = result[0]
-x3 = 9999999999
-double_prob = erf( (x1-m) / (s*sqrt(2)) )
-p_lower = double_prob/2
-double_prob1 = erf( (x2-m) / (s*sqrt(2)) )
-p_upper = double_prob1/2
-double_prob2 = erf( (x2-m1) / (s1*sqrt(2)) )
-p_lower1 = double_prob2/2
-double_prob3 = erf( (x3-m1) / (s1*sqrt(2)) )
-p_upper1 = double_prob3/2
-Pin = (p_upper) - (p_lower)
-Pin1 = (p_upper1) - (p_lower1)
+#x3 = 9999999999
+
+Pin = stats.norm.cdf(x2,popt[1],popt[2])
+Pin1 = 1- stats.norm.cdf(x2, popt1[1], popt1[2])#(p_upper1) - (p_lower1)
 print('probability of misinterpreting bright ion as dark ion at 10 ms exposure: ' + str(Pin))
 print('probability of misinterpreting dark ion as bright ion at 10 ms exposure: ' + str(Pin1))
+
 
 plt.show()

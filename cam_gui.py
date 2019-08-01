@@ -595,7 +595,7 @@ class Ui_cam_gui(object):
         font.setPointSize(11)
         self.doubleSpinBox_no_Kin.setFont(font)
         self.doubleSpinBox_no_Kin.setDecimals(0)
-        self.doubleSpinBox_no_Kin.setMaximum(1000.0)
+        self.doubleSpinBox_no_Kin.setMaximum(99999.0)
         self.doubleSpinBox_no_Kin.setProperty("value", 1.0)
         self.doubleSpinBox_no_Kin.setObjectName("doubleSpinBox_no_Kin")
         self.gridLayout_2.addWidget(self.doubleSpinBox_no_Kin, 0, 7, 1, 1)
