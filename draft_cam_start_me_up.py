@@ -191,8 +191,8 @@ class window_camera(Ui_cam_gui):
                 self.cooler_on()            
                 self.cooler_flag = True
     
-                temp_thread = threading.Thread(target = self.temp_disp)
-                temp_thread.start()
+                temp_disp_thread = threading.Thread(target = self.temp_disp)
+                temp_disp_thread.start()
                 
             elif self.cooler_flag == True:
                 self.cooler_off()
@@ -287,7 +287,7 @@ class window_camera(Ui_cam_gui):
         self.cam.SetEMCCDGain(int(EMCCD_gain))
         self.set_Read_mode()
         self.set_Acq_mode()        
-        
+        self.cam.GetAcquisitionTimings()
         self.set_img_area()
         self.snap_setting_disp()
         self.Read_mode_disp()
@@ -304,24 +304,20 @@ class window_camera(Ui_cam_gui):
             self.cam.SetNumberKinetics(round(Kin_no))
             self.Kin_disp() 
             self.cam.StartAcquisition()     
-            
+
             for i in range(1,int(Kin_no)+1,1): 
                 if self.abort_flag == False:
+                    
                     print(i)
-                    for i in range(1, int(accum_no)+1, 1):
-                        if self.abort_flag == False:
-                            self.cam.dll.WaitForAcquisition()
-                            
-                        elif self.abort_flag == True:
-                            break
+                    time.sleep(self.cam.kinetic + self.cam.accumulate*accum_no)
+                    
                     
                 elif self.abort_flag == True:
                     break
-                
-                #time.sleep((accum_time*accum_no+Kin_time)*Kin_no*1.1) #make sure sleep time longer than acquisition time            
+                           
         else:
             self.cam.StartAcquisition()
-            self.cam.dll.WaitForAcquisition()
+
 
         if self.abort_flag == False:
             data_camera = []
@@ -378,7 +374,7 @@ class window_camera(Ui_cam_gui):
     def Kin_disp(self):
         self.label_Accum_time.setText(str(self.doubleSpinBox_Accum_time.text()) + ' s')
         self.label_no_Accum.setText(str(self.doubleSpinBox_no_Accum.text()))
-        self.label_Kin_time.setText(str(self.doubleSpinBox_Kin_time.text())+ ' s')
+        self.label_Kin_time.setText(str(self.cam.kinetic)[:7] + ' s')
         self.label_no_Kin.setText(str(self.doubleSpinBox_no_Kin.text()))
 
 
@@ -496,8 +492,7 @@ class window_camera(Ui_cam_gui):
     def snap_setting_disp(self):
         self.cam.GetEMCCDGain()
         self.EMCCD_Gain = self.cam.gain
-        self.exp_time = self.cam.exposure
-        self.label_Exp_time_disp.setText(str(self.exp_time)[:5]+ ' s')
+        self.label_Exp_time_disp.setText(str(self.cam.exposure)[:7]+ ' s')
         self.label_EMCCDGain_disp.setText(str(self.EMCCD_Gain))
         
 

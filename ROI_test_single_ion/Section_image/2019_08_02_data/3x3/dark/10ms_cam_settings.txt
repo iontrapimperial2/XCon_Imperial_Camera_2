@@ -1,0 +1,21 @@
+
+ 
+ 2019-08-02 15:12:11.491734
+ Acquisition Mode: Kinetic Scan
+ Read Mode: Image
+ Temperature: -69 °C
+ Exposure Time: 0.00999 s
+ EMCCD Gain: 1000
+ No. of Accumulations: 1
+ Accumulate Cycle Time: 0.000 s
+ No. of Kinetic Series: 10000
+ Kinetic Cycle Time: 0.01080 s
+ Start Column: 188
+ End Column: 190
+ Start Row: 217
+ End Row: 219
+ Horizontal binning: 3
+ Vertical Binning: 3
+ Trigger Mode: Internal
+ Vertical Clock Voltage Amplitude: 2 V
+ Vertical Shift Speed: 0.3 usec

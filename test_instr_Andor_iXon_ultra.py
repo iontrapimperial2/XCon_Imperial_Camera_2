@@ -40,34 +40,51 @@ else:
 cam.Initialize()
 
 #--- set the cooling temperature and start the cooling -----------------------#
-cam.SetTemperature(-5)
+cam.SetTemperature(-70)
 cam.CoolerON()
 
 
 
 #--- set the Read Mode, the image size, Aquisition Mode and Exp time ---------#
+cam.SetShutterEx(1,1,27,27,1)
+cam.SetEMCCDGain(300)
 cam.SetReadMode(4)
-cam.SetImage(1,1,1,512,1,512)
+cam.SetImage(1,1,1,500,1,500)
 cam.SetAcquisitionMode(1)
-cam.SetExposureTime(0.003)
+cam.SetExposureTime(1)
+#cam.SetKineticCycleTime(0.015)
+#cam.SetNumberKinetics(10)
 
 
 
 #--- start the aquisition ----------------------------------------------------#
 cam.StartAcquisition()
 
-time.sleep(5)
+#for i in range(1,11,1):
+ #   print(i)
+#cam.dll.WaitForAcquisition()
+#cam.dll.WaitForAcquisition()
+#cam.dll.WaitForAcquisition()
+#cam.dll.WaitForAcquisition()
+#cam.dll.WaitForAcquisition()
+#cam.dll.WaitForAcquisition()
+#cam.dll.WaitForAcquisition()
+#cam.dll.WaitForAcquisition()
+#cam.dll.WaitForAcquisition()
+cam.dll.WaitForAcquisition()
 
 #--- get the acquired data ---------------------------------------------------#
 data_camera = []
 cam.GetAcquiredData(data_camera)
 
 #--- save the acquired data --------------------------------------------------#
-cam.SaveAsTxt2('test.txt')
-
+#cam.SaveAsTxt2('test.txt')
+print(data_camera)
+print('Snap Complete!')
 
 #--- cooler off --------------------------------------------------------------#
-cam.CoolerOFF()
+cam.CoolerOFF()      
+cam.ShutDown()  
 
 
 

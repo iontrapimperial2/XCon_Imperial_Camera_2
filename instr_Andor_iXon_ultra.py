@@ -181,7 +181,7 @@ class Andor:
     
     def StartAcquisition(self):
         error = self.dll.StartAcquisition()
-        #self.dll.WaitForAcquisition()
+        self.dll.WaitForAcquisition()
         self.verbose(ERROR_CODE[error], sys._getframe().f_code.co_name)
         return ERROR_CODE[error]
 
