@@ -123,6 +123,21 @@
         <layout class="QGridLayout" name="gridLayout_14">
          <item row="0" column="0">
           <layout class="QGridLayout" name="gridLayout_10">
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_Photon_Counting">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Photon Counting OFF</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
            <item row="0" column="0">
             <widget class="QLabel" name="label_Read_mode">
              <property name="font">
@@ -138,7 +153,31 @@
              </property>
             </widget>
            </item>
-           <item row="0" column="1">
+           <item row="1" column="1">
+            <widget class="QPushButton" name="pushButton_Photon_Counting_ON">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>ON</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QPushButton" name="pushButton_Photon_Counting_OFF">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>OFF</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1" colspan="2">
             <widget class="QComboBox" name="comboBox_Read_mode">
              <property name="font">
               <font>
@@ -952,6 +991,18 @@
         <layout class="QGridLayout" name="gridLayout_29">
          <item row="1" column="0">
           <layout class="QGridLayout" name="gridLayout_28">
+           <item row="0" column="2">
+            <widget class="QPushButton" name="pushButton_Abort">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Abort</string>
+             </property>
+            </widget>
+           </item>
            <item row="0" column="3">
             <widget class="QPushButton" name="pushButton_Browse">
              <property name="font">
@@ -973,18 +1024,6 @@
              </property>
              <property name="text">
               <string>Snap</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2">
-            <widget class="QPushButton" name="pushButton_Abort">
-             <property name="font">
-              <font>
-               <pointsize>11</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Abort</string>
              </property>
             </widget>
            </item>
@@ -1200,7 +1239,7 @@
               <number>0</number>
              </property>
              <property name="maximum">
-              <double>1000.000000000000000</double>
+              <double>99999.000000000000000</double>
              </property>
              <property name="value">
               <double>1.000000000000000</double>
@@ -1422,6 +1461,18 @@
         <layout class="QGridLayout" name="gridLayout_13">
          <item row="0" column="0">
           <layout class="QGridLayout" name="gridLayout_9">
+           <item row="1" column="2">
+            <widget class="QPushButton" name="pushButton_Frame_transfer_OFF">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>OFF</string>
+             </property>
+            </widget>
+           </item>
            <item row="0" column="0">
             <widget class="QLabel" name="label_Acq_mode">
              <property name="font">
@@ -1443,18 +1494,6 @@
               <font>
                <pointsize>11</pointsize>
               </font>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="2">
-            <widget class="QPushButton" name="pushButton_Frame_transfer_OFF">
-             <property name="font">
-              <font>
-               <pointsize>11</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>OFF</string>
              </property>
             </widget>
            </item>

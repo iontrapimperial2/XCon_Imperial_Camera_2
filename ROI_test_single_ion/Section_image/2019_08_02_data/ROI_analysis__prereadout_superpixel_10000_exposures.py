@@ -7,10 +7,13 @@ Created on Sun Jun  9 16:45:08 2019
    
 import pandas as pd
 import numpy as np
-from scipy.misc import factorial
+from math import factorial
+#from scipy.special import factorial
 import matplotlib.pyplot as plt
+from scipy import signal
 from scipy import stats
 from scipy.optimize import curve_fit
+
 
 
 
@@ -78,7 +81,6 @@ e1 = np.array(df9).ravel().tolist()
 
 
 
-
 #find intercept of B and D distributions (FOR GAUSSIAN ONLY)
 def solve(m1,m2,std1,std2):
   a = 1/(2*std1**2) - 1/(2*std2**2)
@@ -88,19 +90,35 @@ def solve(m1,m2,std1,std2):
 
 
 #Gaussian function for fitting
-def fit_function(x, A, mu, sigma):
-    return (A*np.exp(-1.0 * (x - mu)**2 / (2 * sigma**2)))
+def fit_function(x, mu, sigma):
+    return ((1/(sigma*np.sqrt(2*np.pi)))*np.exp(-1.0 * (x - mu)**2 / (2 * sigma**2)))
 
 def MB_fit(x,a, A, mu, sigma):
     return (np.sqrt(2/np.pi)*(((x**2)*np.exp(-(x**2)/(2*(a**2))))/(a**3)))*(A*np.exp(-1.0 * (x - mu)**2 / (2 * sigma**2)))
 
-def Poisson_fit(x,lamb):
-        return (lamb**int(x)/(factorial(int(x)))) * np.exp(-lamb)
+def P(x,s,G):
+    return (((x/G)**(s-1))/(G*factorial(int(s-1)))) * np.exp(-x/G)
 
-f = np.vectorize(Poisson_fit)
+def q(s,l):
+    return ((l**(s))/(factorial(int(s)))) * np.exp(l)
 
-def P_fit(x,lamb):
-    return f(x,lamb)
+def q1(x,l):
+    return ((l**(x))/(factorial(int(x)))) * np.exp(l)
+
+def function_fit(x,s):
+        return (((x/300)**(s-1))/(300*factorial(int(s-1)))) * np.exp(-x/300)
+  
+def h(x,l,G):
+    h= [] 
+    for i in range(1,170,1):
+        a = P(x,i,G)*q(i,l)
+        #print(a)
+        h.append(a)
+    return sum(h)
+    
+def convolve(x,l,G,mu,sigma):
+    return signal.fftconvolve(h(x,l,G),fit_function(x,mu,sigma),mode = 'same')    
+
 
 #Histograms
 fi = plt.figure('Histogram for 10 ms Exposure for 7x7 ROI over 10000 Exposures')
@@ -114,16 +132,21 @@ xt = plt.xticks()[0]
 xmin, xmax = min(xt), max(xt)  
 #lnspc = np.linspace(xmin, xmax, 10000)
 lnspc = np.linspace(0, xmax, 10000)
+lnspc2 = np.linspace(100, xmax+100, 10000)
 
 
 binscenters = np.array([0.5 * (bins[i] + bins[i+1]) for i in range(len(bins)-1)])
 #popt, pcov = curve_fit(fit_function, xdata=binscenters, ydata=x, p0 = [0.003, 410, 250])
 #popt, pcov = curve_fit(MB_fit, xdata=binscenters, ydata=x, p0 = [100,0.003, 410, 250])
-popt, pcov = curve_fit(P_fit, xdata=binscenters, ydata=x,p0 = [30])
+#popt, pcov = curve_fit(fit_function, xdata=binscenters, ydata=x, p0 = [2,2, 5])#
+popt, pcov = curve_fit(convolve, xdata=binscenters, ydata=x, p0 = [5,90,1000, 200])#
+#popt, pcov = curve_fit(q1, xdata=binscenters, ydata=x)#, p0 = [100]
 print(popt) 
+#fit = [convolve(i,*popt) for i in lnspc]
 #axe.plot(lnspc, fit_function(lnspc,*popt), 'r', label="Prereadout Super Pixel Bright Ion Gaussian fit") # plot it
 #axe.plot(lnspc, MB_fit(lnspc,*popt), 'r', label="Prereadout Super Pixel Bright Ion Gaussian fit") # plot it
-axe.plot(lnspc, f(lnspc,*popt), 'r', label="Prereadout Super Pixel Bright Ion Gaussian fit") # plot it
+axe.plot(lnspc2, convolve(lnspc,*popt)/120, 'r', label="Prereadout Super Pixel Bright Ion Gaussian fit") # plot it
+#axe.plot(lnspc, q1(lnspc,*popt), 'r', label="Prereadout Super Pixel Bright Ion Gaussian fit") # plot it
 
 a2 = []
 for i in bins:
@@ -172,21 +195,24 @@ xt1 = plt.xticks()[0]
 xmin1, xmax1 = min(xt1), max(xt1)  
 #lnspc1 = np.linspace(xmin1, xmax1, 10000)
 lnspc1 = np.linspace(0, xmax1, 10000)
+lnspc3 = np.linspace(100, xmax1+100, 10000)
 
 binscenters1 = np.array([0.5 * (bins1[i] + bins1[i+1]) for i in range(len(bins1)-1)])
-#popt1, pcov1 = curve_fit(fit_function, xdata=binscenters1, ydata=x1, p0 = [0.002, 150, 60])
+#popt1, pcov1 = curve_fit(fit_function, xdata=binscenters1, ydata=x1, p0 = [150, 60])
 #popt1, pcov1 = curve_fit(MB_fit, xdata=binscenters1, ydata=x1, p0 = [30,0.02, 150, 60])
-popt1, pcov1 = curve_fit(P_fit, xdata=binscenters1, ydata=x1, p0 = [10])
+#popt1, pcov1 = curve_fit(function_fit, xdata=binscenters1, ydata=x1,p0 = [3,1000])
+popt1, pcov1 = curve_fit(convolve, xdata=binscenters1, ydata=x1, p0 = [1,10,150, 12])#
 print(popt1)
 #axe.plot(lnspc1, fit_function(lnspc1,*popt1), 'g', label="Prereadout Super Pixel Dark Ion Gaussian fit") 
 #axe.plot(lnspc1, MB_fit(lnspc1,*popt1), 'g', label="Prereadout Super Pixel Dark Ion Gaussian fit") 
-axe.plot(lnspc1, f(lnspc1,*popt1), 'g', label="Prereadout Super Pixel Dark Ion Gaussian fit") 
+#axe.plot(lnspc1, fit_function(lnspc1,*popt1), 'g', label="Prereadout Super Pixel Dark Ion Gaussian fit") 
+axe.plot(lnspc3, convolve(lnspc1,*popt1)/2, 'r', label="Prereadout Super Pixel Dark Ion Gaussian fit") # plot it
 
 axe.legend(fontsize = 16)
 plt.xlabel('Count reading', fontsize=18)
 plt.ylabel('Probability Density', fontsize=18)
 
-
+'''
 result = solve(popt[1],popt1[1],popt[2],popt1[2])
 #result = solve(popt,popt1)
 print(result)
@@ -557,5 +583,5 @@ print('probability of misinterpreting bright ion as dark ion at 10 ms exposure f
 print('probability of misinterpreting dark ion as bright ion at 10 ms exposure for 3x3 ROI: ' + str(Pin1))
 
 ''''''
-
+'''
 plt.show()

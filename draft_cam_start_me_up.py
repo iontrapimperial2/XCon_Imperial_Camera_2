@@ -33,6 +33,7 @@ class window_camera(Ui_cam_gui):
         self.label_Cooler_OnOff.setStyleSheet('color: red')
         self.label_Frame_transfer.setStyleSheet('color: red')
         self.label_Adv_Gain.setStyleSheet('color: red')
+        self.label_Photon_Counting.setStyleSheet('color:red')
 
         #--- flags -----------------------------------------------------------#
         self.cam_flag = False
@@ -82,6 +83,8 @@ class window_camera(Ui_cam_gui):
         self.pushButton_VSSpeed.clicked.connect(self.set_VSSpeed)
         self.pushButton_Adv_Gain_Enable.clicked.connect(self.Adv_gain_Enable)
         self.pushButton_Adv_Gain_Disable.clicked.connect(self.Adv_gain_Disable)
+        self.pushButton_Photon_Counting_ON.clicked.connect(self.Photon_count_ON)
+        self.pushButton_Photon_Counting_OFF.clicked.connect(self.Photon_count_OFF)
         
 
         #-- combo boxes-----------------------------------------------------#
@@ -137,7 +140,8 @@ class window_camera(Ui_cam_gui):
             self.snap_flag = False
             self.abort_flag = False
             self.cam.CoolerOFF()
-            self.cam.SetEMAdvanced(0)        
+            self.cam.SetEMAdvanced(0)     
+            self.cam.dll.SetPhotonCounting(0)
             self.cam.ShutDown()            
             self.label_Cam_OnOff.setText('OFF')
             self.label_Cam_OnOff.setStyleSheet('color: red')
@@ -165,6 +169,8 @@ class window_camera(Ui_cam_gui):
             self.label_Adv_Gain.setText('Advanced Gain OFF')
             self.label_Adv_Gain.setStyleSheet('color: red')
             self.doubleSpinBox_EMCCD_Gain.setMaximum(300.0)
+            self.label_Photon_Counting.setText('Photon Counting OFF')
+            self.label_Photon_Counting.setStyleSheet('color: red')
             
             
         
@@ -516,6 +522,20 @@ class window_camera(Ui_cam_gui):
         self.cam.SetFrameTransferMode(0)
         self.label_Frame_transfer.setText('Frame Transfer OFF')
         self.label_Frame_transfer.setStyleSheet('color: red')
+        
+        
+#-- Turn on photon counting mode -----------------------------------------------------#                        
+    def Photon_count_ON(self):
+        self.cam.dll.SetPhotonCounting(1)
+        self.label_Photon_Counting.setText('Photon Counting ON')
+        self.label_Photon_Counting.setStyleSheet('color: green')
+        
+
+#-- Turn off photon counting mode -----------------------------------------------------#                        
+    def Photon_count_OFF(self):
+        self.cam.dll.SetPhotonCounting(0)
+        self.label_Photon_Counting.setText('Photon Counting OFF')
+        self.label_Photon_Counting.setStyleSheet('color: red')
         
         
 #-- displays Acquisition mode from previous snap-----------------------------------------------------#            

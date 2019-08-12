@@ -1,0 +1,31 @@
+Fitted mean and std for gain test
+
+100 Gain
+mean: 196.786 std: 12.7877
+
+200 Gain
+mean: 191.743 std: 12.85002
+
+300 Gain
+mean: 190.896 std: 12.0971
+
+400 Gain
+mean: 190.755 std: 12.1835
+
+500 Gain
+mean: 191.179 std: 12.2153
+
+600 Gain
+mean: 190.977 std: 11.9775
+
+700 Gain
+mean: 191.7925 std: 11.8925
+
+800 Gain
+mean: 190.857 std: 12.0128
+
+900 Gain
+mean: 189.863 std: 12.2895
+
+1000 Gain
+mean: 190.21 std: 12.092
