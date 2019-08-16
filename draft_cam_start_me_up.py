@@ -33,7 +33,6 @@ class window_camera(Ui_cam_gui):
         self.label_Cooler_OnOff.setStyleSheet('color: red')
         self.label_Frame_transfer.setStyleSheet('color: red')
         self.label_Adv_Gain.setStyleSheet('color: red')
-        self.label_Photon_Counting.setStyleSheet('color:red')
 
         #--- flags -----------------------------------------------------------#
         self.cam_flag = False
@@ -50,6 +49,7 @@ class window_camera(Ui_cam_gui):
         self.list_EM_gain_mode = ['0','1','2','3']
         self.list_Shutter = ['Fully Auto', 'Permanently Open', 'Permanently Closed']
         self.list_VSSpeeds = ['0.3', '0.5', '0.9', '1.7', '3.3']
+        self.list_HSSpeeds = []
         
         #--- data ------------------------------------------------------------#
         self.data_camera = []
@@ -64,6 +64,7 @@ class window_camera(Ui_cam_gui):
         self.exp_time = None
         self.EMCCD_Gain= None
         self.VSSpeed = None
+        self.HSSpeed = None
        
         #-- Push Buttons -----------------------------------------------------#
         self.pushButton_Cam_On.clicked.connect(self.initialise_thread)
@@ -83,8 +84,7 @@ class window_camera(Ui_cam_gui):
         self.pushButton_VSSpeed.clicked.connect(self.set_VSSpeed)
         self.pushButton_Adv_Gain_Enable.clicked.connect(self.Adv_gain_Enable)
         self.pushButton_Adv_Gain_Disable.clicked.connect(self.Adv_gain_Disable)
-        self.pushButton_Photon_Counting_ON.clicked.connect(self.Photon_count_ON)
-        self.pushButton_Photon_Counting_OFF.clicked.connect(self.Photon_count_OFF)
+        self.pushButton_hsspeed.clicked.connect(self.set_HSSpeed)
         
 
         #-- combo boxes-----------------------------------------------------#
@@ -95,6 +95,7 @@ class window_camera(Ui_cam_gui):
         self.comboBox_EM_gain_mode.addItems(self.list_EM_gain_mode)
         self.comboBox_set_shutter.addItems(self.list_Shutter)
         self.comboBox_VSSpeed.addItems(self.list_VSSpeeds)
+        self.comboBox_hsspeed.addItems(self.list_HSSpeeds)
         
 
 #-- Initialise camera -----------------------------------------------------#
@@ -119,6 +120,11 @@ class window_camera(Ui_cam_gui):
                 self.label_Cam_OnOff.setStyleSheet('color: green')
                 self.cam.GetTemperature()
                 self.label_Temp_disp.setText(str(self.cam.temperature) + ' °C')
+                self.cam.GetNumberHSSpeeds()
+                self.cam.GetHSSpeed()
+                self.list_HSSpeeds = [str(i) for i in self.cam.HSSpeeds]
+                self.comboBox_hsspeed.clear()
+                self.comboBox_hsspeed.addItems(self.list_HSSpeeds)
                 self.cam_flag = True
 
                 print('Camera ON!!')
@@ -141,7 +147,6 @@ class window_camera(Ui_cam_gui):
             self.abort_flag = False
             self.cam.CoolerOFF()
             self.cam.SetEMAdvanced(0)     
-            self.cam.dll.SetPhotonCounting(0)
             self.cam.ShutDown()            
             self.label_Cam_OnOff.setText('OFF')
             self.label_Cam_OnOff.setStyleSheet('color: red')
@@ -169,8 +174,7 @@ class window_camera(Ui_cam_gui):
             self.label_Adv_Gain.setText('Advanced Gain OFF')
             self.label_Adv_Gain.setStyleSheet('color: red')
             self.doubleSpinBox_EMCCD_Gain.setMaximum(300.0)
-            self.label_Photon_Counting.setText('Photon Counting OFF')
-            self.label_Photon_Counting.setStyleSheet('color: red')
+            self.comboBox_hsspeed.clear()
             
             
         
@@ -524,20 +528,6 @@ class window_camera(Ui_cam_gui):
         self.label_Frame_transfer.setStyleSheet('color: red')
         
         
-#-- Turn on photon counting mode -----------------------------------------------------#                        
-    def Photon_count_ON(self):
-        self.cam.dll.SetPhotonCounting(1)
-        self.label_Photon_Counting.setText('Photon Counting ON')
-        self.label_Photon_Counting.setStyleSheet('color: green')
-        
-
-#-- Turn off photon counting mode -----------------------------------------------------#                        
-    def Photon_count_OFF(self):
-        self.cam.dll.SetPhotonCounting(0)
-        self.label_Photon_Counting.setText('Photon Counting OFF')
-        self.label_Photon_Counting.setStyleSheet('color: red')
-        
-        
 #-- displays Acquisition mode from previous snap-----------------------------------------------------#            
     def Acq_mode_disp(self):
         self.acquistion_mode = self.cam.AcquisitionMode
@@ -613,7 +603,20 @@ class window_camera(Ui_cam_gui):
         elif self.VSSpeed == '3.3':
             self.cam.SetVSSpeed(4)
             
-            
+
+#-- sets vertical shift speed (VSSpeed) from user input and displays VSSpeed on label -----------------------------------------------------#        
+    def set_HSSpeed(self):
+        self.HSSpeed = str(self.comboBox_hsspeed.currentText())
+        self.label_hsspeed.setText(self.HSSpeed + ' MHz')
+        if self.HSSpeed == '17.0':    
+            self.cam.SetHSSpeed(0,0)
+        elif self.VSSpeed == '10.5':
+            self.cam.SetHSSpeed(0,1)
+        elif self.VSSpeed == '5.0':
+            self.cam.SetHSSpeed(0,2)
+        elif self.VSSpeed == '1.0':
+            self.cam.SetHSSpeed(0,3)
+          
     #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
     

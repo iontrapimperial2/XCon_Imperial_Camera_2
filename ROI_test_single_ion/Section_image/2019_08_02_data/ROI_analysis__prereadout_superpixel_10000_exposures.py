@@ -96,8 +96,8 @@ def fit_function(x, mu, sigma):
 def MB_fit(x,a, A, mu, sigma):
     return (np.sqrt(2/np.pi)*(((x**2)*np.exp(-(x**2)/(2*(a**2))))/(a**3)))*(A*np.exp(-1.0 * (x - mu)**2 / (2 * sigma**2)))
 
-def P(x,s,G):
-    return (((x/G)**(s-1))/(G*factorial(int(s-1)))) * np.exp(-x/G)
+def P(x,s):
+    return (((x/(1000/15.6))**(s-1))/((1000/15.6)*factorial(int(s-1)))) * np.exp(-x/(1000/15.6))
 
 def q(s,l):
     return ((l**(s))/(factorial(int(s)))) * np.exp(l)
@@ -108,16 +108,16 @@ def q1(x,l):
 def function_fit(x,s):
         return (((x/300)**(s-1))/(300*factorial(int(s-1)))) * np.exp(-x/300)
   
-def h(x,l,G):
+def h(x,l):
     h= [] 
     for i in range(1,170,1):
-        a = P(x,i,G)*q(i,l)
+        a = P(x,i)*q(i,l)
         #print(a)
         h.append(a)
     return sum(h)
     
-def convolve(x,l,G,mu,sigma):
-    return signal.fftconvolve(h(x,l,G),fit_function(x,mu,sigma),mode = 'same')    
+def convolve(x,l,mu,sigma):
+    return signal.fftconvolve(h(x,l),fit_function(x,mu,sigma),mode = 'same')    
 
 
 #Histograms
@@ -139,13 +139,13 @@ binscenters = np.array([0.5 * (bins[i] + bins[i+1]) for i in range(len(bins)-1)]
 #popt, pcov = curve_fit(fit_function, xdata=binscenters, ydata=x, p0 = [0.003, 410, 250])
 #popt, pcov = curve_fit(MB_fit, xdata=binscenters, ydata=x, p0 = [100,0.003, 410, 250])
 #popt, pcov = curve_fit(fit_function, xdata=binscenters, ydata=x, p0 = [2,2, 5])#
-popt, pcov = curve_fit(convolve, xdata=binscenters, ydata=x, p0 = [5,90,1000, 200])#
+popt, pcov = curve_fit(convolve, xdata=binscenters, ydata=x, p0 = [5,600, 200])#
 #popt, pcov = curve_fit(q1, xdata=binscenters, ydata=x)#, p0 = [100]
 print(popt) 
 #fit = [convolve(i,*popt) for i in lnspc]
 #axe.plot(lnspc, fit_function(lnspc,*popt), 'r', label="Prereadout Super Pixel Bright Ion Gaussian fit") # plot it
 #axe.plot(lnspc, MB_fit(lnspc,*popt), 'r', label="Prereadout Super Pixel Bright Ion Gaussian fit") # plot it
-axe.plot(lnspc2, convolve(lnspc,*popt)/120, 'r', label="Prereadout Super Pixel Bright Ion Gaussian fit") # plot it
+axe.plot(lnspc2, convolve(lnspc,*popt)/130, 'r', label="Prereadout Super Pixel Bright Ion Gaussian fit") # plot it
 #axe.plot(lnspc, q1(lnspc,*popt), 'r', label="Prereadout Super Pixel Bright Ion Gaussian fit") # plot it
 
 a2 = []
@@ -201,12 +201,12 @@ binscenters1 = np.array([0.5 * (bins1[i] + bins1[i+1]) for i in range(len(bins1)
 #popt1, pcov1 = curve_fit(fit_function, xdata=binscenters1, ydata=x1, p0 = [150, 60])
 #popt1, pcov1 = curve_fit(MB_fit, xdata=binscenters1, ydata=x1, p0 = [30,0.02, 150, 60])
 #popt1, pcov1 = curve_fit(function_fit, xdata=binscenters1, ydata=x1,p0 = [3,1000])
-popt1, pcov1 = curve_fit(convolve, xdata=binscenters1, ydata=x1, p0 = [1,10,150, 12])#
-print(popt1)
+#popt1, pcov1 = curve_fit(convolve, xdata=binscenters1, ydata=x1, p0 = [1,10,150, 12])#
+#print(popt1)
 #axe.plot(lnspc1, fit_function(lnspc1,*popt1), 'g', label="Prereadout Super Pixel Dark Ion Gaussian fit") 
 #axe.plot(lnspc1, MB_fit(lnspc1,*popt1), 'g', label="Prereadout Super Pixel Dark Ion Gaussian fit") 
 #axe.plot(lnspc1, fit_function(lnspc1,*popt1), 'g', label="Prereadout Super Pixel Dark Ion Gaussian fit") 
-axe.plot(lnspc3, convolve(lnspc1,*popt1)/2, 'r', label="Prereadout Super Pixel Dark Ion Gaussian fit") # plot it
+#axe.plot(lnspc3, convolve(lnspc1,*popt1)/2, 'r', label="Prereadout Super Pixel Dark Ion Gaussian fit") # plot it
 
 axe.legend(fontsize = 16)
 plt.xlabel('Count reading', fontsize=18)
