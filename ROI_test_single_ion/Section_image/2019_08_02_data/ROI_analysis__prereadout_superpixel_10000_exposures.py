@@ -153,7 +153,7 @@ for i in bins:
     if i < 254.2:
         
         a2.append(i)
-binscenters2 = np.array([(a2[1+i] - a2[i]) for i in range(len(a2)-1)])
+binscenters2 = np.array([0.5*(a2[1+i] - a2[i]) for i in range(len(a2)-1)])
 binwidth = (a2[2] - a2[1])
 a3 = x[:len(binscenters2)]
 for i in a3:
@@ -174,7 +174,7 @@ for i in bins1:
     if i > 254.2:
         
         a2.append(i)
-binscenters2 = np.array([(a2[1+i] - a2[i]) for i in range(len(a2)-1)])
+binscenters2 = np.array([0.5*(a2[1+i] - a2[i]) for i in range(len(a2)-1)])
 binwidth = (a2[2] - a2[1])
 a3 = x1[-len(binscenters2):]
 for i in a3:
