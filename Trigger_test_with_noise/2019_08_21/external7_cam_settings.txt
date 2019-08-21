@@ -1,0 +1,17 @@
+
+ 
+ 2019-08-21 12:01:34.313173
+ Acquisition Mode: Single Scan
+ Read Mode: Image
+ Temperature: -69 °C
+ Exposure Time: 0.00999 s
+ EMCCD Gain: 1000
+ Start Column: 1
+ End Column: 512
+ Start Row: 1
+ End Row: 512
+ Horizontal binning: 1
+ Vertical Binning: 1
+ Trigger Mode: External
+ Vertical Clock Voltage Amplitude: 2 V
+ Vertical Shift Speed: 0.3 usec

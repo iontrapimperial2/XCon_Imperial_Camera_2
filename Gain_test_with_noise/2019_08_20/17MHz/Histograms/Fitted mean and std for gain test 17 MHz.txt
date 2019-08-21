@@ -1,0 +1,32 @@
+Fitted mean and std for gain test 17 MHz Readout
+
+100 Gain
+mean: 193.732 std: 11.8972
+
+200 Gain
+mean: 190.528 std: 11.7557
+
+300 Gain
+mean: 190.302 std: 11.5779
+
+400 Gain
+mean: 191.223 std: 11.6091
+
+500 Gain
+mean: 191.169 std: 11.8471
+
+600 Gain
+mean: 190.535 std: 11.7954
+
+700 Gain
+mean: 191.863 std: 11.7539
+
+800 Gain
+mean: 190.428 std: 11.958
+
+900 Gain
+mean: 189.772 std: 11.9357
+
+1000 Gain
+mean: 190.757 std: 11.7074
+

@@ -1,0 +1,32 @@
+Fitted mean and std for gain test 10 MHz Readout
+
+100 Gain
+mean: 190.577 std: 11.5975
+
+200 Gain
+mean: 189.191 std: 11.784
+
+300 Gain
+mean: 190.088 std: 11.7251
+
+400 Gain
+mean: 190.356 std: 11.714
+
+500 Gain
+mean: 191.264 std: 11.663
+
+600 Gain
+mean: 190.212 std: 11.6242
+
+700 Gain
+mean: 190.74 std: 11.7208
+
+800 Gain
+mean: 190.418 std: 11.6611
+
+900 Gain
+mean: 190.209 std: 11.6197
+
+1000 Gain
+mean: 190.034 std: 11.8579
+
