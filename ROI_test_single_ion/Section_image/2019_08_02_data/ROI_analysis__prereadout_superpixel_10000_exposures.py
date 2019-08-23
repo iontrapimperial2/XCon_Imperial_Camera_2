@@ -12,7 +12,8 @@ from math import factorial
 import matplotlib.pyplot as plt
 from scipy import signal
 from scipy import stats
-from scipy.optimize import curve_fit
+from scipy.optimize import curve_fit, least_squares
+from numpy.fft import fft, fftfreq, ifft
 
 
 
@@ -117,7 +118,16 @@ def h(x,l):
     return sum(h)
     
 def convolve(x,l,mu,sigma):
-    return signal.fftconvolve(h(x,l),fit_function(x,mu,sigma),mode = 'same')    
+# =============================================================================
+#     fourier = fft(h(x,l))*fft(fit_function(x,mu,sigma))
+#     conv = ifft(fourier)
+# =============================================================================
+    return signal.fftconvolve(h(x,l),fit_function(x,mu,sigma),mode = 'same')#     conv#
+
+def convolve1(x,l,mu,sigma):
+    fourier = fft(h(x,l))*fft(fit_function(x,mu,sigma))
+    conv = ifft(fourier)
+    return conv#signal.fftconvolve(h(x,l),fit_function(x,mu,sigma),mode = 'same')#     
 
 
 #Histograms
@@ -131,21 +141,37 @@ axe.tick_params(axis='both', labelsize = 16)
 xt = plt.xticks()[0]  
 xmin, xmax = min(xt), max(xt)  
 #lnspc = np.linspace(xmin, xmax, 10000)
-lnspc = np.linspace(0, xmax, 10000)
-lnspc2 = np.linspace(100, xmax+100, 10000)
+lnspc = np.linspace(-160, xmax, 10000)
+lnspc_ = np.linspace(0, xmax, 10000)
+lnspc2 = np.linspace(+100, xmax+100, 10000)
 
 
 binscenters = np.array([0.5 * (bins[i] + bins[i+1]) for i in range(len(bins)-1)])
 #popt, pcov = curve_fit(fit_function, xdata=binscenters, ydata=x, p0 = [0.003, 410, 250])
 #popt, pcov = curve_fit(MB_fit, xdata=binscenters, ydata=x, p0 = [100,0.003, 410, 250])
 #popt, pcov = curve_fit(fit_function, xdata=binscenters, ydata=x, p0 = [2,2, 5])#
-popt, pcov = curve_fit(convolve, xdata=binscenters, ydata=x, p0 = [5,600, 200])#
+popt, pcov = curve_fit(convolve, xdata=binscenters, ydata=x, p0 = [0.15,350, 110])#
 #popt, pcov = curve_fit(q1, xdata=binscenters, ydata=x)#, p0 = [100]
 print(popt) 
+
+
+z = convolve(lnspc,*popt)
+area = np.trapz(z, dx=0.11)
+area2 = np.trapz(z/area,dx=0.11)
+lsp=[]
+
+for i in lnspc_:
+    if i < 247.467:
+        lsp.append(i)
+norm = z/area
+overlap = norm[:len(lsp)]
+area4 = np.trapz(overlap, dx=0.11)
+z1 = max(z)
+#norm = [float(i)/z1 for i in z]
 #fit = [convolve(i,*popt) for i in lnspc]
 #axe.plot(lnspc, fit_function(lnspc,*popt), 'r', label="Prereadout Super Pixel Bright Ion Gaussian fit") # plot it
 #axe.plot(lnspc, MB_fit(lnspc,*popt), 'r', label="Prereadout Super Pixel Bright Ion Gaussian fit") # plot it
-axe.plot(lnspc2, convolve(lnspc,*popt)/130, 'r', label="Prereadout Super Pixel Bright Ion Gaussian fit") # plot it
+axe.plot(lnspc_,  z/area, 'r', label="Prereadout Super Pixel Bright Ionfit") # plot it
 #axe.plot(lnspc, q1(lnspc,*popt), 'r', label="Prereadout Super Pixel Bright Ion Gaussian fit") # plot it
 
 a2 = []
@@ -175,7 +201,7 @@ for i in bins1:
         
         a2.append(i)
 binscenters2 = np.array([0.5*(a2[1+i] - a2[i]) for i in range(len(a2)-1)])
-binwidth = (a2[2] - a2[1])
+binwidth1 = (a2[2] - a2[1])
 a3 = x1[-len(binscenters2):]
 for i in a3:
     if i < 0.0016:
@@ -185,7 +211,7 @@ for i in a3:
         print(i)
 #print(a3)
 #print(binscenters2)
-#print(binwidth)
+#print(binwidth1)
 #print(len(binscenters2))   
 error1 = sum(a3*binwidth)  
 print('dark ion discrimination error from histogram overlap for 7x7 ROI: ' + str(error1))
@@ -194,19 +220,26 @@ print(error + error1)
 xt1 = plt.xticks()[0]  
 xmin1, xmax1 = min(xt1), max(xt1)  
 #lnspc1 = np.linspace(xmin1, xmax1, 10000)
-lnspc1 = np.linspace(0, xmax1, 10000)
+lnspc1 = np.linspace(-322, xmax1, 10000)
+lnspc1_ = np.linspace(100, xmax1, 10000)
 lnspc3 = np.linspace(100, xmax1+100, 10000)
 
 binscenters1 = np.array([0.5 * (bins1[i] + bins1[i+1]) for i in range(len(bins1)-1)])
 #popt1, pcov1 = curve_fit(fit_function, xdata=binscenters1, ydata=x1, p0 = [150, 60])
 #popt1, pcov1 = curve_fit(MB_fit, xdata=binscenters1, ydata=x1, p0 = [30,0.02, 150, 60])
 #popt1, pcov1 = curve_fit(function_fit, xdata=binscenters1, ydata=x1,p0 = [3,1000])
-#popt1, pcov1 = curve_fit(convolve, xdata=binscenters1, ydata=x1, p0 = [1,10,150, 12])#
-#print(popt1)
+popt1, pcov1 = curve_fit(convolve, xdata=binscenters1, ydata=x1, p0 = [0.25,1000,1000])#
+print(popt1)
+
+z2 = convolve(lnspc1,*popt1)
+area1 = np.trapz(z2, dx=0.03)
+area3 = np.trapz(z2/area1, dx = 0.03)
+z4 = max(z)
+
 #axe.plot(lnspc1, fit_function(lnspc1,*popt1), 'g', label="Prereadout Super Pixel Dark Ion Gaussian fit") 
 #axe.plot(lnspc1, MB_fit(lnspc1,*popt1), 'g', label="Prereadout Super Pixel Dark Ion Gaussian fit") 
 #axe.plot(lnspc1, fit_function(lnspc1,*popt1), 'g', label="Prereadout Super Pixel Dark Ion Gaussian fit") 
-#axe.plot(lnspc3, convolve(lnspc1,*popt1)/2, 'r', label="Prereadout Super Pixel Dark Ion Gaussian fit") # plot it
+axe.plot(lnspc1_, z2/area1, 'r', label="Prereadout Super Pixel Dark Ion Gaussian fit") # plot it
 
 axe.legend(fontsize = 16)
 plt.xlabel('Count reading', fontsize=18)
