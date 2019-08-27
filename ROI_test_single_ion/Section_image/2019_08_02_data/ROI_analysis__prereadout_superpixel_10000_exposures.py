@@ -14,6 +14,7 @@ from scipy import signal
 from scipy import stats
 from scipy.optimize import curve_fit, least_squares
 from numpy.fft import fft, fftfreq, ifft
+from sympy import DiracDelta
 
 
 
@@ -110,7 +111,7 @@ def function_fit(x,s):
         return (((x/300)**(s-1))/(300*factorial(int(s-1)))) * np.exp(-x/300)
   
 def h(x,l):
-    h= [] 
+    h= []
     for i in range(1,170,1):
         a = P(x,i)*q(i,l)
         #print(a)

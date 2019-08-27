@@ -142,9 +142,13 @@ def h(x,l):
         #print(a)
         h.append(a)
     return sum(h)
-    
-def convolve(x,l,mu,sigma):
-    return signal.fftconvolve(h(x,l),fit_function(x,mu,sigma),mode = 'same')    
+
+
+def convolve(x,l1,l2,mu,sigma):
+    h_ = signal.fftconvolve(h(x,l1),h(x,l2), mode = 'same')
+    return signal.fftconvolve(h_,fit_function(x,mu,sigma),mode = 'same')  
+
+ 
 
 
 #Histograms
@@ -153,7 +157,7 @@ fi = plt.figure('Histogram for 10 ms Exposure for 7x7 ROI over 2000 Exposures')
 fi.suptitle('Bright and Dark Histogram overlap: 10 ms Exposure for 7x7 ROI over 2000 Exposures', fontsize=20)
 axe = fi.add_subplot(111)
 x, bins, p = axe.hist(a, density=True, bins = 70, label = 'Prereadout Super Pixel Bright Ion')
-#x1, bins1, p1 = axe.hist(a1, density=True, bins = 30, label = 'Prereadout Super Pixel Dark Ion')
+x1, bins1, p1 = axe.hist(a1, density=True, bins = 30, label = 'Prereadout Super Pixel Dark Ion')
 axe.tick_params(axis='both', labelsize = 16)
 
 xt = plt.xticks()[0]  
@@ -168,9 +172,9 @@ binscenters = np.array([0.5 * (bins[i] + bins[i+1]) for i in range(len(bins)-1)]
 #popt, pcov = curve_fit(fit_function, xdata=binscenters, ydata=x, p0 = [10500, 500])
 #popt, pcov = curve_fit(MB_fit, xdata=binscenters, ydata=x, p0 = [100,0.003, 410, 250])
 #popt, pcov = curve_fit(fit_function, xdata=binscenters, ydata=x, p0 = [2,2, 5])#
-popt, pcov = curve_fit(convolve, xdata=binscenters, ydata=x, p0 = [5,1000, 200])#
+popt, pcov = curve_fit(convolve, xdata=binscenters, ydata=x, p0 = [5,5,1000, 200])#
 #popt, pcov = curve_fit(q1, xdata=binscenters, ydata=x)#, p0 = [100]
-#print(popt) 
+print(popt) 
 z = convolve(lnspc,*popt)
 area = np.trapz(z, dx=0.13)
 area2 = np.trapz(z/area,dx=0.13)
@@ -238,19 +242,26 @@ axe.plot(lnspc_, norm, 'r', label="Prereadout Super Pixel Bright Ion Gaussian fi
 xt1 = plt.xticks()[0]  
 xmin1, xmax1 = min(xt1), max(xt1)  
 lnspc1 = np.linspace(xmin1, xmax1, 10000)
-#lnspc1 = np.linspace(0, xmax1, 10000)
-#lnspc3 = np.linspace(100, xmax1+100, 10000)
+lnspc1 = np.linspace(-390, xmax1, 10000)
+lnspc1_ = np.linspace(0, xmax1, 10000)
+lnspc3 = np.linspace(50, xmax1+50, 10000)
 
 binscenters1 = np.array([0.5 * (bins1[i] + bins1[i+1]) for i in range(len(bins1)-1)])
 #popt1, pcov1 = curve_fit(fit_function, xdata=binscenters1, ydata=x1, p0 = [10200, 400])
 #popt1, pcov1 = curve_fit(MB_fit, xdata=binscenters1, ydata=x1, p0 = [30,0.02, 150, 60])
 #popt1, pcov1 = curve_fit(function_fit, xdata=binscenters1, ydata=x1,p0 = [3,1000])
-#popt1, pcov1 = curve_fit(convolve, xdata=binscenters1, ydata=x1, p0 = [1,10,150, 12])#
+popt1, pcov1 = curve_fit(convolve, xdata=binscenters1, ydata=x1, p0 = [1,2,150, 12])#
+
+z1 = convolve(lnspc1,*popt1)
+area1 = np.trapz(z1, dx=0.029)
+area3 = np.trapz(z1/area1,dx=0.029)
+lsp1=[]
+norm1 = z1/area1
 #print(popt1)
 #axe.plot(lnspc1, fit_function(lnspc1,*popt1), 'g', label="Post-readout Super Pixel Dark Ion Gaussian fit") 
 #axe.plot(lnspc1, MB_fit(lnspc1,*popt1), 'g', label="Prereadout Super Pixel Dark Ion Gaussian fit") 
 #axe.plot(lnspc1, fit_function(lnspc1,*popt1), 'g', label="Prereadout Super Pixel Dark Ion Gaussian fit") 
-#axe.plot(lnspc3, convolve(lnspc1,*popt1)/2, 'r', label="Prereadout Super Pixel Dark Ion Gaussian fit") # plot it
+axe.plot(lnspc3, norm1, 'r', label="Prereadout Super Pixel Dark Ion Gaussian fit") # plot it
 axe.legend(fontsize = 16)
 
 plt.xlabel('Count reading', fontsize=18)

@@ -1,0 +1,31 @@
+Fitted mean and std for exposure test
+
+10 ms
+mean: 187.73 std: 12.5772
+
+20 ms
+mean: 189.535 std: 12.5369
+
+30 ms
+mean: 189.255 std: 12.445
+
+40 ms
+mean: 189.292 std: 12.5344
+
+50 ms
+mean: 188.644 std: 12.5774
+
+60 ms
+mean: 188.834 std: 12.6534
+
+70 ms
+mean: 189.272 std: 12.5446
+
+80 ms
+mean: 188.353 std: 12.651
+
+90 ms
+mean: 188.098 std: 12.7552
+
+100 ms
+mean: 188.674 std: 12.8595
