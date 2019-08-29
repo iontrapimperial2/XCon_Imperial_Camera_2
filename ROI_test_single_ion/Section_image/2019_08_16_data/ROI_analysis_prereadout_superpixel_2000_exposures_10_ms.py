@@ -144,9 +144,9 @@ def h(x,l):
     return sum(h)
 
 
-def convolve(x,l1,l2,mu,sigma):
-    h_ = signal.fftconvolve(h(x,l1),h(x,l2), mode = 'same')
-    return signal.fftconvolve(h_,fit_function(x,mu,sigma),mode = 'same')  
+def convolve(x,l,mu,sigma):
+   # h_ = signal.fftconvolve(h(x,l1),h(x,l2), mode = 'same')
+    return signal.fftconvolve(h(x,l),fit_function(x,mu,sigma),mode = 'same')  
 
  
 
@@ -172,7 +172,7 @@ binscenters = np.array([0.5 * (bins[i] + bins[i+1]) for i in range(len(bins)-1)]
 #popt, pcov = curve_fit(fit_function, xdata=binscenters, ydata=x, p0 = [10500, 500])
 #popt, pcov = curve_fit(MB_fit, xdata=binscenters, ydata=x, p0 = [100,0.003, 410, 250])
 #popt, pcov = curve_fit(fit_function, xdata=binscenters, ydata=x, p0 = [2,2, 5])#
-popt, pcov = curve_fit(convolve, xdata=binscenters, ydata=x, p0 = [5,5,1000, 200])#
+popt, pcov = curve_fit(convolve, xdata=binscenters, ydata=x, p0 = [5,1000, 200])#
 #popt, pcov = curve_fit(q1, xdata=binscenters, ydata=x)#, p0 = [100]
 print(popt) 
 z = convolve(lnspc,*popt)
@@ -250,7 +250,7 @@ binscenters1 = np.array([0.5 * (bins1[i] + bins1[i+1]) for i in range(len(bins1)
 #popt1, pcov1 = curve_fit(fit_function, xdata=binscenters1, ydata=x1, p0 = [10200, 400])
 #popt1, pcov1 = curve_fit(MB_fit, xdata=binscenters1, ydata=x1, p0 = [30,0.02, 150, 60])
 #popt1, pcov1 = curve_fit(function_fit, xdata=binscenters1, ydata=x1,p0 = [3,1000])
-popt1, pcov1 = curve_fit(convolve, xdata=binscenters1, ydata=x1, p0 = [1,2,150, 12])#
+popt1, pcov1 = curve_fit(convolve, xdata=binscenters1, ydata=x1, p0 = [1,150, 12])#
 
 z1 = convolve(lnspc1,*popt1)
 area1 = np.trapz(z1, dx=0.029)

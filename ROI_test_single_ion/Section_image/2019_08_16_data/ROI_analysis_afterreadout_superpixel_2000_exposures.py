@@ -16,37 +16,37 @@ from scipy.optimize import curve_fit
 
 
 
+a = []
+a1 = []
+b = []
+b1 = []
+c = []
+c1 = []
+d = []
+d1 = []
+e = []
+e1 = []
+'''
+f = []
+f1 = []
+g = []
+g1 = []
+h = []
+h1 = []
+'''
+
+###Bright###
+
+for num in range(1,2001,1):
+    x = list(range(num*7, (2000*7), 1))
+    y = x +list(range(0, (num-1)*7,1))
+    #7x7
+    df = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_08_16_data\7x7\unbinned\bright\10ms.txt', header = None)
+    df.drop(df.columns[-1], axis=1, inplace=True)  #delete last column
+    df.drop(df.columns[0], axis=1, inplace=True)           #delete first column
+    a.append(np.mean(np.array(df.drop(y)).ravel().tolist()))
+        
 # =============================================================================
-# a = []
-# a1 = []
-# b = []
-# b1 = []
-# c = []
-# c1 = []
-# d = []
-# d1 = []
-# e = []
-# e1 = []
-# '''
-# f = []
-# f1 = []
-# g = []
-# g1 = []
-# h = []
-# h1 = []
-# '''
-# 
-# ###Bright###
-# 
-# for num in range(1,2001,1):
-#     x = list(range(num*7, (2000*7), 1))
-#     y = x +list(range(0, (num-1)*7,1))
-#     #7x7
-#     df = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_08_16_data\7x7\unbinned\bright\10ms.txt', header = None)
-#     df.drop(df.columns[-1], axis=1, inplace=True)  #delete last column
-#     df.drop(df.columns[0], axis=1, inplace=True)           #delete first column
-#     a.append(sum(np.array(df.drop(y)).ravel().tolist()))
-#         
 #     x1 = list(range(num*6, (2000*6), 1))
 #     y1 = x1 +list(range(0, (num-1)*6,1))
 #     #6x6
@@ -78,19 +78,21 @@ from scipy.optimize import curve_fit
 #     df8.drop(df8.columns[-1], axis=1, inplace=True)  #delete last column
 #     df8.drop(df8.columns[0], axis=1, inplace=True)           #delete first column
 #     e.append(sum(np.array(df8.drop(y4)).ravel().tolist()))
-# 
-# 
-# ###Dark###
-# for num in range(1,2001,1):
-#     print(num)
-#     x = list(range(num*7, (2000*7), 1))
-#     y = x +list(range(0, (num-1)*7,1))
-#     #7x7
-#     df1 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_08_16_data\7x7\unbinned\dark\10ms.txt', header = None)
-#     df1.drop(df1.columns[-1], axis=1, inplace=True)  #delete last column
-#     df1.drop(df1.columns[0], axis=1, inplace=True)           #delete first column
-#     a1.append(sum(np.array(df1.drop(y)).ravel().tolist()))
-#     
+# =============================================================================
+
+
+###Dark###
+for num in range(1,2001,1):
+    print(num)
+    x = list(range(num*7, (2000*7), 1))
+    y = x +list(range(0, (num-1)*7,1))
+    #7x7
+    df1 = pd.read_csv(r'C:\Users\iontrap\Documents\iontrap\code\python\XCon_Imperial_Camera_2\ROI_test_single_ion\Section_image\2019_08_16_data\7x7\unbinned\dark\10ms.txt', header = None)
+    df1.drop(df1.columns[-1], axis=1, inplace=True)  #delete last column
+    df1.drop(df1.columns[0], axis=1, inplace=True)           #delete first column
+    a1.append(np.mean(np.array(df1.drop(y)).ravel().tolist()))
+    
+# =============================================================================
 #     x1 = list(range(num*6, (2000*6), 1))
 #     y1 = x1 +list(range(0, (num-1)*6,1))
 #     #6x6    
@@ -168,17 +170,17 @@ def convolve(x,l,mu,sigma):
 # =============================================================================
     return signal.fftconvolve(h(x,l),fit_function(x,mu,sigma),mode = 'same')#     conv#
  
-
+def convolve1(x,mu,sigma):
+    h_ = signal.fftconvolve(h(x,4),h(x,4), mode = 'same')
+    return signal.fftconvolve(h_,fit_function(x,mu,sigma),mode = 'same')  
 
 #Histograms
 
 fi = plt.figure('Histogram for 10 ms Exposure for 7x7 ROI over 2000 Exposures')
 fi.suptitle('Bright and Dark Histogram overlap: 10 ms Exposure for 7x7 ROI over 2000 Exposures', fontsize=20)
 axe = fi.add_subplot(111)
-a_ = [i/49 for i in a]
-a1_ = [i/49 for i in a1]
-x, bins, p = axe.hist(a_, density=True, bins = 50, label = 'Post-readout Super Pixel Bright Ion')
-x1, bins1, p1 = axe.hist(a1_, density=True, bins = 55, label = 'Post-readout Super Pixel Dark Ion')
+x, bins, p = axe.hist(a, density=True, bins = 50, label = 'Post-readout Super Pixel Bright Ion')
+x1, bins1, p1 = axe.hist(a1, density=True, bins = 55, label = 'Post-readout Super Pixel Dark Ion')
 axe.tick_params(axis='both', labelsize = 16)
 
 xt = plt.xticks()[0]  
@@ -189,16 +191,16 @@ lnspc2 = np.linspace(100, xmax+100, 10000)
 
 
 binscenters = np.array([0.5 * (bins[i] + bins[i+1]) for i in range(len(bins)-1)])
-#popt, pcov = curve_fit(fit_function, xdata=binscenters, ydata=x, p0 = [10500, 500])
+popt, pcov = curve_fit(fit_function, xdata=binscenters, ydata=x, p0 = [250, 300])
 #popt, pcov = curve_fit(MB_fit, xdata=binscenters, ydata=x, p0 = [100,0.003, 410, 250])
 #popt, pcov = curve_fit(fit_function, xdata=binscenters, ydata=x, p0 = [2,2, 5])#
-popt, pcov = curve_fit(convolve, xdata=binscenters, ydata=x, p0 = [0.05,200, 100])#
+#popt, pcov = curve_fit(convolve, xdata=binscenters, ydata=x, p0 = [1,200, 100])#
 #popt, pcov = curve_fit(q1, xdata=binscenters, ydata=x)#, p0 = [100]
 #print(popt) 
 #fit = [convolve(i,*popt) for i in lnspc]
-#axe.plot(lnspc, fit_function(lnspc,*popt), 'r', label="Post-readout Super Pixel Bright Ion Gaussian fit") # plot it
+axe.plot(lnspc, fit_function(lnspc,*popt), 'r', label="Post-readout Super Pixel Bright Ion Gaussian fit") # plot it
 #axe.plot(lnspc, MB_fit(lnspc,*popt), 'r', label="Prereadout Super Pixel Bright Ion Gaussian fit") # plot it
-#axe.plot(lnspc2, convolve(lnspc,*popt)/120, 'r', label="Prereadout Super Pixel Bright Ion Gaussian fit") # plot it
+#axe.plot(lnspc, convolve(lnspc,*popt), 'r', label="Prereadout Super Pixel Bright Ion Gaussian fit") # plot it
 #axe.plot(lnspc, q1(lnspc,*popt), 'r', label="Prereadout Super Pixel Bright Ion Gaussian fit") # plot it
 
 # =============================================================================
@@ -257,24 +259,22 @@ popt, pcov = curve_fit(convolve, xdata=binscenters, ydata=x, p0 = [0.05,200, 100
 # print(error + error1)
 # =============================================================================
 
-# =============================================================================
-# xt1 = plt.xticks()[0]  
-# xmin1, xmax1 = min(xt1), max(xt1)  
-# lnspc1 = np.linspace(xmin1, xmax1, 10000)
-# #lnspc1 = np.linspace(0, xmax1, 10000)
-# #lnspc3 = np.linspace(100, xmax1+100, 10000)
-# 
-# binscenters1 = np.array([0.5 * (bins1[i] + bins1[i+1]) for i in range(len(bins1)-1)])
-# popt1, pcov1 = curve_fit(fit_function, xdata=binscenters1, ydata=x1, p0 = [10200, 400])
-# #popt1, pcov1 = curve_fit(MB_fit, xdata=binscenters1, ydata=x1, p0 = [30,0.02, 150, 60])
-# #popt1, pcov1 = curve_fit(function_fit, xdata=binscenters1, ydata=x1,p0 = [3,1000])
-# #popt1, pcov1 = curve_fit(convolve, xdata=binscenters1, ydata=x1, p0 = [1,10,150, 12])#
-# #print(popt1)
-# axe.plot(lnspc1, fit_function(lnspc1,*popt1), 'g', label="Post-readout Super Pixel Dark Ion Gaussian fit") 
-# #axe.plot(lnspc1, MB_fit(lnspc1,*popt1), 'g', label="Prereadout Super Pixel Dark Ion Gaussian fit") 
-# #axe.plot(lnspc1, fit_function(lnspc1,*popt1), 'g', label="Prereadout Super Pixel Dark Ion Gaussian fit") 
-# #axe.plot(lnspc3, convolve(lnspc1,*popt1)/2, 'r', label="Prereadout Super Pixel Dark Ion Gaussian fit") # plot it
-# =============================================================================
+xt1 = plt.xticks()[0]  
+xmin1, xmax1 = min(xt1), max(xt1)  
+lnspc1 = np.linspace(xmin1, xmax1, 10000)
+#lnspc1 = np.linspace(0, xmax1, 10000)
+#lnspc3 = np.linspace(100, xmax1+100, 10000)
+
+binscenters1 = np.array([0.5 * (bins1[i] + bins1[i+1]) for i in range(len(bins1)-1)])
+popt1, pcov1 = curve_fit(fit_function, xdata=binscenters1, ydata=x1, p0 = [200, 20])
+#popt1, pcov1 = curve_fit(MB_fit, xdata=binscenters1, ydata=x1, p0 = [30,0.02, 150, 60])
+#popt1, pcov1 = curve_fit(function_fit, xdata=binscenters1, ydata=x1,p0 = [3,1000])
+#popt1, pcov1 = curve_fit(convolve, xdata=binscenters1, ydata=x1, p0 = [1,10,150, 12])#
+#print(popt1)
+axe.plot(lnspc1, fit_function(lnspc1,*popt1), 'g', label="Post-readout Super Pixel Dark Ion Gaussian fit") 
+#axe.plot(lnspc1, MB_fit(lnspc1,*popt1), 'g', label="Prereadout Super Pixel Dark Ion Gaussian fit") 
+#axe.plot(lnspc1, fit_function(lnspc1,*popt1), 'g', label="Prereadout Super Pixel Dark Ion Gaussian fit") 
+#axe.plot(lnspc3, convolve(lnspc1,*popt1)/2, 'r', label="Prereadout Super Pixel Dark Ion Gaussian fit") # plot it
 
 axe.legend(fontsize = 16)
 plt.xlabel('Count reading', fontsize=18)
